@@ -602,7 +602,7 @@ function CTA() {
             Whether you are building new, remodeling, or sourcing stone for a large development — we do love to hear from you.
           </p>
           <div className="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <a href="https://creativeestimator.com/" data-cursor="estimate" className="btn-magnetic inline-flex items-center gap-3 rounded-full border border-foreground bg-foreground px-10 py-5 text-xs tracking-[0.25em] text-cream">
+            <a href="#" data-cursor="estimate" className="btn-magnetic inline-flex items-center gap-3 rounded-full border border-foreground bg-foreground px-10 py-5 text-xs tracking-[0.25em] text-cream">
               <span>Get an estimate</span>
               <span className="relative z-[2]">→</span>
             </a>
