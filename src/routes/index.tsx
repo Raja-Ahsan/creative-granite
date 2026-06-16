@@ -28,7 +28,7 @@ const materials = [
   { name: "Granite", desc: "Durable natural stone known for its strength and variation. A reliable choice for kitchens and high-use surfaces.", image: "/materials/granite.png" },
   { name: "Quartz", desc: "Engineered surface designed for consistency and low maintenance, offering a wide range of colors and styles.", image: "/materials/quartz.png" },
   { name: "Marble", desc: "Natural stone known for soft movement and timeless appeal, often used in bathrooms and feature areas." },
-  { name: "Quartzite", desc: "Natural stone valued for durability and distinctive movement, ideal for kitchens and high-traffic spaces." },
+  { name: "Quartzite", desc: "Natural stone valued for durability and distinctive movement, ideal for kitchens and high traffic spaces." },
 ];
 
 const services = [
@@ -39,10 +39,10 @@ const services = [
 ];
 
 const process = [
-  { n: "01", t: "Initial Consultation", d: "We discuss your project, timeline, and budget—in our showroom or on-site." },
+  { n: "01", t: "Initial Consultation", d: "We discuss your project, timeline, and budget in our showroom or on-site." },
   { n: "02", t: "Estimate & Material Selection", d: "We provide a detailed quote and guide you through slab selection from our inventory." },
-  { n: "03", t: "Template & Measurement", d: "Our team templates your space with precision for a perfect fit — no guesswork." },
-  { n: "04", t: "Fabrication & Install", d: "Hand-finished edges, sealed surfaces, and a clean, on-schedule installation." },
+  { n: "03", t: "Template & Measurement", d: "Our team templates your space with precision for a perfect fit no guesswork." },
+  { n: "04", t: "Fabrication & Install", d: "Hand finished edges, sealed surfaces, and a clean, on schedule installation." },
 ];
 
 function SplitText({ text, className = "" }: { text: string; className?: string }) {
@@ -112,13 +112,13 @@ function Header() {
         </a>
         <nav className="hidden items-center gap-8 md:flex">
           {nav.map(([l, h]) => (
-            <a key={l} href={h} className="link-underline text-sm font-medium text-cream/80 hover:text-cream">
+            <a key={l} href="#" className="link-underline text-sm font-medium text-cream/80 hover:text-cream">
               {l}
             </a>
           ))}
         </nav>
         <a
-          href="#contact"
+          href="#"
           data-cursor="estimate"
           className="btn-magnetic btn-magnetic-inverse group hidden items-center gap-2 rounded-full border border-cream px-5 py-2.5 text-xs font-medium tracking-[0.18em] text-cream md:inline-flex"
         >
@@ -150,7 +150,7 @@ function Header() {
                 {l}
               </a>
             ))}
-            <a href="#contact" onClick={() => setOpen(false)} className="mt-6 rounded-full bg-cream py-4 text-center text-sm tracking-widest text-ink">
+            <a href="#" onClick={() => setOpen(false)} className="mt-6 rounded-full bg-cream py-4 text-center text-sm tracking-widest text-ink">
               Get an estimate
             </a>
           </div>
@@ -215,12 +215,12 @@ function Hero() {
         <div className="col-span-12 mt-10 grid grid-cols-12 gap-6 md:mt-16">
           <Reveal delay={400} className="col-span-12 md:col-span-5 md:col-start-1">
             <p className="text-base leading-relaxed text-cream/80 md:text-lg">
-              Premium granite, quartz, marble and quartzite. Hand-fabricated in Utah for builders, designers and homeowners who care about the details no one is supposed to notice.
+              Premium granite, quartz, marble and quartzite. Hand fabricated in Utah for builders, designers and homeowners who care about the details no one is supposed to notice.
             </p>
           </Reveal>
           <Reveal delay={600} className="col-span-12 md:col-span-5 md:col-start-8 md:flex md:justify-end">
             <div className="flex flex-col items-start gap-3 md:items-end">
-              <a href="#work" data-cursor="explore" className="btn-magnetic btn-magnetic-inverse inline-flex items-center gap-3 rounded-full border border-cream px-7 py-3.5 text-xs font-medium tracking-[0.2em] text-cream">
+              <a href="#" data-cursor="explore" className="btn-magnetic btn-magnetic-inverse inline-flex items-center gap-3 rounded-full border border-cream px-7 py-3.5 text-xs font-medium tracking-[0.2em] text-cream">
                 <span>View our work</span>
                 <span className="relative z-[2]">→</span>
               </a>
@@ -280,7 +280,7 @@ function WhoWeAre() {
         </Reveal>
         <Reveal delay={300} className="col-span-12 md:col-span-5 md:col-start-8">
           <p className="text-lg leading-relaxed text-foreground/75">
-            For two decades, Creative Granite & Design has shaped natural stone for the homes, hotels and gathering places of the Wasatch Front. Five installation crews, one obsession — surfaces that quietly anchor the rooms they live in.
+            For two decades, Creative Granite <span style={{ fontFamily: "sans-serif" }}>+</span> Design has shaped natural stone for the homes, hotels and gathering places of the Wasatch Front. Five installation crews, one obsession — surfaces that quietly anchor the rooms they live in.
           </p>
         </Reveal>
       </div>
@@ -393,7 +393,7 @@ function Work() {
           </Reveal>
           <Reveal delay={200}>
             <p className="max-w-sm text-foreground/70">
-              A selection of completed spaces, material details, and in-between moments — each reflecting our approach to stone, design, and execution.
+              A selection of completed spaces, material details, and in<span style={{ fontFamily: "sans-serif" }}>-</span>between moments each reflecting our approach to stone, design, and execution.
             </p>
           </Reveal>
         </div>
@@ -461,7 +461,7 @@ function Services() {
                   <p className="text-cream/70 md:text-lg">{s.body}</p>
                 </div>
                 <div className="col-span-12 flex items-center justify-end md:col-span-1">
-                  <span className="text-2xl transition-transform duration-500 group-hover:rotate-45">+</span>
+                  <span className="text-2xl transition-transform duration-500 group-hover:rotate-45" style={{ fontFamily: "sans-serif" }}>+</span>
                 </div>
               </div>
             </Reveal>
@@ -599,7 +599,7 @@ function CTA() {
             <span className="italic">Project.</span>
           </h2>
           <p className="mx-auto mt-10 max-w-xl text-lg text-foreground/70">
-            Whether you're building new, remodeling, or sourcing stone for a large development — we'd love to hear from you.
+            Whether you are building new, remodeling, or sourcing stone for a large development — we do love to hear from you.
           </p>
           <div className="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <a href="https://creativeestimator.com/" data-cursor="estimate" className="btn-magnetic inline-flex items-center gap-3 rounded-full border border-foreground bg-foreground px-10 py-5 text-xs tracking-[0.25em] text-cream">
@@ -607,7 +607,7 @@ function CTA() {
               <span className="relative z-[2]">→</span>
             </a>
             <a href="mailto:info@creativegranite.com" className="link-underline text-sm tracking-[0.2em] text-foreground/70">
-              info@creativegranite.com
+              info<span style={{ fontFamily: "sans-serif" }}>@</span>creativegranite.com
             </a>
           </div>
         </Reveal>
@@ -624,7 +624,7 @@ function Footer() {
           <div className="col-span-12 md:col-span-5">
             <div className="font-display text-5xl md:text-7xl">
               Creative<br />
-              <span className="italic text-cream/60">Granite + Design</span>
+              <span className="italic text-cream/60">Granite <span style={{ fontFamily: "sans-serif" }}>+</span> Design</span>
             </div>
             <p className="mt-6 max-w-sm text-cream/60">
               Fabricated with precision, installed with intention. Serving utah, idaho and wyoming since 2002.
@@ -634,14 +634,14 @@ function Footer() {
             <div className="eyebrow text-cream/50">Navigate</div>
             <ul className="mt-6 space-y-3">
               {["Work", "Materials", "Services", "Process", "Remnants"].map((l) => (
-                <li key={l}><a href={`#${l.toLowerCase()}`} className="link-underline text-cream/85">{l}</a></li>
+                <li key={l}><a href={`#`} className="link-underline text-cream/85">{l}</a></li>
               ))}
             </ul>
           </div>
           <div className="col-span-6 md:col-span-2">
             <div className="eyebrow text-cream/50">Connect</div>
             <ul className="mt-6 space-y-3">
-              <li><a href="https://www.instagram.com/creativegraniteanddesign/" className="link-underline text-cream/85">Instagram</a></li>
+              <li><a href="#" className="link-underline text-cream/85">Instagram</a></li>
               <li><a href="#" className="link-underline text-cream/85">Pinterest</a></li>
               <li><a href="#" className="link-underline text-cream/85">Houzz</a></li>
             </ul>
@@ -650,15 +650,15 @@ function Footer() {
             <div className="eyebrow text-cream/50">Visit</div>
             <div className="mt-6 space-y-1 text-cream/85">
               <div>1998 n redwood rd</div>
-              <div>Salt lake city, ut 84116</div>
-              <div className="mt-4"><a href="tel:8015745477" className="link-underline">(801) 574-5477</a></div>
-              <div><a href="mailto:info@creativegranite.com" className="link-underline">info@creativegranite.com</a></div>
+              <div>Salt lake city, ut 8<span style={{ fontFamily: "sans-serif" }}>4</span>116</div>
+              <div className="mt-4"><a href="tel:8015745477" className="link-underline"><span style={{ fontFamily: "sans-serif" }}>(</span>801<span style={{ fontFamily: "sans-serif" }}>)</span> 57<span style={{ fontFamily: "sans-serif" }}>4-</span>5<span style={{ fontFamily: "sans-serif" }}>4</span>77</a></div>
+              <div><a href="mailto:info@creativegranite.com" className="link-underline">info<span style={{ fontFamily: "sans-serif" }}>@</span>creativegranite.com</a></div>
             </div>
           </div>
         </div>
 
         <div className="flex flex-wrap items-center justify-between gap-4 py-8 text-xs text-cream/50">
-          <div>© {new Date().getFullYear()} Creative granite & design. All rights reserved.</div>
+          <div>© {new Date().getFullYear()} Creative granite <span style={{ fontFamily: "sans-serif" }}>&</span> design. All rights reserved.</div>
           <div className="font-mono tracking-widest">Built with intention.</div>
         </div>
       </div>

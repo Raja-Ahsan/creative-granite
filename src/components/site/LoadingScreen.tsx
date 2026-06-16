@@ -57,7 +57,7 @@ export function LoadingScreen({ onDone }: { onDone?: () => void }) {
           fontSize: "clamp(0.9rem, 1.8vw, 1.6rem)",
         }}
       >
-        CREATIVE GRANITE + DESIGN
+        CREATIVE GRANITE <span style={{ fontFamily: "sans-serif" }}>+</span> DESIGN
       </div>
 
       <style>{`
