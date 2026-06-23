@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { GraniteBlade } from "@/components/site/GraniteBlade";
 
 export function LoadingScreen({ onDone }: { onDone?: () => void }) {
   const [hide, setHide] = useState(false);
@@ -9,11 +10,15 @@ export function LoadingScreen({ onDone }: { onDone?: () => void }) {
 
   useEffect(() => {
     if (!mounted) return;
-    const t1 = window.setTimeout(() => setFade(true), 4300);
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const fadeAt = reducedMotion ? 400 : 2800;
+    const hideAt = reducedMotion ? 700 : 3500;
+
+    const t1 = window.setTimeout(() => setFade(true), fadeAt);
     const t2 = window.setTimeout(() => {
       setHide(true);
       onDone?.();
-    }, 5000);
+    }, hideAt);
     return () => {
       window.clearTimeout(t1);
       window.clearTimeout(t2);
@@ -24,72 +29,38 @@ export function LoadingScreen({ onDone }: { onDone?: () => void }) {
 
   return (
     <div
-      className={`fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-ink text-white transition-opacity duration-700 ${
+      className={`fixed inset-0 z-[9999] flex items-center justify-center bg-ink transition-opacity duration-700 ${
         fade ? "opacity-0" : "opacity-100"
       }`}
       aria-hidden="true"
     >
-      <div
-        className="flex items-end justify-center ls-logo leading-none"
-        style={{
-          fontFamily: "Luxerie, serif",
-          fontSize: "clamp(5rem, 16vw, 13rem)",
-          color: "#ffffff",
-        }}
-      >
-        <span className="ls-letter ls-c inline-block">C</span>
-        <span className="ls-letter ls-g inline-block">G</span>
-        <span
-          className="ls-letter ls-plus inline-block text-center"
-          style={{ fontSize: "0.7em", margin: "0 0.05em 0.15em", transform: "translateY(-0.55em)" }}
-        >
-          +
-        </span>
-        <span className="ls-letter ls-d inline-block">D</span>
-      </div>
-      <div
-        className="ls-tagline mt-8"
-        style={{
-          fontFamily: '"Biondi Sans", sans-serif',
-          fontWeight: 400,
-          color: "#ffffff",
-          letterSpacing: "0.25em",
-          fontSize: "clamp(0.9rem, 1.8vw, 1.6rem)",
-        }}
-      >
-        CREATIVE GRANITE <span style={{ fontFamily: "sans-serif" }}>+</span> DESIGN
+      <div className="ls-blade relative flex items-center justify-center">
+        <div className="ls-blade-glow pointer-events-none absolute inset-0 rounded-full bg-white/10 blur-3xl" />
+        <GraniteBlade className="ls-blade-spin relative h-[clamp(7rem,28vw,14rem)] w-[clamp(7rem,28vw,14rem)]" />
       </div>
 
       <style>{`
-        @keyframes ls-slide-left {
-          0% { opacity: 0; transform: translateX(-120%); }
-          100% { opacity: 1; transform: translateX(0); }
+        @keyframes ls-blade-swirl {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
         }
-        @keyframes ls-slide-right {
-          0% { opacity: 0; transform: translateX(120%); }
-          100% { opacity: 1; transform: translateX(0); }
-        }
-        @keyframes ls-flip-up {
-          0% { opacity: 0; transform: translateY(120%) rotate(180deg); }
-          55% { opacity: 1; transform: translateY(0) rotate(180deg); }
-          100% { opacity: 1; transform: translateY(0) rotate(0deg); }
-        }
-        @keyframes ls-pop {
-          0% { opacity: 0; transform: scale(0.2); }
-          70% { opacity: 1; transform: scale(1.15); }
+        @keyframes ls-blade-in {
+          0% { opacity: 0; transform: scale(0.5); }
           100% { opacity: 1; transform: scale(1); }
         }
-        @keyframes ls-fade-up {
-          0% { opacity: 0; transform: translateY(12px); }
-          100% { opacity: 1; transform: translateY(0); }
+
+        .ls-blade { animation: ls-blade-in 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
+        .ls-blade-spin {
+          animation: ls-blade-swirl 1.2s linear infinite;
+          transform-origin: center center;
+          will-change: transform;
         }
-        /* images are already pure white on transparent bg, no filter needed */
-        .ls-letter { opacity: 0; will-change: transform, opacity; }
-        .ls-c { animation: ls-slide-left 0.9s cubic-bezier(0.2,0.8,0.2,1) 0.1s forwards; }
-        .ls-g { animation: ls-flip-up 1.3s cubic-bezier(0.2,0.8,0.2,1) 0.9s forwards; transform-origin: center; }
-        .ls-plus { animation: ls-pop 0.6s cubic-bezier(0.2,0.8,0.2,1) 2.05s forwards; }
-        .ls-d { animation: ls-slide-right 0.9s cubic-bezier(0.2,0.8,0.2,1) 2.4s forwards; }
-        .ls-tagline { opacity: 0; animation: ls-fade-up 0.9s ease-out 3s forwards; }
+        .ls-blade-glow { animation: ls-blade-in 0.6s ease-out forwards; opacity: 0; }
+
+        @media (prefers-reduced-motion: reduce) {
+          .ls-blade, .ls-blade-glow { animation: none !important; opacity: 1 !important; transform: none !important; }
+          .ls-blade-spin { animation: ls-blade-swirl 2.5s linear infinite !important; }
+        }
       `}</style>
     </div>
   );

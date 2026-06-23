@@ -1,7 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import logo from "@/assets/logo-cgd.png";
-import aboutStoneBath from "@/assets/about-stone-bath.jpg";
+import logo from "@/assets/new-logo.png";
+import aboutStoneBath from "@/assets/LakeLine-20.jpeg";
+import slider1 from "@/assets/slider1.jpg";
+import slider2 from "@/assets/slider2.jpg";
+import slider3 from "@/assets/slider3.jpg";
 import { Reveal } from "@/components/site/Reveal";
 import { CustomCursor } from "@/components/site/CustomCursor";
 import { LoadingScreen } from "@/components/site/LoadingScreen";
@@ -9,6 +12,12 @@ import { LoadingScreen } from "@/components/site/LoadingScreen";
 export const Route = createFileRoute("/")({
   component: Index,
 });
+
+const heroSlides = [
+  { src: slider1, alt: "Luxury kitchen with marble countertops and stone backsplash" },
+  { src: slider2, alt: "Bright modern kitchen with white stone island" },
+  { src: slider3, alt: "Double-island kitchen with sage cabinetry and stone surfaces" },
+];
 
 const portfolio = [
   { src: "/portfolio/DSC_4182_1.jpeg", title: "Carrara Island", tag: "Marble · Salt Lake" },
@@ -25,17 +34,33 @@ const portfolio = [
 ];
 
 const materials = [
-  { name: "Granite", desc: "Durable natural stone known for its strength and variation. A reliable choice for kitchens and high-use surfaces.", image: "/materials/granite.png" },
-  { name: "Quartz", desc: "Engineered surface designed for consistency and low maintenance, offering a wide range of colors and styles.", image: "/materials/quartz.png" },
-  { name: "Marble", desc: "Natural stone known for soft movement and timeless appeal, often used in bathrooms and feature areas." },
-  { name: "Quartzite", desc: "Natural stone valued for durability and distinctive movement, ideal for kitchens and high traffic spaces." },
+  {
+    name: "Granite",
+    desc: "A durable natural stone known for its strength and variation. A reliable choice for kitchens and high-use surfaces.",
+    image: "/materials/granite.png",
+  },
+  {
+    name: "Quartz",
+    desc: "An engineered surface designed for consistency and low maintenance, offering a wide range of colors and styles.",
+    image: "/materials/quartz.png",
+  },
+  {
+    name: "Marble",
+    desc: "A natural stone known for soft movement and timeless appeal, often used in bathrooms and feature areas.",
+    image: "/materials/marble.jpg",
+  },
+  {
+    name: "Quartzite",
+    desc: "A natural stone valued for durability and distinctive movement, ideal for kitchens and high-traffic spaces.",
+    image: "/materials/quartzite.jpg",
+  },
 ];
 
 const services = [
-  { title: "Builder & Designer", body: "Collaborative work on custom homes and design-driven spaces, with a focus on precision and coordination." },
-  { title: "New Construction", body: "Streamlined fabrication and dependable scheduling for residential developments across the wasatch front." },
-  { title: "Multifamily & Commercial", body: "Large-scale fabrication for apartments, condos and commercial projects—built for consistency and efficiency." },
-  { title: "Remodel & Renovation", body: "Replacement countertops, vanities and fireplaces shaped to existing architecture without compromise." },
+  { title: "New Construction", body: "Stone fabrication for new builds, working closely with builders, designers, andproject teams to ensure accuracy, efficiency, and consistency from planning through installation." },
+  { title: "Remodel & Renovation", body: "Custom stone surfaces for kitchen, bathroom, and interior remodels focused on thoughtful material selection and clean execution." },
+  { title: "Multifamily & Commercial", body: "Custom stone fabrication for multifamily and commercial projects, supporting developers, contractors, and project teams with efficient xecution, consistent quality, and dependable delivery." },
+  
 ];
 
 const process = [
@@ -45,7 +70,15 @@ const process = [
   { n: "04", t: "Fabrication & Install", d: "Hand finished edges, sealed surfaces, and a clean, on schedule installation." },
 ];
 
-function SplitText({ text, className = "" }: { text: string; className?: string }) {
+function SplitText({
+  text,
+  className = "",
+  wrap = false,
+}: {
+  text: string;
+  className?: string;
+  wrap?: boolean;
+}) {
   const ref = useRef<HTMLSpanElement>(null);
   const [seen, setSeen] = useState(false);
   useEffect(() => {
@@ -65,9 +98,12 @@ function SplitText({ text, className = "" }: { text: string; className?: string 
     return () => io.disconnect();
   }, []);
   return (
-    <span ref={ref} className={`split-line inline-block overflow-hidden align-baseline ${seen ? "in text-8xl font-normal" : ""} ${className}`}>
+    <span ref={ref} className={`split-line inline-block overflow-hidden align-baseline ${seen ? "in" : ""} ${className}`}>
       {text.split(" ").map((word, wi) => (
-        <span key={wi} className="inline-block overflow-hidden whitespace-nowrap pr-[0.25em] align-baseline py-[10px]">
+        <span
+          key={wi}
+          className={`inline-block overflow-hidden align-baseline py-[0.15em] ${wrap ? "pr-[0.2em]" : "whitespace-nowrap pr-[0.25em]"}`}
+        >
           {word.split("").map((c, ci) => (
             <span
               key={ci}
@@ -94,21 +130,21 @@ function Header() {
   }, []);
   const nav = [
     ["Work", "#work"],
-    ["Materials", "#materials"],
+    ["Products", "#products"],
     ["Services", "#services"],
     ["Process", "#process"],
-    ["Remnants", "#remnants"],
+    ["Get an Estimate", "#estimate"],
     ["Contact", "#contact"],
   ] as const;
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
-        scrolled ? "bg-ink/95 backdrop-blur-md border-b border-cream/10" : "bg-ink/70 backdrop-blur-sm"
+        scrolled ? "bg-ink-soft/90 backdrop-blur-md border-b border-cream/15" : "bg-ink-soft/55 backdrop-blur-sm"
       } text-cream`}
     >
       <div className="mx-auto flex max-w-[1400px] items-center justify-between px-6 py-5 md:px-10">
         <a href="#top" className="flex items-center gap-3" data-cursor="home">
-          <img src={logo} alt="Creative Granite & Design" className="h-24 w-auto object-contain md:h-32" />
+          <img src={logo} alt="Creative Granite & Designsss" className="h-24 w-auto object-contain md:h-32 max-w-[300px]" />
         </a>
         <nav className="hidden items-center gap-8 md:flex">
           {nav.map(([l, h]) => (
@@ -160,6 +196,49 @@ function Header() {
   );
 }
 
+function HeroSlider({ y }: { y: number }) {
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    const interval = window.setInterval(
+      () => setActive((i) => (i + 1) % heroSlides.length),
+      5500,
+    );
+    return () => window.clearInterval(interval);
+  }, []);
+
+  return (
+    <>
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{ transform: `translateY(${y * 0.15}px) scale(1.05)` }}
+      >
+        {heroSlides.map((slide, i) => (
+          <img
+            key={slide.src}
+            src={slide.src}
+            alt={slide.alt}
+            className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-[1600ms] ease-in-out ${
+              i === active ? "opacity-80" : "opacity-0"
+            }`}
+          />
+        ))}
+      </div>
+
+      <div className="pointer-events-none absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 gap-2.5 md:bottom-10">
+        {heroSlides.map((_, i) => (
+          <span
+            key={i}
+            className={`h-1 rounded-full transition-all duration-500 ${
+              i === active ? "w-8 bg-cream" : "w-1 bg-cream/40"
+            }`}
+          />
+        ))}
+      </div>
+    </>
+  );
+}
+
 function Hero() {
   const ref = useRef<HTMLDivElement>(null);
   const [y, setY] = useState(0);
@@ -175,19 +254,10 @@ function Hero() {
   }, []);
   return (
     <section ref={ref} id="top" className="relative min-h-[100svh] overflow-hidden bg-ink pt-32 text-cream md:pt-40">
-      {/* Hero background video — sits behind the headline */}
-      <video
-        src="/hero.mp4"
-        autoPlay
-        loop
-        muted
-        playsInline
-        preload="auto"
-        className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-70"
-        style={{ transform: `translateY(${y * 0.15}px) scale(1.05)` }}
-      />
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-ink/40 via-ink/20 to-ink/85" />
-      <div className="pointer-events-none absolute inset-0 noise-overlay opacity-40" />
+      <HeroSlider y={y} />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-ink/80 via-ink/45 to-ink/20" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/95 via-ink/30 to-ink/25" />
+      <div className="pointer-events-none absolute inset-0 noise-overlay opacity-30" />
       <div
         className="pointer-events-none absolute -right-32 -top-32 h-[600px] w-[600px] rounded-full opacity-30 blur-3xl"
         style={{ background: "radial-gradient(circle, rgba(170,130,80,0.5), transparent 70%)", transform: `translateY(${y * 0.6}px)` }}
@@ -197,22 +267,25 @@ function Hero() {
         style={{ background: "radial-gradient(circle, rgba(60,40,20,0.6), transparent 70%)", transform: `translateY(${y * -0.4}px)` }}
       />
 
-      <div className="relative grid max-w-[1400px] grid-cols-12 gap-6 self-end pl-6 pr-6 md:absolute md:bottom-10 md:left-10 md:right-auto md:pl-0 md:pr-0">
-        <div className="col-span-12 flex items-center gap-3 md:col-span-6">
+      <div className="relative z-10 grid max-w-[1400px] grid-cols-12 gap-6 self-end px-6 pb-20 md:absolute md:bottom-12 md:left-10 md:right-10 md:px-0 md:pb-0 lg:right-auto">
+        <div className="col-span-12 flex items-center gap-3 md:col-span-8">
           <span className="h-px w-12 bg-cream/50" />
           <span className="eyebrow text-cream/70 tracking-[0.2em]">Welcome to creative granite &amp; design</span>
         </div>
 
-        <h1 className="col-span-12 mt-6 font-display leading-[0.95] tracking-[-0.03em]">
-          <span className="block text-4xl md:text-5xl lg:text-6xl">
-            <SplitText text="Countertops, Vanities," />
-            <br />
-            <SplitText text="Fireplaces & More" />
+        <h1 className="col-span-12 mt-5 w-full font-display leading-none tracking-[-0.02em]">
+          <span className="block whitespace-nowrap text-[clamp(1.15rem,3.25vw,3.75rem)] uppercase">
+            <SplitText text="Crafting Custom Stone for Inspired Spaces" />
           </span>
-          <span className="mt-4 block text-2xl italic text-cream/85 md:text-3xl lg:text-4xl"></span>
+          <Reveal
+            delay={450}
+            className="mt-5 block whitespace-nowrap font-sans text-[clamp(0.65rem,1.2vw,1.125rem)] font-normal uppercase leading-none tracking-[0.18em] text-cream/80 md:mt-6"
+          >
+            Serving homeowners, builders, and multifamily projects across Utah
+          </Reveal>
         </h1>
 
-        <div className="col-span-12 mt-10 grid grid-cols-12 gap-6 md:mt-16">
+        <div className="col-span-12 mt-8 grid grid-cols-12 gap-6 md:mt-12">
           <Reveal delay={400} className="col-span-12 md:col-span-5 md:col-start-1">
             <p className="text-base leading-relaxed text-cream/80 md:text-lg">
               Premium granite, quartz, marble and quartzite. Hand fabricated in Utah for builders, designers and homeowners who care about the details no one is supposed to notice.
@@ -236,23 +309,6 @@ function Hero() {
   );
 }
 
-function Marquee() {
-  const items = ["Kitchen islands", "Vanities", "Fireplaces", "Commercial", "Countertops", "Outdoor", "Backsplashes", "Multi-family", "Tabletops"];
-  const row = [...items, ...items];
-  return (
-    <section className="relative overflow-hidden border-y border-foreground/10 bg-ink py-6 text-cream">
-      <div className="flex w-max gap-16 whitespace-nowrap marquee-track">
-        {row.map((s, i) => (
-          <span key={i} className="flex items-center gap-16 font-display text-3xl md:text-5xl">
-            {s}
-            <span className="text-accent">✦</span>
-          </span>
-        ))}
-      </div>
-    </section>
-  );
-}
-
 function WhoWeAre() {
   return (
     <section className="relative mx-auto max-w-[1400px] px-6 py-28 md:px-10 md:py-40">
@@ -262,12 +318,12 @@ function WhoWeAre() {
             <span className="eyebrow">Who we are</span>
         </div>
       </Reveal>
-      <h2 className="mt-8 max-w-5xl font-display text-5xl leading-[1.02] md:text-7xl lg:text-[6.5rem]">
-        <SplitText text="Precision fabrication." />
-        <br />
-        <span className="italic text-foreground/80"><SplitText text="Thoughtful design." /></span>
-      </h2>
-      <div className="mt-16 grid grid-cols-12 gap-6 md:gap-10 items-center">
+      <Reveal delay={100}>
+        <p className="mt-8 font-display text-lg italic text-foreground/50 md:text-xl">
+          Built on craftsmanship since 1998
+        </p>
+      </Reveal>
+      <div className="mt-12 grid grid-cols-12 gap-6 md:mt-16 md:gap-10 items-center">
         <Reveal delay={100} className="col-span-12 md:col-span-6 group">
           <div className="relative overflow-hidden aspect-[4/5] md:aspect-[5/6]">
             <img
@@ -280,7 +336,8 @@ function WhoWeAre() {
         </Reveal>
         <Reveal delay={300} className="col-span-12 md:col-span-5 md:col-start-8">
           <p className="text-lg leading-relaxed text-foreground/75">
-            For two decades, Creative Granite <span style={{ fontFamily: "sans-serif" }}>+</span> Design has shaped natural stone for the homes, hotels and gathering places of the Wasatch Front. Five installation crews, one obsession — surfaces that quietly anchor the rooms they live in.
+            Creative Granite <span style={{ fontFamily: "sans-serif" }}>+</span> Design is a Utah<span style={{ fontFamily: "sans-serif" }}>-</span>based stone fabrication company specializing in custom countertops and architectural
+surfaces. We partner with homeowners, builders, and designers to deliver precise fabrication, thoughtful material selection, and high-quality installation across residential and multifamily residential projects in Utah, Idaho, and Wyoming.
           </p>
         </Reveal>
       </div>
@@ -323,51 +380,40 @@ function Materials() {
               key={m.name}
               onMouseEnter={() => setActive(i)}
               data-cursor="select"
-              className={`group relative cursor-pointer bg-cream p-8 md:p-12 ${
-                active === i && !m.image ? "bg-foreground text-cream" : ""
-              } ${m.image ? "[perspective:1400px]" : "overflow-hidden transition-all duration-700"}`}
+              className={`group relative flex cursor-pointer flex-col overflow-hidden bg-cream p-8 transition-colors duration-700 md:p-12 ${
+                active === i ? "bg-foreground text-cream" : ""
+              }`}
             >
-              {m.image ? (
-                <div className="relative h-full min-h-[360px] w-full transition-transform duration-[900ms] [transform-style:preserve-3d] ease-[cubic-bezier(0.2,0.8,0.2,1)] group-hover:[transform:rotateY(180deg)]">
-                  <div className="absolute inset-0 flex flex-col [backface-visibility:hidden]">
-                    <div className="flex items-start justify-between">
-                      <span className="font-mono text-xs opacity-60">0{i + 1}</span>
-                      <span className={`h-2 w-2 rounded-full transition-all duration-500 ${active === i ? "bg-accent scale-150" : "bg-foreground/30"}`} />
-                    </div>
-                    <h3 className="mt-12 font-display text-5xl md:text-6xl">{m.name}</h3>
-                    <p className="mt-6 max-w-md text-sm leading-relaxed opacity-70">{m.desc}</p>
-                    <div className="mt-auto flex items-center justify-between border-t border-current/20 pt-6 opacity-70">
-                      <span className="eyebrow">Explore</span>
-                      <span className="text-xl">→</span>
-                    </div>
-                  </div>
-                  <div
-                    className="absolute inset-0 overflow-hidden bg-cover bg-center [backface-visibility:hidden] [transform:rotateY(180deg)]"
-                    style={{ backgroundImage: `url(${m.image})` }}
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-                    <div className="relative flex h-full flex-col p-2 text-cream">
-                      <span className="font-mono text-xs opacity-80">0{i + 1}</span>
-                      <h3 className="mt-auto font-display text-5xl md:text-6xl [text-shadow:0_2px_18px_rgba(0,0,0,0.7)]">{m.name}</h3>
-                    </div>
-                  </div>
+              <div className="img-zoom relative mb-8 aspect-[4/3] w-full overflow-hidden rounded-sm">
+                <img
+                  src={m.image}
+                  alt={`${m.name} surface`}
+                  loading="lazy"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+              <div className="flex flex-1 flex-col">
+                <div className="flex items-start justify-between">
+                  <span className="font-mono text-xs opacity-60">0{i + 1}</span>
+                  <span
+                    className={`h-2 w-2 rounded-full transition-all duration-500 ${
+                      active === i ? "bg-accent scale-150" : "bg-foreground/30"
+                    }`}
+                  />
                 </div>
-              ) : (
-                <>
-                  <div className="flex items-start justify-between">
-                    <span className="font-mono text-xs opacity-60">0{i + 1}</span>
-                    <span className={`h-2 w-2 rounded-full transition-all duration-500 ${active === i ? "bg-accent scale-150" : "bg-foreground/30"}`} />
-                  </div>
-                  <h3 className="mt-12 font-display text-5xl md:text-6xl">{m.name}</h3>
-                  <p className={`mt-6 max-w-md text-sm leading-relaxed transition-opacity ${active === i ? "opacity-90" : "opacity-70"}`}>
-                    {m.desc}
-                  </p>
-                  <div className="mt-10 flex items-center justify-between border-t border-current/20 pt-6 opacity-70">
-                    <span className="eyebrow">Explore</span>
-                    <span className="text-xl transition-transform duration-500 group-hover:translate-x-2">→</span>
-                  </div>
-                </>
-              )}
+                <h3 className="mt-6 font-display text-5xl md:text-6xl">{m.name}</h3>
+                <p
+                  className={`mt-6 max-w-md text-sm leading-relaxed transition-opacity ${
+                    active === i ? "opacity-90" : "opacity-70"
+                  }`}
+                >
+                  {m.desc}
+                </p>
+                <div className="mt-10 flex items-center justify-between border-t border-current/20 pt-6 opacity-70">
+                  <span className="eyebrow">Explore</span>
+                  <span className="text-xl transition-transform duration-500 group-hover:translate-x-2">→</span>
+                </div>
+              </div>
             </div>
           ))}
         </div>
@@ -387,13 +433,14 @@ function Work() {
             <span className="eyebrow">Our work</span>
             </div>
             <h2 className="mt-6 max-w-3xl font-display text-5xl leading-[1.02] md:text-7xl">
-              Completed spaces, <br />
-              <span className="italic">seen up close.</span>
+            Fabricated with precision, <br />
+              <span className="italic">installed with intention.</span>
             </h2>
           </Reveal>
           <Reveal delay={200}>
             <p className="max-w-sm text-foreground/70">
-              A selection of completed spaces, material details, and in<span style={{ fontFamily: "sans-serif" }}>-</span>between moments each reflecting our approach to stone, design, and execution.
+            A selection of completed spaces, material details, and in<span style={{ fontFamily: "sans-serif" }}>-</span>between
+            moments<span style={{ fontFamily: "sans-serif" }}>-</span>each reflecting our approach to stone, design, and execution.
             </p>
           </Reveal>
         </div>
@@ -673,7 +720,6 @@ function Index() {
       <CustomCursor />
       <Header />
       <Hero />
-      <Marquee />
       <WhoWeAre />
       <Materials />
       <Work />
