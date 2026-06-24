@@ -94,7 +94,7 @@
 
 @layer base {
   * { border-color: var(--color-border); }
-  html, body { background: var(--color-background); color: var(--color-foreground); }
+  html, body { background: var(--color-background); color: var(--color-foreground); overflow-x: clip; }
   body { font-family: var(--font-sans); font-weight: 300; -webkit-font-smoothing: antialiased; }
   ::selection { background: var(--color-ink); color: var(--color-cream); }
 }
