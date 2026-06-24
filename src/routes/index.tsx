@@ -335,7 +335,7 @@ function WhoWeAre() {
         </div>
       </Reveal>
       <Reveal delay={100} className="overflow-visible">
-        <p className="mt-4 font-display text-[20px] italic text-foreground/50 md:mt-5 md:text-[25px]">
+        <p className="mt-4 font-display text-[20px] italic text-[#021E44] md:mt-5 md:text-[25px]">
           Built on craftsmanship since{" "}
           <span className="font-sans not-italic">1998</span>
         </p>
@@ -384,7 +384,7 @@ function Materials() {
               <span className="h-px w-12 bg-foreground/40" />
               <span className="eyebrow">Materials</span>
             </div>
-            <h2 className="mt-6 max-w-3xl font-display text-5xl leading-[1.02] md:text-7xl">
+            <h2 className="mt-6 max-w-3xl font-display text-[#021E44] text-5xl leading-[1.02] md:text-7xl">
               The slab decides <span className="italic">everything.</span>
             </h2>
           </Reveal>
@@ -453,7 +453,7 @@ function Work() {
               <span className="h-px w-12 bg-foreground/40" />
             <span className="eyebrow">Our work</span>
             </div>
-            <h2 className="mt-6 max-w-3xl font-display text-5xl leading-[1.02] md:text-7xl">
+            <h2 className="mt-6 max-w-3xl font-display text-[#021E44] text-5xl leading-[1.02] md:text-7xl">
             Fabricated with precision, <br />
               <span className="italic">installed with intention.</span>
             </h2>
@@ -471,7 +471,7 @@ function Work() {
             const [category, location] = p.tag.split("·").map((s) => s.trim());
             return (
               <Reveal key={i} delay={(i % 3) * 120} className="h-full">
-                <div className="img-zoom group relative aspect-[4/3] h-full w-full overflow-hidden rounded-none bg-bone" data-cursor="view">
+                <div className="img-zoom group relative aspect-[4/3] h-[200px] w-full overflow-hidden rounded-none bg-bone md:h-full" data-cursor="view">
                   <img
                     src={p.src}
                     alt={p.title}
@@ -515,7 +515,7 @@ function InstagramSection() {
               <span className="h-px w-12 bg-foreground/40" />
               <span className="eyebrow">Instagram</span>
             </div>
-            <h2 className="mt-6 max-w-3xl font-display text-5xl leading-[1.02] md:text-7xl">
+            <h2 className="mt-6 max-w-3xl font-display  text-[#021E44] text-5xl leading-[1.02] md:text-7xl">
               Follow our <span className="italic">work.</span>
             </h2>
           </Reveal>
