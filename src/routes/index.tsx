@@ -35,6 +35,8 @@ const portfolio = [
 ];
 
 const INSTAGRAM_URL = "#";
+const SHOWROOM_MAPS_URL =
+  "https://www.google.com/maps/place/1998+N+Redwood+Rd,+Salt+Lake+City,+UT+84116,+USA/@40.8115045,-111.9402546,16.96z/data=!4m6!3m5!1s0x8752f6bad3a740e7:0x54da835cc07f3b51!8m2!3d40.8115002!4d-111.9376702!16s%2Fg%2F11c1zjtg8r?entry=ttu&g_ep=EgoyMDI2MDYyMy4wIKXMDSoASAFQAw%3D%3D";
 
 const instagramPosts = [
   { src: "/portfolio/DSC_4076.jpg", alt: "Marble kitchen countertop installation in Park City" },
@@ -82,14 +84,26 @@ const process = [
   { n: "04", t: "Fabrication & Install", d: "Hand finished edges, sealed surfaces, and a clean, on schedule installation." },
 ];
 
+const sectionHeading =
+  "font-display text-[clamp(1.75rem,4.5vw,3.75rem)] uppercase leading-[0.92] tracking-[-0.02em]";
+const sectionHeadingLight = `${sectionHeading} text-[#021E44]`;
+const sectionHeadingDark = `${sectionHeading} text-cream`;
+
+const bodyCopy =
+  "font-sans text-sm uppercase leading-[1.85] tracking-[0.12em] md:text-base";
+const bodyCopyLight = `${bodyCopy} text-foreground/75`;
+const bodyCopyDark = `${bodyCopy} text-cream/75`;
+
 function SplitText({
   text,
   className = "",
   wrap = false,
+  dense = false,
 }: {
   text: string;
   className?: string;
   wrap?: boolean;
+  dense?: boolean;
 }) {
   const ref = useRef<HTMLSpanElement>(null);
   const [seen, setSeen] = useState(false);
@@ -114,7 +128,7 @@ function SplitText({
       {text.split(" ").map((word, wi) => (
         <span
           key={wi}
-          className={`inline-block overflow-hidden align-baseline py-[0.15em] ${wrap ? "pr-[0.2em]" : "whitespace-nowrap pr-[0.25em]"}`}
+          className={`inline-block overflow-hidden align-baseline ${dense ? "py-0" : "py-[0.15em]"} ${wrap ? "pr-[0.2em]" : "whitespace-nowrap pr-[0.25em]"}`}
         >
           {word.split("").map((c, ci) => (
             <span
@@ -140,47 +154,73 @@ function Header() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-  const nav = [
+  const navLeft = [
     ["Work", "#work"],
     ["Products", "#products"],
     ["Services", "#services"],
+  ] as const;
+
+  const navRight = [
     ["Process", "#process"],
-    ["Get an Estimate", "#estimate"],
     ["Contact", "#contact"],
   ] as const;
+
+  const navMobile = [...navLeft, ...navRight] as const;
+
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 overflow-x-clip transition-all duration-500 ${
-        scrolled ? "bg-ink-soft/90 backdrop-blur-md border-b border-cream/15" : "bg-ink-soft/55 backdrop-blur-sm"
+      className={`sticky top-0 z-50 overflow-x-clip bg-ink transition-all duration-500 ${
+        scrolled ? "border-b border-cream/15" : ""
       } text-cream`}
     >
-      <div className="mx-auto flex min-w-0 max-w-[1400px] items-center justify-between gap-2 px-4 py-3 sm:gap-3 sm:px-6 sm:py-5 md:px-10">
-        <a href="#top" className="min-w-0 flex-1 overflow-hidden" data-cursor="home">
-          <img
-            src={logo}
-            alt="Creative Granite & Designsss"
-            className="block h-11 w-auto max-w-full object-contain object-left sm:h-16 md:h-24 lg:h-32"
-          />
-        </a>
-        <nav className="hidden items-center gap-8 md:flex">
-          {nav.map(([l, h]) => (
-            <a key={l} href="#" className="link-underline text-sm font-medium text-cream/80 hover:text-cream">
+      {/* Desktop — logo center, nav split left / right */}
+      <div className="mx-auto hidden max-w-[1400px] grid-cols-3 items-center px-6 py-4 md:grid md:px-10 md:py-5">
+        <nav className="flex items-center gap-6 lg:gap-8">
+          {navLeft.map(([l, h]) => (
+            <a key={l} href={h} className="link-underline text-sm font-medium text-cream/80 hover:text-cream">
               {l}
             </a>
           ))}
         </nav>
-        <a
-          href="#"
-          data-cursor="estimate"
-          className="btn-magnetic btn-magnetic-inverse group hidden items-center gap-2 rounded-full border border-cream px-5 py-2.5 text-xs font-medium tracking-[0.18em] text-cream md:inline-flex"
-        >
-          <span>Get an estimate</span>
-          <span className="relative z-[2] inline-block transition-transform group-hover:translate-x-1">→</span>
+
+        <a href="#top" className="flex justify-center" data-cursor="home">
+          <img
+            src={logo}
+            alt="Creative Granite & Design"
+            className="h-14 w-auto max-w-[240px] object-contain lg:h-[4.5rem]"
+          />
+        </a>
+
+        <div className="flex items-center justify-end gap-6 lg:gap-8">
+          {navRight.map(([l, h]) => (
+            <a key={l} href={h} className="link-underline text-sm font-medium text-cream/80 hover:text-cream">
+              {l}
+            </a>
+          ))}
+          <a
+            href="#contact"
+            data-cursor="estimate"
+            className="btn-magnetic btn-magnetic-inverse group inline-flex shrink-0 items-center gap-2 rounded-full border border-cream px-5 py-2.5 text-xs font-medium tracking-[0.18em] text-cream"
+          >
+            <span>Get an estimate</span>
+            <span className="relative z-[2] inline-block transition-transform group-hover:translate-x-1">→</span>
+          </a>
+        </div>
+      </div>
+
+      {/* Mobile — logo left, hamburger right */}
+      <div className="mx-auto flex min-w-0 max-w-[1400px] items-center justify-between gap-2 px-4 py-3 md:hidden">
+        <a href="#top" className="min-w-0 flex-1 overflow-hidden" data-cursor="home">
+          <img
+            src={logo}
+            alt="Creative Granite & Design"
+            className="block h-11 w-auto max-w-full object-contain object-left sm:h-14"
+          />
         </a>
         <button
           aria-label="Menu"
           onClick={() => setOpen((v) => !v)}
-          className="flex h-10 w-10 shrink-0 items-center justify-center md:hidden"
+          className="flex h-10 w-10 shrink-0 items-center justify-center"
         >
           <div className="flex flex-col gap-1.5">
             <span className={`block h-px w-6 bg-cream transition-transform ${open ? "translate-y-[6px] rotate-45" : ""}`} />
@@ -189,10 +229,11 @@ function Header() {
           </div>
         </button>
       </div>
+
       {open && (
         <div className="border-t border-cream/10 bg-ink md:hidden">
           <div className="flex flex-col px-6 py-6">
-            {nav.map(([l, h]) => (
+            {navMobile.map(([l, h]) => (
               <a
                 key={l}
                 href={h}
@@ -202,7 +243,7 @@ function Header() {
                 {l}
               </a>
             ))}
-            <a href="#" onClick={() => setOpen(false)} className="mt-6 rounded-full bg-cream py-4 text-center text-sm tracking-widest text-ink">
+            <a href="#contact" onClick={() => setOpen(false)} className="mt-6 rounded-full bg-cream py-4 text-center text-sm tracking-widest text-ink">
               Get an estimate
             </a>
           </div>
@@ -234,7 +275,7 @@ function HeroSlider({ y }: { y: number }) {
             key={slide.src}
             src={slide.src}
             alt={slide.alt}
-            className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-[1600ms] ease-in-out ${
+            className={`absolute inset-0 h-full w-full  transition-opacity duration-[1600ms] ease-in-out ${
               i === active ? "opacity-80" : "opacity-0"
             }`}
           />
@@ -269,9 +310,9 @@ function Hero() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
   return (
-    <section ref={ref} id="top" className="relative min-h-[100svh] overflow-hidden bg-ink pt-32 text-cream md:pt-40">
+    <section ref={ref} id="top" className="relative min-h-[calc(100svh-4.25rem)] overflow-hidden bg-ink text-cream md:min-h-[calc(100svh-6.5rem)]">
       <HeroSlider y={y} />
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-ink/80 via-ink/45 to-ink/20" />
+      {/* <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-ink/80 via-ink/45 to-ink/20" />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/95 via-ink/30 to-ink/25" />
       <div className="pointer-events-none absolute inset-0 noise-overlay opacity-30" />
       <div
@@ -281,45 +322,51 @@ function Hero() {
       <div
         className="pointer-events-none absolute -bottom-40 -left-40 h-[700px] w-[700px] rounded-full opacity-25 blur-3xl"
         style={{ background: "radial-gradient(circle, rgba(60,40,20,0.6), transparent 70%)", transform: `translateY(${y * -0.4}px)` }}
-      />
+      /> */}
 
-      <div className="relative z-10 grid max-w-[1400px] grid-cols-12 gap-6 self-end px-6 pb-20 md:absolute md:bottom-12 md:left-10 md:right-10 md:px-0 md:pb-0 lg:right-auto">
-        <div className="col-span-12 flex items-center gap-3 md:col-span-8">
-          <span className="h-px w-12 bg-cream/50" />
-          <span className="eyebrow text-cream/70 tracking-[0.2em]">Welcome to creative granite &amp; design</span>
-        </div>
+    </section>
+  );
+}
 
-        <h1 className="col-span-12 mt-5 w-full font-display leading-none tracking-[-0.02em]">
-          <span className="block whitespace-nowrap text-[clamp(1.15rem,3.25vw,3.75rem)] uppercase">
-            <SplitText text="Crafting Custom Stone for Inspired Spaces" />
-          </span>
-          <Reveal
-            delay={450}
-            className="mt-5 block whitespace-nowrap font-sans text-[clamp(0.65rem,1.2vw,1.125rem)] font-normal uppercase leading-none tracking-[0.18em] text-cream/80 md:mt-6"
-          >
-            Serving homeowners, builders, and multifamily projects across Utah
-          </Reveal>
+function HeroIntro() {
+  return (
+    <section className="relative bg-cream px-6 py-10 text-center md:px-10 md:py-14">
+      <div className="mx-auto max-w-[920px]">
+        <Reveal>
+          <div className="flex items-center justify-center gap-3 text-foreground/60">
+            <span className="h-px w-12 bg-foreground/40" />
+            <span className="eyebrow tracking-[0.2em]">Welcome to creative granite and design</span>
+            <span className="h-px w-12 bg-foreground/40" />
+          </div>
+        </Reveal>
+
+        <h1 className={`mt-4 md:mt-5 ${sectionHeadingLight}`}>
+          <SplitText text="Crafting Custom Stone for Inspired Spaces" wrap dense />
         </h1>
 
-        <div className="col-span-12 mt-8 grid grid-cols-12 gap-6 md:mt-12">
-          <Reveal delay={400} className="col-span-12 md:col-span-5 md:col-start-1">
-            <p className="text-base leading-relaxed text-cream/80 md:text-lg">
-              Premium granite, quartz, marble and quartzite. Hand fabricated in Utah for builders, designers and homeowners who care about the details no one is supposed to notice.
-            </p>
-          </Reveal>
-          <Reveal delay={600} className="col-span-12 md:col-span-5 md:col-start-8 md:flex md:justify-end">
-            <div className="flex flex-col items-start gap-3 md:items-end">
-              <a href="#" data-cursor="explore" className="btn-magnetic btn-magnetic-inverse inline-flex items-center gap-3 rounded-full border border-cream px-7 py-3.5 text-xs font-medium tracking-[0.2em] text-cream">
-                <span>get an estimate</span>
-                <span className="relative z-[2]">→</span>
-              </a>
-              {/* <a href="#contact" className="link-underline text-xs font-medium tracking-[0.2em] text-cream/70">
-                Or — get an estimate
-              </a> */}
-            </div>
-          </Reveal>
-        </div>
+        <Reveal
+          delay={300}
+          className={`mt-4 ${bodyCopyLight}`}
+        >
+          Serving homeowners, builders, and multifamily projects across Utah
+        </Reveal>
 
+        <Reveal delay={400}>
+          <p className={`mx-auto mt-5 max-w-2xl md:mt-6 ${bodyCopyLight}`}>
+            Premium granite, quartz, marble and quartzite. Hand fabricated in Utah for builders, designers and homeowners who care about the details no one is supposed to notice.
+          </p>
+        </Reveal>
+
+        <Reveal delay={500} className="mt-7 flex justify-center md:mt-8">
+          <a
+            href="#contact"
+            data-cursor="estimate"
+            className="btn-magnetic inline-flex items-center gap-3 rounded-full border border-foreground bg-foreground px-8 py-4 text-xs font-medium tracking-[0.2em] text-cream md:px-10 md:py-5"
+          >
+            <span>Get an estimate</span>
+            <span className="relative z-[2]">→</span>
+          </a>
+        </Reveal>
       </div>
     </section>
   );
@@ -335,10 +382,10 @@ function WhoWeAre() {
         </div>
       </Reveal>
       <Reveal delay={100} className="overflow-visible">
-        <p className="mt-4 font-display text-[20px] italic text-[#021E44] md:mt-5 md:text-[25px]">
+        <h2 className={`mt-4 max-w-2xl md:mt-5 ${sectionHeadingLight}`}>
           Built on craftsmanship since{" "}
-          <span className="font-sans not-italic">1998</span>
-        </p>
+          <span className="font-sans font-light tracking-[-0.02em]">1998</span>
+        </h2>
       </Reveal>
 
       <div className="mt-8 grid grid-cols-1 items-stretch gap-6 md:mt-10 md:grid-cols-2 md:gap-8">
@@ -354,10 +401,9 @@ function WhoWeAre() {
         </Reveal>
 
         <Reveal delay={300} className="flex w-full min-w-0 items-center">
-          <p className="w-full text-sm uppercase leading-[1.85] tracking-[0.12em] text-foreground/75 md:text-base">
-            Creative Granite <span style={{ fontFamily: "sans-serif" }}>+</span> Design is a Utah
-            <span style={{ fontFamily: "sans-serif" }}>-</span>based stone fabrication company specializing in custom countertops and architectural
-            surfaces. We partner with homeowners, builders, and designers to deliver precise fabrication, thoughtful material selection, and high-quality installation across residential and multifamily residential projects in Utah, Idaho, and Wyoming.
+          <p className={`w-full ${bodyCopyLight}`}>
+            Creative Granite <span style={{ fontFamily: "sans-serif" }}>+</span> Design is a Utah based stone fabrication company specializing in custom countertops and architectural
+            surfaces. We partner with homeowners, builders, and designers to deliver precise fabrication, thoughtful material selection, and high quality installation across residential and multifamily residential projects in Utah, Idaho, and Wyoming.
           </p>
         </Reveal>
       </div>
@@ -384,12 +430,12 @@ function Materials() {
               <span className="h-px w-12 bg-foreground/40" />
               <span className="eyebrow">Materials</span>
             </div>
-            <h2 className="mt-6 max-w-3xl font-display text-[#021E44] text-5xl leading-[1.02] md:text-7xl">
-              The slab decides <span className="italic">everything.</span>
+            <h2 className={`mt-6 max-w-2xl ${sectionHeadingLight}`}>
+              The slab decides everything.
             </h2>
           </Reveal>
           <Reveal delay={200}>
-            <p className="max-w-sm text-foreground/70">
+            <p className={`max-w-sm ${bodyCopyLight}`}>
               Four core surfaces, each with its own temperament. We help you choose by feel, not just by sample.
             </p>
           </Reveal>
@@ -424,8 +470,8 @@ function Materials() {
                 </div>
                 <h3 className="mt-6 font-display text-5xl md:text-6xl">{m.name}</h3>
                 <p
-                  className={`mt-6 max-w-md text-sm leading-relaxed transition-opacity ${
-                    active === i ? "opacity-90" : "opacity-70"
+                  className={`mt-6 max-w-md ${bodyCopy} transition-opacity ${
+                    active === i ? "text-cream/90" : "text-foreground/75"
                   }`}
                 >
                   {m.desc}
@@ -453,15 +499,14 @@ function Work() {
               <span className="h-px w-12 bg-foreground/40" />
             <span className="eyebrow">Our work</span>
             </div>
-            <h2 className="mt-6 max-w-3xl font-display text-[#021E44] text-5xl leading-[1.02] md:text-7xl">
-            Fabricated with precision, <br />
-              <span className="italic">installed with intention.</span>
+            <h2 className={`mt-6 max-w-3xl ${sectionHeadingLight}`}>
+              Fabricated with precision, installed with intention.
             </h2>
           </Reveal>
           <Reveal delay={200}>
-            <p className="max-w-sm text-foreground/70">
-            A selection of completed spaces, material details, and in<span style={{ fontFamily: "sans-serif" }}>-</span>between
-            moments<span style={{ fontFamily: "sans-serif" }}>-</span>each reflecting our approach to stone, design, and execution.
+            <p className={`max-w-sm ${bodyCopyLight}`}>
+            A selection of completed spaces, material details, and in-between
+            moments each reflecting our approach to stone, design, and execution.
             </p>
           </Reveal>
         </div>
@@ -515,13 +560,13 @@ function InstagramSection() {
               <span className="h-px w-12 bg-foreground/40" />
               <span className="eyebrow">Instagram</span>
             </div>
-            <h2 className="mt-6 max-w-3xl font-display  text-[#021E44] text-5xl leading-[1.02] md:text-7xl">
-              Follow our <span className="italic">work.</span>
+            <h2 className={`mt-6 max-w-3xl ${sectionHeadingLight}`}>
+              Follow our work.
             </h2>
           </Reveal>
           <Reveal delay={200}>
-            <p className="max-w-sm text-foreground/70">
-              Behind the scenes, slab selections, and finished installs — see what we are working on in the shop and in the field.
+            <p className={`max-w-sm ${bodyCopyLight}`}>
+              Behind the scenes, slab selections, and finished installs  see what we are working on in the shop and in the field.
             </p>
           </Reveal>
         </div>
@@ -581,9 +626,8 @@ function Services() {
             <span className="h-px w-12 bg-cream/40" />
             <span className="eyebrow">Services</span>
           </div>
-          <h2 className="mt-6 max-w-4xl font-display text-5xl leading-[1.02] md:text-7xl">
-            Built for <span className="italic">builders.</span><br />
-            Tailored for <span className="italic">homes.</span>
+          <h2 className={`mt-6 max-w-2xl ${sectionHeadingDark}`}>
+            Built for builders. Tailored for homes.
           </h2>
         </Reveal>
 
@@ -603,7 +647,7 @@ function Services() {
                   </h3>
                 </div>
                 <div className="col-span-12 md:col-span-5">
-                  <p className="text-cream/70 md:text-lg">{s.body}</p>
+                  <p className={bodyCopyDark}>{s.body}</p>
                 </div>
                 <div className="col-span-12 flex items-center justify-end md:col-span-1">
                   <span className="text-2xl transition-transform duration-500 group-hover:rotate-45" style={{ fontFamily: "sans-serif" }}>+</span>
@@ -637,8 +681,8 @@ function Process() {
             <span className="h-px w-12 bg-foreground/40" />
             <span className="eyebrow">Project timeline</span>
           </div>
-          <h2 className="mt-6 max-w-3xl font-display text-5xl leading-[1.02] md:text-7xl">
-            Four steps, <span className="italic">no surprises.</span>
+          <h2 className={`mt-6 max-w-3xl ${sectionHeadingLight}`}>
+            Four steps, no surprises.
           </h2>
         </Reveal>
 
@@ -651,7 +695,7 @@ function Process() {
                   <span className="h-px w-8 bg-foreground/20 transition-all duration-500 group-hover:w-16 group-hover:bg-foreground" />
                 </div>
                 <h3 className="mt-16 font-display text-3xl md:text-4xl">{p.t}</h3>
-                <p className="mt-4 text-sm leading-relaxed text-foreground/70">{p.d}</p>
+                <p className={`mt-4 ${bodyCopyLight}`}>{p.d}</p>
               </div>
             </Reveal>
           ))}
@@ -677,10 +721,10 @@ function Remnants() {
             <span className="h-px w-12 bg-cream/40" />
             <span className="eyebrow">Remnants</span>
           </div>
-          <h2 className="mt-6 font-display text-5xl leading-[1.02] md:text-7xl lg:text-8xl">
-            Great stone at a <span className="italic text-accent">great value.</span>
+          <h2 className={`mt-6 max-w-3xl ${sectionHeadingDark}`}>
+            Great stone at a <span className="text-accent">great value.</span>
           </h2>
-          <p className="mt-8 max-w-xl text-cream/70 md:text-lg">
+          <p className={`mt-8 max-w-xl ${bodyCopyDark}`}>
             Smaller pieces of stone, ideal for vanities, laundry rooms, and smaller projects. First come, first served — join our list for early access.
           </p>
           <div className="mt-10 flex flex-col gap-4 sm:flex-row">
@@ -720,13 +764,13 @@ function Testimonial() {
       <div className="mx-auto max-w-[1100px] px-6 text-center md:px-10">
         <Reveal>
           <div className="eyebrow text-foreground/60">Trusted across utah</div>
-          <div className="mt-8 flex justify-center gap-1 text-accent">
+          <div className="mt-4 flex justify-center gap-1 text-accent">
             {Array.from({ length: 5 }).map((_, k) => (<span key={k}>★</span>))}
           </div>
-          <blockquote key={i} className="mx-auto mt-10 max-w-3xl font-display text-[20px] italic leading-tight text-foreground md:text-[40px] animate-in fade-in slide-in-from-bottom-4 duration-700">
+          <blockquote key={i} className="mx-auto mt-4 max-w-3xl font-display text-[16px]  leading-tight text-foreground md:text-[20px] animate-in fade-in slide-in-from-bottom-4 duration-700">
             "{cur.q}"
           </blockquote>
-          <div className="eyebrow mt-10 text-foreground/60">— {cur.a} · {cur.r}</div>
+          <div className="eyebrow mt-5 text-foreground/60">— {cur.a} · {cur.r}</div>
           <div className="mt-10 flex justify-center gap-2">
             {items.map((_, k) => (
               <button
@@ -750,30 +794,38 @@ function CTA() {
       <div className="relative mx-auto max-w-[1400px] px-6 text-center md:px-10">
         <Reveal>
           <div className="eyebrow text-foreground/60">Start your project</div>
-          <h2 className="mt-8 font-display text-[16vw] leading-[0.9] md:text-[12rem]">
-            Start your <br />
-            <span className="italic">Project.</span>
+          <h2 className={`mx-auto mt-8 max-w-4xl ${sectionHeadingLight}`}>
+            Start your project.
           </h2>
-          <p className="mx-auto mt-10 max-w-xl text-lg text-foreground/70">
+          <p className={`mx-auto mt-10 max-w-xl ${bodyCopyLight}`}>
           “Whether you’re building a custom home, planning a remodel, 
 or managing a multifamily or commercial project, our team is here to help bring 
 it to life.”
           </p>
-          <div className="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <a href="#" data-cursor="estimate" className="btn-magnetic inline-flex items-center gap-3 rounded-full border border-foreground bg-foreground px-10 py-5 text-xs tracking-[0.25em] text-cream">
+          <div className="mt-12 flex flex-col items-center gap-5">
+            <a
+              href="#"
+              data-cursor="estimate"
+              className="btn-magnetic inline-flex items-center gap-3 rounded-full border border-foreground bg-foreground px-10 py-5 text-xs font-medium tracking-[0.25em] text-cream"
+            >
               <span>Get an estimate</span>
               <span className="relative z-[2]">→</span>
             </a>
-            <a href="mailto:info@creativegranite.com" className="link-underline text-sm tracking-[0.2em] text-foreground/70">
-              info<span style={{ fontFamily: "sans-serif" }}>@</span>creativegranite.com
-            </a>
-          </div>
 
-          <div className="mt-8 flex justify-center">
+            <a
+              href={SHOWROOM_MAPS_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-cursor="view"
+              className="link-underline text-sm tracking-[0.2em] text-foreground/70 transition-colors hover:text-foreground"
+            >
+              Visit our showroom
+            </a>
+
             <a
               href="#"
               data-cursor="appointment"
-              className="btn-magnetic inline-flex items-center gap-3 rounded-full border border-foreground bg-foreground px-10 py-5 text-xs font-medium tracking-[0.25em] text-cream"
+              className="btn-magnetic mt-2 inline-flex items-center gap-3 rounded-full border border-foreground bg-foreground px-10 py-5 text-xs font-medium tracking-[0.25em] text-cream"
             >
               <span>Book an appointment</span>
               <span className="relative z-[2]">→</span>
@@ -868,6 +920,7 @@ function Index() {
       <CustomCursor />
       <Header />
       <Hero />
+      <HeroIntro />
       <WhoWeAre />
       <Materials />
       <Work />
