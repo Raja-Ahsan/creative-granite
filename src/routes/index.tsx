@@ -505,7 +505,7 @@ function Work() {
           </Reveal>
           <Reveal delay={200}>
             <p className={`max-w-sm ${bodyCopyLight}`}>
-            A selection of completed spaces, material details, and in-between
+            A selection of completed spaces, material details, and in between
             moments each reflecting our approach to stone, design, and execution.
             </p>
           </Reveal>
