@@ -50,7 +50,7 @@ const instagramPosts = [
 const materials = [
   {
     name: "Granite",
-    desc: "A durable natural stone known for its strength and variation. A reliable choice for kitchens and high-use surfaces.",
+    desc: "A durable natural stone known for its strength and variation. A reliable choice for kitchens and high use surfaces.",
     image: "/materials/granite.png",
   },
   {
@@ -65,7 +65,7 @@ const materials = [
   },
   {
     name: "Quartzite",
-    desc: "A natural stone valued for durability and distinctive movement, ideal for kitchens and high-traffic spaces.",
+    desc: "A natural stone valued for durability and distinctive movement, ideal for kitchens and high traffic spaces.",
     image: "/materials/quartzite.jpg",
   },
 ];
@@ -88,11 +88,6 @@ const sectionHeading =
   "font-display text-[clamp(1.75rem,4.5vw,3.75rem)] uppercase leading-[0.92] tracking-[-0.02em]";
 const sectionHeadingLight = `${sectionHeading} text-[#021E44]`;
 const sectionHeadingDark = `${sectionHeading} text-cream`;
-
-const bodyCopy =
-  "font-sans text-sm uppercase leading-[1.85] tracking-[0.12em] md:text-base";
-const bodyCopyLight = `${bodyCopy} text-foreground/75`;
-const bodyCopyDark = `${bodyCopy} text-cream/75`;
 
 function SplitText({
   text,
@@ -156,7 +151,7 @@ function Header() {
   }, []);
   const navLeft = [
     ["Work", "#work"],
-    ["Products", "#products"],
+    ["Products", "#materials"],
     ["Services", "#services"],
   ] as const;
 
@@ -268,15 +263,15 @@ function HeroSlider({ y }: { y: number }) {
     <>
       <div
         className="pointer-events-none absolute inset-0"
-        style={{ transform: `translateY(${y * 0.15}px) scale(1.05)` }}
+        style={{ transform: `translateY(${y * 0.15}px)` }}
       >
         {heroSlides.map((slide, i) => (
           <img
             key={slide.src}
             src={slide.src}
             alt={slide.alt}
-            className={`absolute inset-0 h-full w-full  transition-opacity duration-[1600ms] ease-in-out ${
-              i === active ? "opacity-80" : "opacity-0"
+            className={`absolute inset-0 size-full object-cover object-center transition-opacity duration-[1600ms] ease-in-out ${
+              i === active ? "opacity-100" : "opacity-0"
             }`}
           />
         ))}
@@ -310,7 +305,7 @@ function Hero() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
   return (
-    <section ref={ref} id="top" className="relative min-h-[calc(100svh-4.25rem)] overflow-hidden bg-ink text-cream md:min-h-[calc(100svh-6.5rem)]">
+    <section ref={ref} id="top" className="relative h-[calc(100svh-4.25rem)] overflow-hidden bg-ink text-cream md:h-auto md:min-h-[calc(100svh-6.5rem)]">
       <HeroSlider y={y} />
       {/* <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-ink/80 via-ink/45 to-ink/20" />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/95 via-ink/30 to-ink/25" />
@@ -346,13 +341,13 @@ function HeroIntro() {
 
         <Reveal
           delay={300}
-          className={`mt-4 ${bodyCopyLight}`}
+          className="mt-4 text-foreground/70"
         >
           Serving homeowners, builders, and multifamily projects across Utah
         </Reveal>
 
         <Reveal delay={400}>
-          <p className={`mx-auto mt-5 max-w-2xl md:mt-6 ${bodyCopyLight}`}>
+          <p className="mx-auto mt-5 max-w-2xl text-foreground/70 md:mt-6">
             Premium granite, quartz, marble and quartzite. Hand fabricated in Utah for builders, designers and homeowners who care about the details no one is supposed to notice.
           </p>
         </Reveal>
@@ -401,7 +396,7 @@ function WhoWeAre() {
         </Reveal>
 
         <Reveal delay={300} className="flex w-full min-w-0 items-center">
-          <p className={`w-full ${bodyCopyLight}`}>
+          <p className="w-full text-foreground/70">
             Creative Granite <span style={{ fontFamily: "sans-serif" }}>+</span> Design is a Utah based stone fabrication company specializing in custom countertops and architectural
             surfaces. We partner with homeowners, builders, and designers to deliver precise fabrication, thoughtful material selection, and high quality installation across residential and multifamily residential projects in Utah, Idaho, and Wyoming.
           </p>
@@ -435,7 +430,7 @@ function Materials() {
             </h2>
           </Reveal>
           <Reveal delay={200}>
-            <p className={`max-w-sm ${bodyCopyLight}`}>
+          <p className="max-w-sm text-foreground/70">
               Four core surfaces, each with its own temperament. We help you choose by feel, not just by sample.
             </p>
           </Reveal>
@@ -470,8 +465,8 @@ function Materials() {
                 </div>
                 <h3 className="mt-6 font-display text-5xl md:text-6xl">{m.name}</h3>
                 <p
-                  className={`mt-6 max-w-md ${bodyCopy} transition-opacity ${
-                    active === i ? "text-cream/90" : "text-foreground/75"
+                  className={`mt-6 max-w-md transition-opacity ${
+                    active === i ? "text-cream/90" : "text-foreground/70"
                   }`}
                 >
                   {m.desc}
@@ -504,7 +499,7 @@ function Work() {
             </h2>
           </Reveal>
           <Reveal delay={200}>
-            <p className={`max-w-sm ${bodyCopyLight}`}>
+            <p className="max-w-sm text-foreground/70">
             A selection of completed spaces, material details, and in between
             moments each reflecting our approach to stone, design, and execution.
             </p>
@@ -565,7 +560,7 @@ function InstagramSection() {
             </h2>
           </Reveal>
           <Reveal delay={200}>
-            <p className={`max-w-sm ${bodyCopyLight}`}>
+            <p className="max-w-sm text-foreground/70">
               Behind the scenes, slab selections, and finished installs  see what we are working on in the shop and in the field.
             </p>
           </Reveal>
@@ -642,12 +637,12 @@ function Services() {
                   <span className="font-mono text-sm opacity-50">0{i + 1}</span>
                 </div>
                 <div className="col-span-10 md:col-span-5">
-                  <h3 className="font-display text-3xl transition-transform duration-500 group-hover:translate-x-2 md:text-5xl">
+                  <h3 className="font-display text-2xl transition-transform duration-500 group-hover:translate-x-2 md:text-5xl">
                     {s.title}
                   </h3>
                 </div>
                 <div className="col-span-12 md:col-span-5">
-                  <p className={bodyCopyDark}>{s.body}</p>
+                  <p className="text-cream/70 md:text-lg">{s.body}</p>
                 </div>
                 <div className="col-span-12 flex items-center justify-end md:col-span-1">
                   <span className="text-2xl transition-transform duration-500 group-hover:rotate-45" style={{ fontFamily: "sans-serif" }}>+</span>
@@ -695,7 +690,7 @@ function Process() {
                   <span className="h-px w-8 bg-foreground/20 transition-all duration-500 group-hover:w-16 group-hover:bg-foreground" />
                 </div>
                 <h3 className="mt-16 font-display text-3xl md:text-4xl">{p.t}</h3>
-                <p className={`mt-4 ${bodyCopyLight}`}>{p.d}</p>
+                <p className="mt-4 text-sm leading-relaxed text-foreground/70">{p.d}</p>
               </div>
             </Reveal>
           ))}
@@ -724,7 +719,7 @@ function Remnants() {
           <h2 className={`mt-6 max-w-3xl ${sectionHeadingDark}`}>
             Great stone at a <span className="text-accent">great value.</span>
           </h2>
-          <p className={`mt-8 max-w-xl ${bodyCopyDark}`}>
+          <p className="mt-8 max-w-xl text-cream/70 md:text-lg">
             Smaller pieces of stone, ideal for vanities, laundry rooms, and smaller projects. First come, first served — join our list for early access.
           </p>
           <div className="mt-10 flex flex-col gap-4 sm:flex-row">
@@ -751,7 +746,8 @@ function Testimonial() {
   const items = [
     { q: "We've used them on three builds now. Consistent quality, great communication, and they always hit our timelines. Wouldn't go anywhere else.", a: "Mark T.", r: "General contractor" },
     { q: "Their slab selection process is the most thoughtful in utah. The install crew left the space cleaner than they found it.", a: "Lauren P.", r: "Interior designer" },
-    { q: "Multifamily project, 120 units, zero late deliveries. Creative is the partner you call when it has to be right.", a: "David R.", r: "Developer" },
+    { q: "Countless multifamily projects, zero late deliveries. Creative is the partner you call when it has to be right.",
+ a: "David R.", r: "Developer" },
   ];
   const [i, setI] = useState(0);
   useEffect(() => {
@@ -795,9 +791,9 @@ function CTA() {
         <Reveal>
           <div className="eyebrow text-foreground/60">Start your project</div>
           <h2 className={`mx-auto mt-8 max-w-4xl ${sectionHeadingLight}`}>
-            Start your project.
+            Start your project
           </h2>
-          <p className={`mx-auto mt-10 max-w-xl ${bodyCopyLight}`}>
+          <p className="mx-auto mt-10 max-w-xl text-lg text-foreground/70">
           “Whether you’re building a custom home, planning a remodel, 
 or managing a multifamily or commercial project, our team is here to help bring 
 it to life.”
@@ -850,7 +846,7 @@ function Footer() {
                 className="h-20 w-auto max-w-[260px] object-contain object-left sm:h-24 md:h-28"
               />
             </a>
-            <p className=" max-w-[250px] text-cream/60 ">
+            <p className=" max-w-[250px] text-cream/85 ">
             Built on craftsmanship. Serving Utah since 1998.
             </p>
             <a
@@ -865,8 +861,20 @@ function Footer() {
           <div className="col-span-6 md:col-span-2">
             <div className="eyebrow text-cream/50">Navigate</div>
             <ul className="mt-6 space-y-3">
-              {["Work", "Products", "Services", "Process", "Get an Estimate"].map((l) => (
-                <li key={l}><a href={`#`} className="link-underline text-cream/85">{l}</a></li>
+              {(
+                [
+                  ["Work", "#work"],
+                  ["Products", "#materials"],
+                  ["Services", "#services"],
+                  ["Process", "#process"],
+                  ["Get an Estimate", "#contact"],
+                ] as const
+              ).map(([l, h]) => (
+                <li key={l}>
+                  <a href={h} className="link-underline text-cream/85">
+                    {l}
+                  </a>
+                </li>
               ))}
             </ul>
           </div>

@@ -186,3 +186,6 @@
 }
 .cursor-pulse { animation: cursor-pulse 2s ease-in-out infinite; }
 
+header {
+  background-color: var(--color-ink);
+}
