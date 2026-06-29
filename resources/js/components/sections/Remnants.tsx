@@ -1,5 +1,5 @@
 import { Reveal } from "@/components/site/Reveal";
-import { bodyCopyDark, sectionHeadingDark } from "@/utils/typography";
+import { bodyCopyDarkLarge, sectionHeadingDark } from "@/utils/typography";
 
 export function Remnants() {
   return (
@@ -20,7 +20,7 @@ export function Remnants() {
           <h2 className={`mt-6 max-w-3xl ${sectionHeadingDark}`}>
             Great stone at a <span className="text-accent">great value.</span>
           </h2>
-          <p className={`mt-8 max-w-xl ${bodyCopyDark}`}>
+          <p className={`mt-8 max-w-xl ${bodyCopyDarkLarge}`}>
             Smaller pieces of stone, ideal for vanities, laundry rooms, and smaller projects. First come, first served
             — join our list for early access.
           </p>

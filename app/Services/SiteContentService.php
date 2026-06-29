@@ -109,7 +109,7 @@ class SiteContentService
         return [
             ['q' => "We've used them on three builds now. Consistent quality, great communication, and they always hit our timelines. Wouldn't go anywhere else.", 'a' => 'Mark T.', 'r' => 'General contractor'],
             ['q' => 'Their slab selection process is the most thoughtful in utah. The install crew left the space cleaner than they found it.', 'a' => 'Lauren P.', 'r' => 'Interior designer'],
-            ['q' => 'Multifamily project, 120 units, zero late deliveries. Creative is the partner you call when it has to be right.', 'a' => 'David R.', 'r' => 'Developer'],
+            ['q' => 'Countless multifamily projects, zero late deliveries. Creative is the partner you call when it has to be right.', 'a' => 'David R.', 'r' => 'Developer'],
         ];
     }
 
@@ -118,7 +118,7 @@ class SiteContentService
         return [
             ['Work', '#work'],
             ['Products', '#products'],
-            ['Services', '#services'],
+            ['Services', '/services'],
         ];
     }
 
@@ -126,13 +126,19 @@ class SiteContentService
     {
         return [
             ['Process', '#process'],
-            ['Contact', '#contact'],
+            ['Contact', '/contact'],
         ];
     }
 
     private function staticFooterNavLinks(): array
     {
-        return ['Work', 'Products', 'Services', 'Process', 'Get an Estimate'];
+        return [
+            ['Work', '/#work'],
+            ['Products', '/#products'],
+            ['Services', '/services'],
+            ['Process', '/#process'],
+            ['Get an Estimate', '/contact'],
+        ];
     }
 
     private function staticFooterSocialLinks(): array
@@ -159,7 +165,7 @@ class SiteContentService
                 'eyebrow' => 'Who we are',
                 'heading' => 'Built on craftsmanship since',
                 'subheading' => '',
-                'body' => 'Creative Granite + Design is a Utah based stone fabrication company specializing in custom countertops and architectural surfaces. We partner with homeowners, builders, and designers to deliver precise fabrication, thoughtful material selection, and high quality installation across residential and multifamily residential projects in Utah, Idaho, and Wyoming.',
+                'body' => 'Creative Granite  Design is a Utah based stone fabrication company specializing in custom countertops and architectural surfaces. We partner with homeowners, builders, and designers to deliver precise fabrication, thoughtful material selection, and high quality installation across residential and multifamily residential projects in Utah, Idaho, and Wyoming.',
                 'highlightText' => '1998',
                 'image' => '/images/site/LakeLine-20.jpeg',
             ],
@@ -190,7 +196,7 @@ class SiteContentService
             'services' => [
                 'eyebrow' => 'Services',
                 'heading' => 'Built for builders. Tailored for homes.',
-                'subheading' => '',
+                'subheading' => 'From new construction to remodels and multifamily projects — precision fabrication and installation across Utah.',
                 'body' => '',
                 'highlightText' => '',
                 'image' => '',
@@ -221,7 +227,7 @@ class SiteContentService
             ],
             'cta' => [
                 'eyebrow' => 'Start your project',
-                'heading' => 'Start your project.',
+                'heading' => 'Start your project',
                 'subheading' => '',
                 'body' => 'Whether you’re building a custom home, planning a remodel, or managing a multifamily or commercial project, our team is here to help bring it to life.',
                 'highlightText' => '',

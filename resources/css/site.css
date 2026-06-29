@@ -132,6 +132,7 @@
 .link-underline {
   position: relative;
   display: inline-block;
+  
 }
 
 .link-underline::after {
@@ -225,4 +226,14 @@
 
 .img-zoom:hover img {
   transform: scale(1.06);
+}
+
+.footer-sans {
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+}
+
+.footer-sans option {
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  font-weight: 400;
+  text-transform: none;
 }

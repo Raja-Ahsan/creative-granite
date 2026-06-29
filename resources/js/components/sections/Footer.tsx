@@ -15,9 +15,9 @@ export function Footer() {
                 className="h-20 w-auto max-w-[260px] object-contain object-left sm:h-24 md:h-28"
               />
             </a>
-            <p className="max-w-[250px] text-cream/60">{settings.footerTagline}</p>
+            <p className="max-w-[250px] text-cream/85">{settings.footerTagline}</p>
             <a
-              href="#contact"
+              href="/contact"
               data-cursor="appointment"
               className="btn-magnetic btn-magnetic-inverse mt-6 inline-flex items-center gap-3 rounded-full border border-cream px-7 py-3.5 text-xs font-medium tracking-[0.2em] text-cream"
             >
@@ -28,10 +28,10 @@ export function Footer() {
           <div className="col-span-6 md:col-span-2">
             <div className="eyebrow text-cream/50">Navigate</div>
             <ul className="mt-6 space-y-3">
-              {footerNavLinks.map((l) => (
-                <li key={l}>
-                  <a href="#" className="link-underline text-cream/85">
-                    {l}
+              {footerNavLinks.map(([label, href]) => (
+                <li key={label}>
+                  <a href={href} className="link-underline text-cream/85">
+                    {label}
                   </a>
                 </li>
               ))}
@@ -65,14 +65,14 @@ export function Footer() {
               <div className="mt-4 space-y-1">
                 {settings.phone && (
                   <div>
-                    <a href={`tel:${settings.phone}`} className="link-underline">
+                    <a href={`tel:${settings.phone}`} className="footer-sans link-underline">
                       {settings.phone}
                     </a>
                   </div>
                 )}
                 {settings.email && (
                   <div>
-                    <a href={`mailto:${settings.email}`} className="link-underline">
+                    <a href={`mailto:${settings.email}`} className="footer-sans link-underline">
                       {settings.email}
                     </a>
                   </div>
@@ -82,7 +82,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center justify-between gap-4 py-8 text-xs text-cream/50">
+        <div className="flex flex-wrap items-center justify-between gap-4 py-8 text-xs text-cream/85">
           <div>
             © {new Date().getFullYear()} Creative granite <span style={{ fontFamily: "sans-serif" }}>&</span> design.
             All rights reserved.
