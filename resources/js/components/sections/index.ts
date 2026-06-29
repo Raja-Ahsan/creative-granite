@@ -1,0 +1,13 @@
+export { CTA } from "./CTA";
+export { Footer } from "./Footer";
+export { Header } from "./Header";
+export { Hero } from "./Hero";
+export { HeroIntro } from "./HeroIntro";
+export { InstagramSection } from "./InstagramSection";
+export { Materials } from "./Materials";
+export { Process } from "./Process";
+export { Remnants } from "./Remnants";
+export { Services } from "./Services";
+export { Testimonial } from "./Testimonial";
+export { WhoWeAre } from "./WhoWeAre";
+export { Work } from "./Work";

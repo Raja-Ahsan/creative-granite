@@ -1,0 +1,44 @@
+@extends('layouts.admin.master')
+@section('content')
+    @include('screens.admin.partials.alerts')
+    @include('screens.admin.partials.page-header', [
+        'title' => $title,
+        'actionRoute' => route('admin.materials.create'),
+        'actionLabel' => 'Add Material',
+    ])
+
+    <div class="bg-white shadow sm:rounded-lg overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Preview</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Active</th>
+                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    @forelse ($items as $item)
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $item->sort_order }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap"><img src="{{ $item->image_path }}" alt="" class="h-12 w-auto rounded"></td>
+                            <td class="px-6 py-4 text-sm text-gray-900">{{ $item->name }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $item->is_active ? 'Yes' : 'No' }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm">
+                                <x-admin.row-actions
+                                    :edit-route="route('admin.materials.edit', $item)"
+                                    :destroy-route="route('admin.materials.destroy', $item)"
+                                    confirm="Delete this material?"
+                                />
+                            </td>
+                        </tr>
+                    @empty
+                        <tr><td colspan="5" class="px-6 py-8 text-center text-sm text-gray-500">No materials yet.</td></tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+    </div>
+@endsection
