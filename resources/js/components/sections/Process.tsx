@@ -1,6 +1,6 @@
 import { Reveal } from "@/components/site/Reveal";
 import { processSteps } from "@/services/content";
-import { bodyCopyLight, sectionHeadingLight } from "@/utils/typography";
+import { bodyCopySmall, sectionHeadingLight } from "@/utils/typography";
 
 export function Process() {
   return (
@@ -23,7 +23,7 @@ export function Process() {
                   <span className="h-px w-8 bg-foreground/20 transition-all duration-500 group-hover:w-16 group-hover:bg-foreground" />
                 </div>
                 <h3 className="mt-16 font-display text-3xl md:text-4xl">{p.t}</h3>
-                <p className={`mt-4 ${bodyCopyLight}`}>{p.d}</p>
+                <p className={`mt-4 ${bodyCopySmall}`}>{p.d}</p>
               </div>
             </Reveal>
           ))}

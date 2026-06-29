@@ -17,7 +17,7 @@ export function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-50 overflow-x-clip bg-ink transition-all duration-500 ${
+      className={`sticky top-0 z-50 overflow-x-clip bg-[#2a2622] transition-all duration-500 ${
         scrolled ? "border-b border-cream/15" : ""
       } text-cream`}
     >
@@ -30,7 +30,7 @@ export function Header() {
           ))}
         </nav>
 
-        <a href="#top" className="flex justify-center" data-cursor="home">
+        <a href="/" className="flex justify-center" data-cursor="home">
           <img
             src={settings.logo}
             alt="Creative Granite & Design"
@@ -45,7 +45,7 @@ export function Header() {
             </a>
           ))}
           <a
-            href="#contact"
+            href="/contact"
             data-cursor="estimate"
             className="btn-magnetic btn-magnetic-inverse group inline-flex shrink-0 items-center gap-2 rounded-full border border-cream px-5 py-2.5 text-xs font-medium tracking-[0.18em] text-cream"
           >
@@ -56,7 +56,7 @@ export function Header() {
       </div>
 
       <div className="mx-auto flex min-w-0 max-w-[1400px] items-center justify-between gap-2 px-4 py-3 md:hidden">
-        <a href="#top" className="min-w-0 flex-1 overflow-hidden" data-cursor="home">
+        <a href="/" className="min-w-0 flex-1 overflow-hidden" data-cursor="home">
           <img
             src={settings.logo}
             alt="Creative Granite & Design"
@@ -89,7 +89,7 @@ export function Header() {
                 {l}
               </a>
             ))}
-            <a href="#contact" onClick={() => setOpen(false)} className="mt-6 rounded-full bg-cream py-4 text-center text-sm tracking-widest text-ink">
+            <a href="/contact" onClick={() => setOpen(false)} className="mt-6 rounded-full bg-cream py-4 text-center text-sm tracking-widest text-ink">
               Get an estimate
             </a>
           </div>

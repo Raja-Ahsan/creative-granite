@@ -23,7 +23,7 @@ export type SiteContentPayload = {
   testimonials: Testimonial[];
   navLeft: NavLink[];
   navRight: NavLink[];
-  footerNavLinks: string[];
+  footerNavLinks: NavLink[];
   footerSocialLinks: SiteSocialLink[];
   sections: Record<string, SectionContent>;
 };

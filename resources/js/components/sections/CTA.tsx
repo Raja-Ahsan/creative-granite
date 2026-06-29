@@ -1,6 +1,6 @@
 import { Reveal } from "@/components/site/Reveal";
 import { useSection, useSiteContent } from "@/contexts/SiteContentContext";
-import { bodyCopyLight, sectionHeadingLight } from "@/utils/typography";
+import { bodyCopyCta, sectionHeadingLight } from "@/utils/typography";
 
 export function CTA() {
   const { settings } = useSiteContent();
@@ -13,7 +13,7 @@ export function CTA() {
         <Reveal>
           <div className="eyebrow text-foreground/60">{section.eyebrow}</div>
           <h2 className={`mx-auto mt-8 max-w-4xl ${sectionHeadingLight}`}>{section.heading}</h2>
-          {section.body && <p className={`mx-auto mt-10 max-w-xl ${bodyCopyLight}`}>{section.body}</p>}
+          {section.body && <p className={`mx-auto mt-10 max-w-xl ${bodyCopyCta}`}>{section.body}</p>}
           <div className="mt-12 flex flex-col items-center gap-5">
             <a
               href="#"

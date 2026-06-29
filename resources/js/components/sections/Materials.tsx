@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Reveal } from "@/components/site/Reveal";
 import { useSection, useSiteContent } from "@/contexts/SiteContentContext";
-import { bodyCopy, bodyCopyLight, sectionHeadingLight } from "@/utils/typography";
+import { bodyCopyLight, sectionHeadingLight } from "@/utils/typography";
 
 export function Materials() {
   const { materials } = useSiteContent();
@@ -52,8 +52,8 @@ export function Materials() {
                 </div>
                 <h3 className="mt-6 font-display text-5xl md:text-6xl">{m.name}</h3>
                 <p
-                  className={`mt-6 max-w-md ${bodyCopy} transition-opacity ${
-                    active === i ? "text-cream/90" : "text-foreground/75"
+                  className={`mt-6 max-w-md transition-opacity ${
+                    active === i ? "text-cream/90" : "text-foreground/70"
                   }`}
                 >
                   {m.desc}

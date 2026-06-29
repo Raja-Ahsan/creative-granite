@@ -1,7 +1,7 @@
 import { Footer, Header } from "@/components/sections";
 import { Reveal } from "@/components/site/Reveal";
 import { useSiteContent } from "@/contexts/SiteContentContext";
-import { sectionHeadingLight } from "@/utils/typography";
+import { bodyCopyLight, sectionHeadingLight } from "@/utils/typography";
 import { SiteLayout } from "@/layouts/SiteLayout";
 
 export function GalleryPage() {
@@ -19,7 +19,7 @@ export function GalleryPage() {
                 <span className="eyebrow">Gallery</span>
               </div>
               <h1 className={`mt-6 max-w-3xl ${sectionHeadingLight}`}>Our Work</h1>
-              <p className="mt-6 max-w-2xl text-sm uppercase leading-[1.85] tracking-[0.12em] text-foreground/70 md:text-base">
+              <p className={`mt-6 max-w-2xl ${bodyCopyLight}`}>
                 A full collection of completed spaces, material details, and finished installs.
               </p>
             </Reveal>
@@ -32,10 +32,10 @@ export function GalleryPage() {
                     data-cursor="view"
                   >
                     <img src={item.src} alt={item.title} loading="lazy" className="h-full w-full object-cover" />
-                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent" />
+                    {/* <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent" />
                     <div className="pointer-events-none absolute bottom-0 left-0 right-0 p-4 md:p-6">
                       <p className="text-xs font-medium uppercase tracking-[0.2em] text-cream">{item.title}</p>
-                    </div>
+                    </div> */}
                   </div>
                 </Reveal>
               ))}
