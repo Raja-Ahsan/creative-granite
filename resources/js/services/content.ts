@@ -56,12 +56,18 @@ export const portfolio: PortfolioItem[] = [
 ];
 
 export const instagramPosts: InstagramPost[] = [
-  { src: "/portfolio/DSC_4076.jpg", alt: "Marble kitchen countertop installation in Park City" },
-  { src: "/portfolio/DSC_3988.jpg", alt: "Quartzite kitchen surfaces in Holladay" },
-  { src: "/portfolio/054.jpg", alt: "Custom stone island fabrication" },
-  { src: "/portfolio/063.jpg", alt: "Granite countertop detail" },
-  { src: "/portfolio/073.jpg", alt: "Modern bathroom stone vanity" },
-  { src: "/portfolio/040-1.jpg", alt: "Creative Granite showroom slab selection" },
+  { src: "/portfolio/instagram/DSC_3969.jpg", alt: "Creative Granite stone fabrication — DSC_3969" },
+  { src: "/portfolio/instagram/DSC_3986%20(1).jpg", alt: "Creative Granite stone fabrication — DSC_3986 (1)" },
+  { src: "/portfolio/instagram/DSC_4008.jpeg", alt: "Creative Granite stone fabrication — DSC_4008" },
+  { src: "/portfolio/instagram/DSC_4011.jpeg", alt: "Creative Granite stone fabrication — DSC_4011" },
+  { src: "/portfolio/instagram/DSC_4068.jpg", alt: "Creative Granite stone fabrication — DSC_4068" },
+  { src: "/portfolio/instagram/DSC_4165.jpg", alt: "Creative Granite stone fabrication — DSC_4165" },
+  { src: "/portfolio/instagram/DSC_4181%20(1).jpg", alt: "Creative Granite stone fabrication — DSC_4181 (1)" },
+  { src: "/portfolio/instagram/DSC_4192.jpeg", alt: "Creative Granite stone fabrication — DSC_4192" },
+  { src: "/portfolio/instagram/DSC_4204%20(1).jpg", alt: "Creative Granite stone fabrication — DSC_4204 (1)" },
+  { src: "/portfolio/instagram/Journeys%20End-12.jpg", alt: "Creative Granite stone fabrication — Journeys End-12" },
+  { src: "/portfolio/instagram/LakeLine-20.jpeg", alt: "Creative Granite stone fabrication — LakeLine-20" },
+  { src: "/portfolio/instagram/Sabal-24.jpg", alt: "Creative Granite stone fabrication — Sabal-24" },
 ];
 
 export const materials: Material[] = [

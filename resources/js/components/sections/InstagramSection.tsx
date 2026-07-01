@@ -26,25 +26,24 @@ export function InstagramSection() {
           )}
         </div>
 
-        <div className="mt-16 grid grid-cols-2 gap-0 md:grid-cols-3">
+        <div className="mt-12 grid grid-cols-2 gap-0 md:mt-16 md:grid-cols-4">
           {instagramPosts.map((post, i) => (
-            <Reveal key={post.src} delay={(i % 3) * 100} className="h-full">
-              <a
-                href={post.url ?? instagramUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                data-cursor="view"
-                className="img-zoom group relative block aspect-square h-full w-full overflow-hidden bg-ink"
-              >
-                <img src={post.src} alt={post.alt} loading="lazy" className="h-full w-full object-cover" />
-                <div className="pointer-events-none absolute inset-0 bg-ink/0 transition-colors duration-500 group-hover:bg-ink/45" />
-                <div className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-                  <span className="flex h-12 w-12 items-center justify-center rounded-full border border-cream/80 bg-cream/10 text-cream backdrop-blur-sm">
-                    <Instagram className="h-5 w-5" strokeWidth={1.5} />
-                  </span>
-                </div>
-              </a>
-            </Reveal>
+            <a
+              key={`${post.src}-${i}`}
+              href={post.url ?? instagramUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-cursor="view"
+              className="img-zoom group relative block aspect-square w-full overflow-hidden rounded-none bg-ink"
+            >
+              <img src={post.src} alt={post.alt} loading="lazy" className="h-full w-full object-cover" />
+              <div className="pointer-events-none absolute inset-0 bg-ink/0 transition-colors duration-300 group-hover:bg-ink/40" />
+              <div className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                <span className="flex h-8 w-8 items-center justify-center rounded-full border border-cream/80 bg-cream/10 text-cream backdrop-blur-sm md:h-9 md:w-9">
+                  <Instagram className="h-3.5 w-3.5 md:h-4 md:w-4" strokeWidth={1.5} />
+                </span>
+              </div>
+            </a>
           ))}
         </div>
 
@@ -54,7 +53,7 @@ export function InstagramSection() {
             target="_blank"
             rel="noopener noreferrer"
             data-cursor="follow"
-            className="btn-magnetic inline-flex items-center gap-3 rounded-full border border-foreground bg-foreground px-10 py-5 text-xs font-medium tracking-[0.25em] text-cream"
+            className="btn-magnetic inline-flex items-center rounded-full border border-foreground bg-foreground px-10 py-5 text-xs font-medium tracking-[0.25em] text-cream"
           >
             <Instagram className="relative z-[2] h-4 w-4" strokeWidth={1.5} />
             <span>Follow on Instagram</span>

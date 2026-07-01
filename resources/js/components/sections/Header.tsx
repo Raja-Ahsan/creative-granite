@@ -17,9 +17,11 @@ export function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-50 overflow-x-clip bg-[#2a2622] transition-all duration-500 ${
-        scrolled ? "border-b border-cream/15" : ""
-      } text-cream`}
+      className={`fixed inset-x-0 top-0 z-50 overflow-x-clip text-cream transition-all duration-500 ${
+        scrolled
+          ? "border-b border-cream/15 bg-ink/80 backdrop-blur-md"
+          : "bg-ink/50 backdrop-blur-sm"
+      }`}
     >
       <div className="mx-auto hidden max-w-[1400px] grid-cols-3 items-center px-6 py-4 md:grid md:px-10 md:py-5">
         <nav className="flex items-center gap-6 lg:gap-8">
@@ -49,7 +51,7 @@ export function Header() {
             data-cursor="estimate"
             className="btn-magnetic btn-magnetic-inverse group inline-flex shrink-0 items-center gap-2 rounded-full border border-cream px-5 py-2.5 text-xs font-medium tracking-[0.18em] text-cream"
           >
-            <span>Get an estimate</span>
+            <span>Contact</span>
             <span className="relative z-[2] inline-block transition-transform group-hover:translate-x-1">→</span>
           </a>
         </div>
@@ -77,7 +79,7 @@ export function Header() {
       </div>
 
       {open && (
-        <div className="border-t border-cream/10 bg-ink md:hidden">
+        <div className="border-t border-cream/10 bg-ink/85 backdrop-blur-md md:hidden">
           <div className="flex flex-col px-6 py-6">
             {navMobile.map(([l, h]) => (
               <a

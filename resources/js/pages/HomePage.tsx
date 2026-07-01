@@ -3,7 +3,6 @@ import {
   Footer,
   Header,
   Hero,
-  HeroIntro,
   InstagramSection,
   Materials,
   Services,
@@ -19,13 +18,12 @@ export function HomePage() {
         <main>
           <Header />
           <Hero />
-          <HeroIntro />
           <WhoWeAre />
-          <Materials />
           <Work />
-          <InstagramSection />
           <Services />
+          <Materials />
           <Testimonial />
+          <InstagramSection />
           <CTA />
           <Footer />
         </main>
