@@ -15,6 +15,12 @@ export function Reveal({
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setSeen(true);
+      return;
+    }
+
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
@@ -24,7 +30,7 @@ export function Reveal({
           }
         });
       },
-      { threshold: 0.15 },
+      { threshold: 0.08, rootMargin: "120px 0px" },
     );
     io.observe(el);
     return () => io.disconnect();

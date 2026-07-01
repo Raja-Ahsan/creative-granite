@@ -26,15 +26,20 @@ export function Work() {
 
         <div className="mt-16 grid grid-cols-2 gap-0 md:grid-cols-3">
           {portfolio.slice(0, 9).map((p, i) => (
-            <Reveal key={`${p.src}-${i}`} delay={(i % 3) * 120} className="h-full">
-              <div
-                className="img-zoom group relative aspect-[4/3] h-[200px] w-full overflow-hidden rounded-none bg-bone md:h-full"
-                data-cursor="view"
-              >
-                <img src={p.src} alt={p.title} loading="lazy" className="h-full w-full object-cover" />
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent" />
-              </div>
-            </Reveal>
+            <div
+              key={`${p.src}-${i}`}
+              className="img-zoom group relative aspect-[4/3] h-[200px] w-full overflow-hidden rounded-none bg-bone md:h-full"
+              data-cursor="view"
+            >
+              <img
+                src={p.src}
+                alt={p.title}
+                loading="lazy"
+                decoding="async"
+                className="h-full w-full object-cover"
+              />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent" />
+            </div>
           ))}
         </div>
 

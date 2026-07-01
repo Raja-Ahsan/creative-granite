@@ -27,7 +27,7 @@ export function InstagramSection() {
         </div>
 
         <div className="mt-12 grid grid-cols-2 gap-0 md:mt-16 md:grid-cols-4">
-          {instagramPosts.map((post, i) => (
+          {instagramPosts.slice(0, 8).map((post, i) => (
             <a
               key={`${post.src}-${i}`}
               href={post.url ?? instagramUrl}
@@ -36,7 +36,13 @@ export function InstagramSection() {
               data-cursor="view"
               className="img-zoom group relative block aspect-square w-full overflow-hidden rounded-none bg-ink"
             >
-              <img src={post.src} alt={post.alt} loading="lazy" className="h-full w-full object-cover" />
+              <img
+                src={post.src}
+                alt={post.alt}
+                loading="lazy"
+                decoding="async"
+                className="h-full w-full object-cover"
+              />
               <div className="pointer-events-none absolute inset-0 bg-ink/0 transition-colors duration-300 group-hover:bg-ink/40" />
               <div className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                 <span className="flex h-8 w-8 items-center justify-center rounded-full border border-cream/80 bg-cream/10 text-cream backdrop-blur-sm md:h-9 md:w-9">

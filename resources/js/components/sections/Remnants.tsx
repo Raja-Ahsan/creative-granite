@@ -46,6 +46,8 @@ export function Remnants() {
             <img
               src="/portfolio/Creative-Quartz-scaled-1.jpg"
               alt="Remnant slab"
+              loading="lazy"
+              decoding="async"
               className="h-full w-full object-cover"
             />
           </div>
