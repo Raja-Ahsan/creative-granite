@@ -7,10 +7,23 @@ use App\Models\Material;
 use App\Models\PortfolioItem;
 use App\Models\Service;
 use App\Models\SiteSetting;
+use Illuminate\Support\Facades\Cache;
 
 class SiteContentService
 {
+    public const CACHE_KEY = 'site.content.payload';
+
     public function getPayload(): array
+    {
+        return Cache::remember(self::CACHE_KEY, now()->addDay(), fn () => $this->buildPayload());
+    }
+
+    public static function clearCache(): void
+    {
+        Cache::forget(self::CACHE_KEY);
+    }
+
+    private function buildPayload(): array
     {
         $settings = SiteSetting::query()
             ->pluck('value', 'key')
@@ -19,7 +32,7 @@ class SiteContentService
         return [
             'settings' => [
                 'logo' => $settings['logo_path'] ?? '/images/site/update-logo.png',
-                'aboutStoneBath' => $settings['about_image_path'] ?? '/images/site/LakeLine-20.jpeg',
+                'aboutStoneBath' => $settings['about_image_path'] ?? '/images/site/LakeLine-20.jpg',
                 'instagramUrl' => $settings['instagram_url'] ?? '#',
                 'showroomMapsUrl' => $settings['showroom_maps_url'] ?? '',
                 'addressLine1' => $settings['address_line_1'] ?? '',
@@ -87,16 +100,15 @@ class SiteContentService
         $files = [
             'DSC_3969.jpg',
             'DSC_3986 (1).jpg',
-            'DSC_4008.jpeg',
-            'DSC_4011.jpeg',
+            'DSC_4008.jpg',
+            'DSC_4011.jpg',
             'DSC_4068.jpg',
             'DSC_4165.jpg',
             'DSC_4181 (1).jpg',
-            'DSC_4192.jpeg',
+            'DSC_4192.jpg',
             'DSC_4204 (1).jpg',
             'Journeys End-12.jpg',
-            'LakeLine-20.jpeg',
-            'Sabal-19.jpeg',
+            'LakeLine-20.jpg',
             'Sabal-24.jpg',
         ];
 
@@ -184,7 +196,7 @@ class SiteContentService
                 'subheading' => '',
                 'body' => 'Creative Granite  Design is a Utah based stone fabrication company specializing in custom countertops and architectural surfaces. We partner with homeowners, builders, and designers to deliver precise fabrication, thoughtful material selection, and high quality installation across residential and multifamily residential projects in Utah, Idaho, and Wyoming.',
                 'highlightText' => '1998',
-                'image' => '/images/site/LakeLine-20.jpeg',
+                'image' => '/images/site/LakeLine-20.jpg',
             ],
             'materials' => [
                 'eyebrow' => 'Materials',

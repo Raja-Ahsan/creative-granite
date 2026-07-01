@@ -6,10 +6,34 @@ export function CustomCursor() {
   const [hover, setHover] = useState(false);
   const [label, setLabel] = useState<string | null>(null);
   const pos = useRef({ x: 0, y: 0, tx: 0, ty: 0 });
+  const raf = useRef(0);
+  const running = useRef(false);
+  const idleTimer = useRef(0);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
     if (window.matchMedia("(pointer: coarse)").matches) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const loop = () => {
+      pos.current.x += (pos.current.tx - pos.current.x) * 0.12;
+      pos.current.y += (pos.current.ty - pos.current.y) * 0.12;
+      if (ring.current) {
+        ring.current.style.transform = `translate3d(${pos.current.x}px, ${pos.current.y}px, 0) translate(-50%, -50%)`;
+      }
+      raf.current = requestAnimationFrame(loop);
+    };
+
+    const startLoop = () => {
+      if (running.current) return;
+      running.current = true;
+      raf.current = requestAnimationFrame(loop);
+    };
+
+    const stopLoop = () => {
+      running.current = false;
+      cancelAnimationFrame(raf.current);
+    };
 
     const onMove = (e: MouseEvent) => {
       pos.current.tx = e.clientX;
@@ -17,6 +41,9 @@ export function CustomCursor() {
       if (dot.current) {
         dot.current.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
       }
+      startLoop();
+      window.clearTimeout(idleTimer.current);
+      idleTimer.current = window.setTimeout(stopLoop, 120);
     };
 
     const onOver = (e: MouseEvent) => {
@@ -31,21 +58,11 @@ export function CustomCursor() {
       }
     };
 
-    let raf = 0;
-    const loop = () => {
-      pos.current.x += (pos.current.tx - pos.current.x) * 0.12;
-      pos.current.y += (pos.current.ty - pos.current.y) * 0.12;
-      if (ring.current) {
-        ring.current.style.transform = `translate3d(${pos.current.x}px, ${pos.current.y}px, 0) translate(-50%, -50%)`;
-      }
-      raf = requestAnimationFrame(loop);
-    };
-    raf = requestAnimationFrame(loop);
-
-    window.addEventListener("mousemove", onMove);
+    window.addEventListener("mousemove", onMove, { passive: true });
     window.addEventListener("mouseover", onOver);
     return () => {
-      cancelAnimationFrame(raf);
+      stopLoop();
+      window.clearTimeout(idleTimer.current);
       window.removeEventListener("mousemove", onMove);
       window.removeEventListener("mouseover", onOver);
     };

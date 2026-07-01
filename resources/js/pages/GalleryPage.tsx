@@ -26,18 +26,19 @@ export function GalleryPage() {
 
             <div className="mt-16 grid grid-cols-2 gap-0 md:grid-cols-3">
               {portfolio.map((item, i) => (
-                <Reveal key={`${item.src}-${i}`} delay={(i % 3) * 120} className="h-full">
-                  <div
-                    className="img-zoom group relative aspect-[4/3] h-[200px] w-full overflow-hidden rounded-none bg-bone md:h-full"
-                    data-cursor="view"
-                  >
-                    <img src={item.src} alt={item.title} loading="lazy" className="h-full w-full object-cover" />
-                    {/* <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent" />
-                    <div className="pointer-events-none absolute bottom-0 left-0 right-0 p-4 md:p-6">
-                      <p className="text-xs font-medium uppercase tracking-[0.2em] text-cream">{item.title}</p>
-                    </div> */}
-                  </div>
-                </Reveal>
+                <div
+                  key={`${item.src}-${i}`}
+                  className="img-zoom group relative aspect-[4/3] h-[200px] w-full overflow-hidden rounded-none bg-bone md:h-full"
+                  data-cursor="view"
+                >
+                  <img
+                    src={item.src}
+                    alt={item.title}
+                    loading="lazy"
+                    decoding="async"
+                    className="h-full w-full object-cover"
+                  />
+                </div>
               ))}
             </div>
           </div>

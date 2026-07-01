@@ -37,7 +37,7 @@ declare global {
 export const defaultSiteContent: SiteContentPayload = {
   settings: {
     logo: "/images/site/update-logo.png",
-    aboutStoneBath: "/images/site/LakeLine-20.jpeg",
+    aboutStoneBath: "/images/site/LakeLine-20.jpg",
     instagramUrl: "#",
     showroomMapsUrl: "",
     addressLine1: "",

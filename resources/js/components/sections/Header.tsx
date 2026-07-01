@@ -1,16 +1,30 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSiteContent } from "@/contexts/SiteContentContext";
 
 export function Header() {
   const { settings, navLeft, navRight } = useSiteContent();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const scrolledRef = useRef(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    let raf = 0;
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const next = window.scrollY > 24;
+        if (next !== scrolledRef.current) {
+          scrolledRef.current = next;
+          setScrolled(next);
+        }
+      });
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScroll);
+    };
   }, []);
 
   const navMobile = [...navLeft, ...navRight] as const;
@@ -36,6 +50,8 @@ export function Header() {
           <img
             src={settings.logo}
             alt="Creative Granite & Design"
+            loading="eager"
+            decoding="async"
             className="h-14 w-auto max-w-[240px] object-contain lg:h-[4.5rem]"
           />
         </a>

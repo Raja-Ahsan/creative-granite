@@ -39,7 +39,13 @@ export function Materials() {
               }`}
             >
               <div className="img-zoom relative mb-8 aspect-[4/3] w-full overflow-hidden rounded-sm">
-                <img src={m.image} alt={`${m.name} surface`} loading="lazy" className="h-full w-full object-cover" />
+                <img
+                  src={m.image}
+                  alt={`${m.name} surface`}
+                  loading="lazy"
+                  decoding="async"
+                  className="h-full w-full object-cover"
+                />
               </div>
               <div className="flex flex-1 flex-col">
                 <div className="flex items-start justify-between">

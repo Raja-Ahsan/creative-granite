@@ -13,9 +13,16 @@
     <meta name="twitter:title" content="Creative Granite &amp; Design — Stone, shaped with intention.">
     <meta name="twitter:description" content="Premium granite, quartz, marble &amp; quartzite countertops in Utah. Precision fabrication and thoughtful design for kitchens, baths, fireplaces and beyond.">
     <link rel="icon" href="{{ asset('favicon.ico') }}">
+    @if (!empty($siteContent['heroSlides'][0]['src']))
+        <link rel="preload" as="image" href="{{ $siteContent['heroSlides'][0]['src'] }}" fetchpriority="high">
+    @endif
+    @if (!empty($siteContent['settings']['logo']))
+        <link rel="preload" as="image" href="{{ $siteContent['settings']['logo'] }}">
+    @endif
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap">
+    @viteReactRefresh
     @vite(['resources/css/site.css', 'resources/js/site.tsx'])
     <script>
         window.__SITE_CONTENT__ = @json($siteContent ?? []);

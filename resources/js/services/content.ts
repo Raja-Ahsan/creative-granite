@@ -26,7 +26,7 @@ export type {
 
 export const SITE_IMAGES = {
   logo: "/images/site/update-logo.png",
-  aboutStoneBath: "/images/site/LakeLine-20.jpeg",
+  aboutStoneBath: "/images/site/LakeLine-20.jpg",
   slider1: "/images/site/slider1.jpg",
   slider2: "/images/site/slider2.jpg",
   slider3: "/images/site/slider3.jpg",
@@ -44,7 +44,7 @@ export const heroSlides: HeroSlide[] = [
 ];
 
 export const portfolio: PortfolioItem[] = [
-  { src: "/portfolio/DSC_4182_1.jpeg", title: "Carrara Island", tag: "Marble · Salt Lake" },
+  { src: "/portfolio/DSC_4182_1.jpg", title: "Carrara Island", tag: "Marble · Salt Lake" },
   { src: "/portfolio/024.jpg", title: "Modern Kitchen", tag: "Granite · Salt Lake" },
   { src: "/portfolio/portfolio_2.jpg", title: "Refined Hearth", tag: "Quartz · Provo" },
   { src: "/portfolio/067.jpg", title: "Warm Minimal", tag: "Quartzite · Holladay" },
@@ -58,15 +58,15 @@ export const portfolio: PortfolioItem[] = [
 export const instagramPosts: InstagramPost[] = [
   { src: "/portfolio/instagram/DSC_3969.jpg", alt: "Creative Granite stone fabrication — DSC_3969" },
   { src: "/portfolio/instagram/DSC_3986%20(1).jpg", alt: "Creative Granite stone fabrication — DSC_3986 (1)" },
-  { src: "/portfolio/instagram/DSC_4008.jpeg", alt: "Creative Granite stone fabrication — DSC_4008" },
-  { src: "/portfolio/instagram/DSC_4011.jpeg", alt: "Creative Granite stone fabrication — DSC_4011" },
+  { src: "/portfolio/instagram/DSC_4008.jpg", alt: "Creative Granite stone fabrication — DSC_4008" },
+  { src: "/portfolio/instagram/DSC_4011.jpg", alt: "Creative Granite stone fabrication — DSC_4011" },
   { src: "/portfolio/instagram/DSC_4068.jpg", alt: "Creative Granite stone fabrication — DSC_4068" },
   { src: "/portfolio/instagram/DSC_4165.jpg", alt: "Creative Granite stone fabrication — DSC_4165" },
   { src: "/portfolio/instagram/DSC_4181%20(1).jpg", alt: "Creative Granite stone fabrication — DSC_4181 (1)" },
-  { src: "/portfolio/instagram/DSC_4192.jpeg", alt: "Creative Granite stone fabrication — DSC_4192" },
+  { src: "/portfolio/instagram/DSC_4192.jpg", alt: "Creative Granite stone fabrication — DSC_4192" },
   { src: "/portfolio/instagram/DSC_4204%20(1).jpg", alt: "Creative Granite stone fabrication — DSC_4204 (1)" },
   { src: "/portfolio/instagram/Journeys%20End-12.jpg", alt: "Creative Granite stone fabrication — Journeys End-12" },
-  { src: "/portfolio/instagram/LakeLine-20.jpeg", alt: "Creative Granite stone fabrication — LakeLine-20" },
+  { src: "/portfolio/instagram/LakeLine-20.jpg", alt: "Creative Granite stone fabrication — LakeLine-20" },
   { src: "/portfolio/instagram/Sabal-24.jpg", alt: "Creative Granite stone fabrication — Sabal-24" },
 ];
 
@@ -74,12 +74,12 @@ export const materials: Material[] = [
   {
     name: "Granite",
     desc: "A durable natural stone known for its strength and variation. A reliable choice for kitchens and high-use surfaces.",
-    image: "/materials/granite.png",
+    image: "/materials/granite.jpg",
   },
   {
     name: "Quartz",
     desc: "An engineered surface designed for consistency and low maintenance, offering a wide range of colors and styles.",
-    image: "/materials/quartz.png",
+    image: "/materials/quartz.jpg",
   },
   {
     name: "Marble",

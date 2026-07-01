@@ -24,7 +24,7 @@ class SiteContentSeeder extends Seeder
     {
         $settings = [
             ['key' => 'logo_path', 'value' => '/images/site/update-logo.png', 'type' => 'image', 'group' => 'assets'],
-            ['key' => 'about_image_path', 'value' => '/images/site/LakeLine-20.jpeg', 'type' => 'image', 'group' => 'assets'],
+            ['key' => 'about_image_path', 'value' => '/images/site/LakeLine-20.jpg', 'type' => 'image', 'group' => 'assets'],
             ['key' => 'instagram_url', 'value' => '#', 'type' => 'url', 'group' => 'social'],
             ['key' => 'showroom_maps_url', 'value' => 'https://www.google.com/maps/place/1998+N+Redwood+Rd,+Salt+Lake+City,+UT+84116,+USA/@40.8115045,-111.9402546,16.96z/data=!4m6!3m5!1s0x8752f6bad3a740e7:0x54da835cc07f3b51!8m2!3d40.8115002!4d-111.9376702!16s%2Fg%2F11c1zjtg8r?entry=ttu&g_ep=EgoyMDI2MDYyMy4wIKXMDSoASAFQAw%3D%3D', 'type' => 'url', 'group' => 'contact'],
             ['key' => 'address_line_1', 'value' => '1998 n redwood rd', 'type' => 'string', 'group' => 'contact'],
@@ -60,8 +60,8 @@ class SiteContentSeeder extends Seeder
     private function seedMaterials(): void
     {
         $items = [
-            ['Granite', 'A durable natural stone known for its strength and variation. A reliable choice for kitchens and high-use surfaces.', '/materials/granite.png'],
-            ['Quartz', 'An engineered surface designed for consistency and low maintenance, offering a wide range of colors and styles.', '/materials/quartz.png'],
+            ['Granite', 'A durable natural stone known for its strength and variation. A reliable choice for kitchens and high-use surfaces.', '/materials/granite.jpg'],
+            ['Quartz', 'An engineered surface designed for consistency and low maintenance, offering a wide range of colors and styles.', '/materials/quartz.jpg'],
             ['Marble', 'A natural stone known for soft movement and timeless appeal, often used in bathrooms and feature areas.', '/materials/marble.jpg'],
             ['Quartzite', 'A natural stone valued for durability and distinctive movement, ideal for kitchens and high-traffic spaces.', '/materials/quartzite.jpg'],
         ];
@@ -77,7 +77,7 @@ class SiteContentSeeder extends Seeder
     private function seedPortfolio(): void
     {
         $items = [
-            ['/portfolio/DSC_4182_1.jpeg', 'Carrara Island'],
+            ['/portfolio/DSC_4182_1.jpg', 'Carrara Island'],
             ['/portfolio/024.jpg', 'Modern Kitchen'],
             ['/portfolio/portfolio_2.jpg', 'Refined Hearth'],
             ['/portfolio/067.jpg', 'Warm Minimal'],
