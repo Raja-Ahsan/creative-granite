@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useSiteContent } from "@/contexts/SiteContentContext";
+import { HeroIntro } from "./HeroIntro";
 
 function HeroSlider({ y, slides }: { y: number; slides: { src: string; alt: string }[] }) {
   const [active, setActive] = useState(0);
@@ -23,14 +24,14 @@ function HeroSlider({ y, slides }: { y: number; slides: { src: string; alt: stri
             key={`${slide.src}-${i}`}
             src={slide.src}
             alt={slide.alt}
-            className={`absolute inset-0 h-full w-full transition-opacity duration-[1600ms] ease-in-out ${
-              i === active ? "opacity-80" : "opacity-0"
+            className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-[1600ms] ease-in-out ${
+              i === active ? "opacity-100" : "opacity-0"
             }`}
           />
         ))}
       </div>
 
-      <div className="pointer-events-none absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 gap-2.5 md:bottom-10">
+      <div className="pointer-events-none absolute bottom-8 left-1/2 z-30 flex -translate-x-1/2 gap-2.5 md:bottom-10">
         {slides.map((_, i) => (
           <span
             key={i}
@@ -64,9 +65,18 @@ export function Hero() {
     <section
       ref={ref}
       id="top"
-      className="relative min-h-[calc(100svh-4.25rem)] overflow-hidden bg-ink text-cream md:min-h-[calc(100svh-6.5rem)]"
+      className="relative min-h-svh overflow-hidden bg-ink text-cream"
     >
       <HeroSlider y={y} slides={heroSlides} />
+
+      <div
+        className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-b from-ink/80 via-ink/55 to-ink/75"
+        aria-hidden
+      />
+
+      <div className="relative z-20 flex min-h-svh items-center justify-center">
+        <HeroIntro overlay />
+      </div>
     </section>
   );
 }

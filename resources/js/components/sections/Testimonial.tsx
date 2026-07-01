@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Reveal } from "@/components/site/Reveal";
 import { useSection, useSiteContent } from "@/contexts/SiteContentContext";
+import { sectionHeadingLight } from "@/utils/typography";
 
 export function Testimonial() {
   const { testimonials } = useSiteContent();
@@ -21,8 +22,10 @@ export function Testimonial() {
     <section className="relative py-28">
       <div className="mx-auto max-w-[1100px] px-6 text-center md:px-10">
         <Reveal>
-          <div className="eyebrow text-foreground/60">{section.eyebrow}</div>
-          <div className="mt-4 flex justify-center gap-1 text-accent">
+          <h2 className={`mx-auto max-w-3xl ${sectionHeadingLight}`}>
+            {section.heading || section.eyebrow}
+          </h2>
+          <div className="mt-6 flex justify-center gap-1 text-accent">
             {Array.from({ length: 5 }).map((_, k) => (
               <span key={k}>★</span>
             ))}

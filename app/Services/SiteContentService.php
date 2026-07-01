@@ -84,14 +84,31 @@ class SiteContentService
 
     private function staticInstagramPosts(): array
     {
-        return [
-            ['src' => '/portfolio/DSC_4076.jpg', 'alt' => 'Marble kitchen countertop installation in Park City', 'url' => '#'],
-            ['src' => '/portfolio/DSC_3988.jpg', 'alt' => 'Quartzite kitchen surfaces in Holladay', 'url' => '#'],
-            ['src' => '/portfolio/054.jpg', 'alt' => 'Custom stone island fabrication', 'url' => '#'],
-            ['src' => '/portfolio/063.jpg', 'alt' => 'Granite countertop detail', 'url' => '#'],
-            ['src' => '/portfolio/073.jpg', 'alt' => 'Modern bathroom stone vanity', 'url' => '#'],
-            ['src' => '/portfolio/040-1.jpg', 'alt' => 'Creative Granite showroom slab selection', 'url' => '#'],
+        $files = [
+            'DSC_3969.jpg',
+            'DSC_3986 (1).jpg',
+            'DSC_4008.jpeg',
+            'DSC_4011.jpeg',
+            'DSC_4068.jpg',
+            'DSC_4165.jpg',
+            'DSC_4181 (1).jpg',
+            'DSC_4192.jpeg',
+            'DSC_4204 (1).jpg',
+            'Journeys End-12.jpg',
+            'LakeLine-20.jpeg',
+            'Sabal-19.jpeg',
+            'Sabal-24.jpg',
         ];
+
+        return array_map(function (string $file) {
+            $label = pathinfo($file, PATHINFO_FILENAME);
+
+            return [
+                'src' => '/portfolio/instagram/'.rawurlencode($file),
+                'alt' => 'Creative Granite stone fabrication — '.$label,
+                'url' => '#',
+            ];
+        }, $files);
     }
 
     private function staticProcessSteps(): array
@@ -126,7 +143,7 @@ class SiteContentService
     {
         return [
             ['Process', '#process'],
-            ['Contact', '/contact'],
+            ['Get an estimate', '/contact'],
         ];
     }
 
@@ -218,8 +235,8 @@ class SiteContentService
                 'image' => '/portfolio/Creative-Quartz-scaled-1.jpg',
             ],
             'testimonial' => [
-                'eyebrow' => 'Trusted across utah',
-                'heading' => '',
+                'eyebrow' => '',
+                'heading' => 'Trusted across utah.',
                 'subheading' => '',
                 'body' => '',
                 'highlightText' => '',

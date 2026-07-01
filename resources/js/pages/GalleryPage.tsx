@@ -11,7 +11,7 @@ export function GalleryPage() {
     <SiteLayout>
       <main>
         <Header />
-        <section className="relative py-28 md:py-40">
+        <section className="relative pb-28 pt-[calc(4.25rem+7rem)] md:pb-40 md:pt-[calc(6.5rem+10rem)]">
           <div className="mx-auto max-w-[1400px] px-6 md:px-10">
             <Reveal>
               <div className="flex items-center gap-3 text-foreground/60">
