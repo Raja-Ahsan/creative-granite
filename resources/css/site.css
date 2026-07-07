@@ -110,7 +110,7 @@
 }
 
 .eyebrow {
-  font-size: 0.7rem;
+  font-size: 1rem;
   letter-spacing: 0.22em;
   font-weight: 500;
 }
@@ -244,4 +244,112 @@
   font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
   font-weight: 400;
   text-transform: none;
+}
+
+.service-prose {
+  color: theme("colors.ink");
+  font-size: 1.05rem;
+  line-height: 1.85;
+  font-weight: 300;
+}
+
+.service-prose > * + * {
+  margin-top: 1.25rem;
+}
+
+.service-prose h2,
+.service-prose h3,
+.service-prose h4 {
+  font-family: theme("fontFamily.display");
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: theme("colors.ink");
+  text-transform: none;
+}
+
+.service-prose h1 {
+  display: none;
+}
+
+.service-prose p,
+.service-prose li {
+  color: #2a2520;
+  text-transform: none;
+  font-weight: 300;
+}
+
+.service-prose h2 {
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  margin-top: 2.5rem;
+}
+
+.service-prose h3 {
+  font-size: clamp(1.35rem, 2.5vw, 1.75rem);
+  margin-top: 2rem;
+}
+
+.service-prose h4 {
+  font-size: 1.15rem;
+  margin-top: 1.75rem;
+}
+
+.service-prose a {
+  color: theme("colors.ink");
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.service-prose ul,
+.service-prose ol {
+  padding-left: 1.25rem;
+}
+
+.service-prose ul {
+  list-style: disc;
+}
+
+.service-prose ol {
+  list-style: decimal;
+}
+
+.service-prose blockquote {
+  border-left: 2px solid rgba(42, 37, 32, 0.2);
+  padding-left: 1rem;
+  font-style: italic;
+  color: rgba(42, 37, 32, 0.72);
+}
+
+.service-prose img {
+  width: 100%;
+  border-radius: 0.125rem;
+  margin: 2rem 0;
+}
+
+.service-prose table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.service-prose th,
+.service-prose td {
+  border: 1px solid rgba(42, 37, 32, 0.12);
+  padding: 0.75rem 1rem;
+  text-align: left;
+}
+
+.service-card {
+  transition: box-shadow 0.5s ease, transform 0.5s ease;
+}
+
+.service-card:hover {
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.35);
+  background-color: rgba(255, 250, 240, 0.05);
+}
+
+.service-card-placeholder {
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(180, 140, 90, 0.35), transparent 55%),
+    radial-gradient(ellipse at 80% 80%, rgba(60, 40, 20, 0.45), transparent 50%),
+    theme("colors.ink");
 }

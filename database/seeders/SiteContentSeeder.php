@@ -60,10 +60,10 @@ class SiteContentSeeder extends Seeder
     private function seedMaterials(): void
     {
         $items = [
-            ['Granite', 'A durable natural stone known for its strength and variation. A reliable choice for kitchens and high-use surfaces.', '/materials/granite.jpg'],
-            ['Quartz', 'An engineered surface designed for consistency and low maintenance, offering a wide range of colors and styles.', '/materials/quartz.jpg'],
-            ['Marble', 'A natural stone known for soft movement and timeless appeal, often used in bathrooms and feature areas.', '/materials/marble.jpg'],
-            ['Quartzite', 'A natural stone valued for durability and distinctive movement, ideal for kitchens and high-traffic spaces.', '/materials/quartzite.jpg'],
+            ['Granite', 'A durable natural stone known for its strength and variation. A reliable choice for kitchens and high-use surfaces.', '/materials/granite.webp'],
+            ['Quartz', 'An engineered surface designed for consistency and low maintenance, offering a wide range of colors and styles.', '/materials/quartz.webp'],
+            ['Marble', 'A natural stone known for soft movement and timeless appeal, often used in bathrooms and feature areas.', '/materials/marble.webp'],
+            ['Quartzite', 'A natural stone valued for durability and distinctive movement, ideal for kitchens and high-traffic spaces.', '/materials/quartzite.webp'],
         ];
 
         foreach ($items as $index => [$name, $desc, $image]) {

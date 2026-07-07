@@ -52,7 +52,7 @@ export const portfolio: PortfolioItem[] = [
   { src: "/portfolio/051.jpg", title: "Quiet Movement", tag: "Granite · Ogden" },
   { src: "/portfolio/009-1.jpg", title: "Coastal Kitchen", tag: "Quartzite · St. George" },
   { src: "/portfolio/Creative-Quartz-scaled-1.jpg", title: "Creative Quartz", tag: "Quartz · Showroom" },
-  { src: "/portfolio/DSC_4182.jpg", title: "Carrara Island", tag: "Marble · Salt Lake" },
+  { src: "/portfolio/DSC_4182_1.jpg", title: "Carrara Island", tag: "Marble · Salt Lake" },
 ];
 
 export const instagramPosts: InstagramPost[] = [
@@ -74,37 +74,43 @@ export const materials: Material[] = [
   {
     name: "Granite",
     desc: "A durable natural stone known for its strength and variation. A reliable choice for kitchens and high-use surfaces.",
-    image: "/materials/granite.jpg",
+    image: "/materials/granite.webp",
   },
   {
     name: "Quartz",
     desc: "An engineered surface designed for consistency and low maintenance, offering a wide range of colors and styles.",
-    image: "/materials/quartz.jpg",
+    image: "/materials/quartz.webp",
   },
   {
     name: "Marble",
     desc: "A natural stone known for soft movement and timeless appeal, often used in bathrooms and feature areas.",
-    image: "/materials/marble.jpg",
+    image: "/materials/marble.webp",
   },
   {
     name: "Quartzite",
     desc: "A natural stone valued for durability and distinctive movement, ideal for kitchens and high-traffic spaces.",
-    image: "/materials/quartzite.jpg",
+    image: "/materials/quartzite.webp",
   },
 ];
 
 export const services: Service[] = [
   {
     title: "New Construction",
-    body: "Stone fabrication for new builds, working closely with builders, designers, andproject teams to ensure accuracy, efficiency, and consistency from planning through installation.",
+    slug: "new-construction",
+    excerpt: "Stone fabrication for new builds, working closely with builders, designers, and project teams to ensure accuracy, efficiency, and consistency from planning through installation.",
+    body: "<p>Stone fabrication for new builds, working closely with builders, designers, and project teams to ensure accuracy, efficiency, and consistency from planning through installation.</p>",
   },
   {
     title: "Remodel & Renovation",
-    body: "Custom stone surfaces for kitchen, bathroom, and interior remodels focused on thoughtful material selection and clean execution.",
+    slug: "remodel-renovation",
+    excerpt: "Custom stone surfaces for kitchen, bathroom, and interior remodels focused on thoughtful material selection and clean execution.",
+    body: "<p>Custom stone surfaces for kitchen, bathroom, and interior remodels focused on thoughtful material selection and clean execution.</p>",
   },
   {
     title: "Multifamily & Commercial",
-    body: "Custom stone fabrication for multifamily and commercial projects, supporting developers, contractors, and project teams with efficient xecution, consistent quality, and dependable delivery.",
+    slug: "multifamily-commercial",
+    excerpt: "Custom stone fabrication for multifamily and commercial projects, supporting developers, contractors, and project teams with efficient execution, consistent quality, and dependable delivery.",
+    body: "<p>Custom stone fabrication for multifamily and commercial projects, supporting developers, contractors, and project teams with efficient execution, consistent quality, and dependable delivery.</p>",
   },
 ];
 

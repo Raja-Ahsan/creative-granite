@@ -8,10 +8,10 @@ use Illuminate\Support\Facades\Storage;
 
 trait HandlesImageUpload
 {
-    protected function mergeImagePath(Request $request, array $data, string $field = 'image_path', string $disk = 'public', string $directory = 'site'): array
+    protected function mergeImagePath(Request $request, array $data, string $field = 'image_path', string $disk = 'public', string $directory = 'site', string $fileInput = 'image'): array
     {
-        if ($request->hasFile('image')) {
-            $path = $request->file('image')->store($directory, $disk);
+        if ($request->hasFile($fileInput)) {
+            $path = $request->file($fileInput)->store($directory, $disk);
             $data[$field] = '/storage/'.$path;
         }
 

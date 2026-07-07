@@ -81,7 +81,10 @@ class SiteContentService
                 ->get()
                 ->map(fn (Service $service) => [
                     'title' => $service->title,
+                    'slug' => $service->slug,
+                    'excerpt' => $service->excerpt ?: \Illuminate\Support\Str::limit(strip_tags($service->body), 220),
                     'body' => $service->body,
+                    'mainImage' => $service->main_image_path,
                 ])
                 ->values()
                 ->all(),
@@ -145,8 +148,8 @@ class SiteContentService
     private function staticNavLeft(): array
     {
         return [
-            ['Work', '#work'],
-            ['Products', '#products'],
+            ['Work', '/#work'],
+            ['Products', '/#products'],
             ['Services', '/services'],
         ];
     }
@@ -154,7 +157,7 @@ class SiteContentService
     private function staticNavRight(): array
     {
         return [
-            ['Process', '#process'],
+            ['Process', '/#process'],
             ['Get an estimate', '/contact'],
         ];
     }

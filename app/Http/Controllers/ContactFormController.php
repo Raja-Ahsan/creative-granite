@@ -4,28 +4,30 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ContactFormRequest;
 use App\Mail\ContactInquiryMail;
-use App\Models\SiteSetting;
+use App\Models\ContactInquiry;
+use App\Services\MailSettingsService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Mail;
 
 class ContactFormController extends Controller
 {
-    public function store(ContactFormRequest $request): JsonResponse
+    public function store(ContactFormRequest $request, MailSettingsService $mailSettings): JsonResponse
     {
         $data = $request->validated();
 
-        $recipient = SiteSetting::query()
-            ->where('key', 'email')
-            ->value('value');
+        $inquiry = ContactInquiry::create($data);
 
-        if (! $recipient) {
-            $recipient = config('mail.from.address');
+        $mailSettings->applyToConfig();
+
+        try {
+            Mail::to($mailSettings->contactRecipient())->send(new ContactInquiryMail($data));
+        } catch (\Throwable $exception) {
+            report($exception);
         }
-
-        Mail::to($recipient)->send(new ContactInquiryMail($data));
 
         return response()->json([
             'message' => 'Thank you — we received your message and will be in touch soon.',
+            'id' => $inquiry->id,
         ]);
     }
 }

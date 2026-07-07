@@ -20,6 +20,11 @@ const client = axios.create({
   withXSRFToken: true,
 });
 
+const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute("content");
+if (csrfToken) {
+  client.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
+}
+
 export async function submitContactForm(data: ContactFormData): Promise<string> {
   const response = await client.post<{ message: string }>("/contact", data);
 

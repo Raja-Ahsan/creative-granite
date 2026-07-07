@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             SiteContentSeeder::class,
+            EmailTemplateSeeder::class,
             CmsModuleSeeder::class,
             CmsModulePermissionsSeeder::class,
         ]);

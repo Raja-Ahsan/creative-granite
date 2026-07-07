@@ -27,6 +27,68 @@
             </div>
 
             <div class="flex items-center gap-2 sm:gap-4">
+                <div class="relative" x-data="{ notificationsOpen: false }">
+                    <button
+                        type="button"
+                        class="relative inline-flex h-10 w-10 items-center justify-center rounded-lg border border-bone bg-white text-ink-soft transition hover:bg-bone/40 hover:text-ink"
+                        @click="notificationsOpen = !notificationsOpen"
+                        aria-label="Notifications"
+                    >
+                        <i class="fa-regular fa-bell text-sm"></i>
+                        @if ($unreadInquiriesCount > 0)
+                            <span class="absolute -right-1 -top-1 flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-red-600 px-1 text-[10px] font-bold text-white">
+                                {{ $unreadInquiriesCount > 9 ? '9+' : $unreadInquiriesCount }}
+                            </span>
+                        @endif
+                    </button>
+
+                    <div
+                        x-show="notificationsOpen"
+                        x-transition
+                        @click.outside="notificationsOpen = false"
+                        class="absolute right-0 z-50 mt-2 w-80 overflow-hidden rounded-xl border border-bone bg-white shadow-lg sm:w-96"
+                        style="display: none;"
+                    >
+                        <div class="flex items-center justify-between border-b border-bone px-4 py-3">
+                            <p class="text-sm font-semibold text-ink">Notifications</p>
+                            @if ($unreadInquiriesCount > 0)
+                                <span class="rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-amber-800">
+                                    {{ $unreadInquiriesCount }} new
+                                </span>
+                            @endif
+                        </div>
+
+                        <div class="max-h-80 overflow-y-auto">
+                            @forelse ($recentInquiries as $inquiry)
+                                <a
+                                    href="{{ route('admin.contact-inquiries.show', $inquiry) }}"
+                                    class="block border-b border-bone/70 px-4 py-3 transition hover:bg-cream/50 {{ $inquiry->isUnread() ? 'bg-amber-50/50' : '' }}"
+                                    @click="notificationsOpen = false"
+                                >
+                                    <div class="flex items-start justify-between gap-2">
+                                        <p class="text-sm font-medium text-ink">{{ $inquiry->name }}</p>
+                                        @if ($inquiry->isUnread())
+                                            <span class="mt-1 h-2 w-2 shrink-0 rounded-full bg-amber-500"></span>
+                                        @endif
+                                    </div>
+                                    <p class="mt-1 truncate text-xs text-ink-soft">{{ $inquiry->projectTypeLabel() }}</p>
+                                    <p class="mt-1 text-[11px] text-ink-soft/70">{{ $inquiry->created_at->diffForHumans() }}</p>
+                                </a>
+                            @empty
+                                <div class="px-4 py-8 text-center text-sm text-ink-soft">
+                                    No contact enquiries yet.
+                                </div>
+                            @endforelse
+                        </div>
+
+                        <div class="border-t border-bone bg-cream/30 px-4 py-3">
+                            <a href="{{ route('admin.contact-inquiries.index') }}" class="text-xs font-semibold uppercase tracking-wider text-accent hover:underline">
+                                View all enquiries
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
                 <a
                     href="{{ route('home') }}"
                     target="_blank"

@@ -20,12 +20,23 @@ class CmsModuleSeeder extends Seeder
             ]
         );
 
+        CmsModule::updateOrCreate(
+            ['route_name' => 'contact-inquiries.index'],
+            [
+                'name' => 'Contact',
+                'icon' => 'fa-solid fa-inbox',
+                'sort_order' => 2,
+                'status' => 'active',
+                'parent_id' => 0,
+            ]
+        );
+
         $siteContent = CmsModule::updateOrCreate(
             ['route_name' => 'site-content-module'],
             [
                 'name' => 'Site Content',
                 'icon' => 'fa-solid fa-globe',
-                'sort_order' => 2,
+                'sort_order' => 3,
                 'status' => 'active',
                 'parent_id' => 0,
             ]
@@ -37,6 +48,8 @@ class CmsModuleSeeder extends Seeder
             ['portfolio-items.index', 'Portfolio', 'fa-solid fa-camera', 3],
             ['services.index', 'Services', 'fa-solid fa-briefcase', 4],
             ['site-settings.edit', 'Site Settings', 'fa-solid fa-gear', 5],
+            ['email-settings.edit', 'Email Settings', 'fa-solid fa-envelope', 6],
+            ['email-templates.index', 'Email Templates', 'fa-solid fa-envelope-open-text', 7],
         ];
 
         foreach ($modules as [$route, $name, $icon, $order]) {
@@ -53,7 +66,7 @@ class CmsModuleSeeder extends Seeder
         }
 
         $allowed = array_merge(
-            ['admin.dashboard', 'site-content-module'],
+            ['admin.dashboard', 'contact-inquiries.index', 'site-content-module'],
             array_column($modules, 0)
         );
 

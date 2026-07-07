@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from "react";
+import Swal from "sweetalert2";
 import {
   contactFormErrorMessage,
   parseContactFormErrors,
@@ -26,11 +27,46 @@ const fieldClass =
 
 const labelClass = "eyebrow text-foreground/50";
 
+const swalTheme = {
+  confirmButtonColor: "#2a2622",
+  background: "#f5f0ea",
+  color: "#2a2622",
+};
+
+function showSuccessAlert(message: string) {
+  return Swal.fire({
+    icon: "success",
+    title: "Message sent",
+    text: message,
+    confirmButtonText: "Done",
+    ...swalTheme,
+    customClass: {
+      popup: "rounded-sm border border-foreground/10 font-sans",
+      title: "font-display text-2xl uppercase tracking-wide",
+      confirmButton: "rounded-full px-8 py-3 text-xs uppercase tracking-[0.2em]",
+    },
+  });
+}
+
+function showErrorAlert(message: string) {
+  return Swal.fire({
+    icon: "error",
+    title: "Could not send",
+    text: message,
+    confirmButtonText: "Try again",
+    ...swalTheme,
+    customClass: {
+      popup: "rounded-sm border border-foreground/10 font-sans",
+      title: "font-display text-2xl uppercase tracking-wide",
+      confirmButton: "rounded-full px-8 py-3 text-xs uppercase tracking-[0.2em]",
+    },
+  });
+}
+
 export function ContactForm() {
   const [form, setForm] = useState<ContactFormData>(initialForm);
   const [errors, setErrors] = useState<Partial<Record<keyof ContactFormData, string>>>({});
-  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
-  const [feedback, setFeedback] = useState("");
+  const [status, setStatus] = useState<"idle" | "submitting">("idle");
 
   const updateField = (field: keyof ContactFormData, value: string) => {
     setForm((current) => ({ ...current, [field]: value }));
@@ -40,14 +76,13 @@ export function ContactForm() {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setStatus("submitting");
-    setFeedback("");
     setErrors({});
 
     try {
       const message = await submitContactForm(form);
-      setStatus("success");
-      setFeedback(message);
       setForm(initialForm);
+      setStatus("idle");
+      await showSuccessAlert(message);
     } catch (error) {
       const validationErrors = parseContactFormErrors(error);
       if (validationErrors) {
@@ -57,11 +92,23 @@ export function ContactForm() {
             Object.entries(validationErrors).map(([key, messages]) => [key, messages?.[0] ?? ""]),
           ) as Partial<Record<keyof ContactFormData, string>>,
         );
+        await Swal.fire({
+          icon: "warning",
+          title: "Check your form",
+          text: "Please fix the highlighted fields and try again.",
+          confirmButtonText: "OK",
+          ...swalTheme,
+          customClass: {
+            popup: "rounded-sm border border-foreground/10 font-sans",
+            title: "font-display text-2xl uppercase tracking-wide",
+            confirmButton: "rounded-full px-8 py-3 text-xs uppercase tracking-[0.2em]",
+          },
+        });
         return;
       }
 
-      setStatus("error");
-      setFeedback(contactFormErrorMessage(error));
+      setStatus("idle");
+      await showErrorAlert(contactFormErrorMessage(error));
     }
   };
 
@@ -163,15 +210,6 @@ export function ContactForm() {
         />
         {errors.message && <p className="footer-sans mt-2 text-sm text-red-700">{errors.message}</p>}
       </div>
-
-      {feedback && (
-        <p
-          className={`text-sm ${status === "success" ? "text-foreground/70" : "text-red-700"}`}
-          role={status === "success" ? "status" : "alert"}
-        >
-          {feedback}
-        </p>
-      )}
 
       <button
         type="submit"
