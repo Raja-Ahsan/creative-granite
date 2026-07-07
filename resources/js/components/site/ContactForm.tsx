@@ -1,5 +1,6 @@
-import { useState, type FormEvent } from "react";
+import { useEffect, useMemo, useState, type FormEvent } from "react";
 import Swal from "sweetalert2";
+import { useSiteContent } from "@/contexts/SiteContentContext";
 import {
   contactFormErrorMessage,
   parseContactFormErrors,
@@ -7,25 +8,10 @@ import {
   type ContactFormData,
 } from "@/services/contactForm";
 
-const projectTypes = [
-  { value: "new-construction", label: "New construction" },
-  { value: "remodel", label: "Remodel & renovation" },
-  { value: "multifamily", label: "Multifamily & commercial" },
-  { value: "other", label: "Other" },
-] as const;
-
-const initialForm: ContactFormData = {
-  name: "",
-  email: "",
-  phone: "",
-  project_type: "new-construction",
-  message: "",
-};
-
 const fieldClass =
-  "mt-2 w-full border-b border-foreground/20 bg-transparent py-3 text-foreground outline-none transition-colors placeholder:text-foreground/35 focus:border-foreground";
+  "mt-2 box-border min-w-0 w-full max-w-full border-b border-foreground/20 bg-transparent py-3 text-foreground outline-none transition-colors placeholder:text-foreground/35 focus:border-foreground";
 
-const labelClass = "eyebrow text-foreground/50";
+const labelClass = "eyebrow block text-foreground/50 normal-case";
 
 const swalTheme = {
   confirmButtonColor: "#2a2622",
@@ -64,9 +50,30 @@ function showErrorAlert(message: string) {
 }
 
 export function ContactForm() {
+  const { projectTypes } = useSiteContent();
+  const defaultProjectType = projectTypes[0]?.value ?? "";
+
+  const initialForm = useMemo<ContactFormData>(
+    () => ({
+      name: "",
+      email: "",
+      phone: "",
+      project_type: defaultProjectType,
+      message: "",
+    }),
+    [defaultProjectType],
+  );
+
   const [form, setForm] = useState<ContactFormData>(initialForm);
   const [errors, setErrors] = useState<Partial<Record<keyof ContactFormData, string>>>({});
   const [status, setStatus] = useState<"idle" | "submitting">("idle");
+
+  useEffect(() => {
+    setForm((current) => ({
+      ...current,
+      project_type: current.project_type || defaultProjectType,
+    }));
+  }, [defaultProjectType]);
 
   const updateField = (field: keyof ContactFormData, value: string) => {
     setForm((current) => ({ ...current, [field]: value }));
@@ -112,10 +119,18 @@ export function ContactForm() {
     }
   };
 
+  if (!projectTypes.length) {
+    return (
+      <p className="text-sm font-light text-foreground/65">
+        The contact form is temporarily unavailable. Please call or email us directly.
+      </p>
+    );
+  }
+
   return (
-    <form onSubmit={handleSubmit} className="space-y-8" noValidate>
-      <div className="grid gap-8 md:grid-cols-2">
-        <div>
+    <form onSubmit={handleSubmit} className="w-full min-w-0 max-w-full space-y-6 sm:space-y-8" noValidate>
+      <div className="grid min-w-0 grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2">
+        <div className="min-w-0">
           <label htmlFor="contact-name" className={labelClass}>
             Name
           </label>
@@ -133,7 +148,7 @@ export function ContactForm() {
           {errors.name && <p className="footer-sans mt-2 text-sm text-red-700">{errors.name}</p>}
         </div>
 
-        <div>
+        <div className="min-w-0">
           <label htmlFor="contact-email" className={labelClass}>
             Email
           </label>
@@ -152,8 +167,8 @@ export function ContactForm() {
         </div>
       </div>
 
-      <div className="grid gap-8 md:grid-cols-2">
-        <div>
+      <div className="grid min-w-0 grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2">
+        <div className="min-w-0">
           <label htmlFor="contact-phone" className={labelClass}>
             Phone
           </label>
@@ -170,7 +185,7 @@ export function ContactForm() {
           {errors.phone && <p className="footer-sans mt-2 text-sm text-red-700">{errors.phone}</p>}
         </div>
 
-        <div>
+        <div className="min-w-0">
           <label htmlFor="contact-project-type" className={labelClass}>
             Project type
           </label>
@@ -194,7 +209,7 @@ export function ContactForm() {
         </div>
       </div>
 
-      <div>
+      <div className="min-w-0">
         <label htmlFor="contact-message" className={labelClass}>
           Message
         </label>
@@ -215,7 +230,7 @@ export function ContactForm() {
         type="submit"
         disabled={status === "submitting"}
         data-cursor="estimate"
-        className="btn-magnetic inline-flex items-center gap-3 rounded-full border border-foreground bg-foreground px-10 py-5 text-xs font-medium tracking-[0.25em] text-cream disabled:cursor-not-allowed disabled:opacity-60"
+        className="btn-magnetic inline-flex w-full items-center justify-center gap-3 rounded-full border border-foreground bg-foreground px-8 py-5 text-xs font-medium tracking-[0.2em] text-cream disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto sm:px-10"
       >
         <span>{status === "submitting" ? "Sending..." : "Send message"}</span>
         <span className="relative z-[2]">→</span>

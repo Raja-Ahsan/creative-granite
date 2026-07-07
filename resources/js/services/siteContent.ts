@@ -5,6 +5,8 @@ import type {
   NavLink,
   PortfolioItem,
   ProcessStep,
+  Product,
+  ProjectTypeOption,
   SectionContent,
   Service,
   SiteSettings,
@@ -14,10 +16,12 @@ import type {
 
 export type SiteContentPayload = {
   settings: SiteSettings;
+  projectTypes: ProjectTypeOption[];
   heroSlides: HeroSlide[];
   portfolio: PortfolioItem[];
   instagramPosts: InstagramPost[];
   materials: Material[];
+  products: Product[];
   services: Service[];
   processSteps: ProcessStep[];
   testimonials: Testimonial[];
@@ -47,11 +51,14 @@ export const defaultSiteContent: SiteContentPayload = {
     hours: "",
     foundedYear: "1998",
     footerTagline: "Built on craftsmanship. Serving Utah since 1998.",
+    contactFormIntro: "Tell us about your project — we will follow up with next steps, timing, and a path to estimate.",
   },
+  projectTypes: [],
   heroSlides: [],
   portfolio: [],
   instagramPosts: [],
   materials: [],
+  products: [],
   services: [],
   processSteps: [],
   testimonials: [],

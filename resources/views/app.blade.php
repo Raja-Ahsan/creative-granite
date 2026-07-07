@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ $metaTitle ?? 'Creative Granite &amp; Design — Stone, shaped with intention.' }}</title>
+    <title>{{ $metaTitle ?? 'Creative Granite & Design — Stone, shaped with intention.' }}</title>
     <meta name="description" content="{{ $metaDescription ?? 'Premium granite, quartz, marble &amp; quartzite countertops in Utah. Precision fabrication and thoughtful design for kitchens, baths, fireplaces and beyond.' }}">
     <meta name="author" content="Creative Granite & Design">
     <meta property="og:title" content="Creative Granite &amp; Design — Stone, shaped with intention.">

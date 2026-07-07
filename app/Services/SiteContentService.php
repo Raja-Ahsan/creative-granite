@@ -5,6 +5,10 @@ namespace App\Services;
 use App\Models\HeroSlide;
 use App\Models\Material;
 use App\Models\PortfolioItem;
+use App\Models\ProcessStep;
+use App\Models\Product;
+use App\Models\ProductImage;
+use App\Models\ProjectType;
 use App\Models\Service;
 use App\Models\SiteSetting;
 use Illuminate\Support\Facades\Cache;
@@ -42,7 +46,18 @@ class SiteContentService
                 'hours' => $settings['hours'] ?? '',
                 'foundedYear' => $settings['founded_year'] ?? '1998',
                 'footerTagline' => $settings['footer_tagline'] ?? '',
+                'contactFormIntro' => $settings['contact_form_intro'] ?? 'Tell us about your project — we will follow up with next steps, timing, and a path to estimate.',
             ],
+            'projectTypes' => ProjectType::query()
+                ->where('is_active', true)
+                ->orderBy('sort_order')
+                ->get()
+                ->map(fn (ProjectType $type) => [
+                    'value' => $type->slug,
+                    'label' => $type->name,
+                ])
+                ->values()
+                ->all(),
             'heroSlides' => HeroSlide::query()
                 ->where('is_active', true)
                 ->orderBy('sort_order')
@@ -75,6 +90,27 @@ class SiteContentService
                 ])
                 ->values()
                 ->all(),
+            'products' => Product::query()
+                ->with(['images' => fn ($query) => $query->orderBy('sort_order')])
+                ->where('is_active', true)
+                ->orderBy('sort_order')
+                ->get()
+                ->map(fn (Product $product) => [
+                    'name' => $product->name,
+                    'slug' => $product->slug,
+                    'desc' => $product->excerpt ?: \Illuminate\Support\Str::limit(strip_tags($product->description), 160),
+                    'description' => $product->description,
+                    'image' => $product->image_path,
+                    'relatedImages' => $product->images
+                        ->map(fn (ProductImage $image) => [
+                            'src' => $image->image_path,
+                            'alt' => $image->alt_text ?: $product->name,
+                        ])
+                        ->values()
+                        ->all(),
+                ])
+                ->values()
+                ->all(),
             'services' => Service::query()
                 ->where('is_active', true)
                 ->orderBy('sort_order')
@@ -88,7 +124,17 @@ class SiteContentService
                 ])
                 ->values()
                 ->all(),
-            'processSteps' => $this->staticProcessSteps(),
+            'processSteps' => ProcessStep::query()
+                ->where('is_active', true)
+                ->orderBy('sort_order')
+                ->get()
+                ->map(fn (ProcessStep $step) => [
+                    'n' => $step->step_number,
+                    't' => $step->title,
+                    'd' => $step->description,
+                ])
+                ->values()
+                ->all(),
             'testimonials' => $this->staticTestimonials(),
             'navLeft' => $this->staticNavLeft(),
             'navRight' => $this->staticNavRight(),
@@ -126,16 +172,6 @@ class SiteContentService
         }, $files);
     }
 
-    private function staticProcessSteps(): array
-    {
-        return [
-            ['n' => '01', 't' => 'Initial Consultation', 'd' => 'We discuss your project, timeline, and budget in our showroom or on-site.'],
-            ['n' => '02', 't' => 'Estimate & Material Selection', 'd' => 'We provide a detailed quote and guide you through slab selection from our inventory.'],
-            ['n' => '03', 't' => 'Template & Measurement', 'd' => 'Our team templates your space with precision for a perfect fit no guesswork.'],
-            ['n' => '04', 't' => 'Fabrication & Install', 'd' => 'Hand finished edges, sealed surfaces, and a clean, on schedule installation.'],
-        ];
-    }
-
     private function staticTestimonials(): array
     {
         return [
@@ -149,7 +185,7 @@ class SiteContentService
     {
         return [
             ['Work', '/#work'],
-            ['Products', '/#products'],
+            ['Products', '/products'],
             ['Services', '/services'],
         ];
     }
@@ -157,8 +193,8 @@ class SiteContentService
     private function staticNavRight(): array
     {
         return [
-            ['Process', '/#process'],
-            ['Get an estimate', '/contact'],
+            ['Process', '/process'],
+            ['Get an estimate', '#estimate'],
         ];
     }
 
@@ -166,10 +202,10 @@ class SiteContentService
     {
         return [
             ['Work', '/#work'],
-            ['Products', '/#products'],
+            ['Products', '/products'],
             ['Services', '/services'],
-            ['Process', '/#process'],
-            ['Get an Estimate', '/contact'],
+            ['Process', '/process'],
+            ['Get an Estimate', '#estimate'],
         ];
     }
 
@@ -205,6 +241,14 @@ class SiteContentService
                 'eyebrow' => 'Materials',
                 'heading' => 'The slab decides everything.',
                 'subheading' => 'Four core surfaces, each with its own temperament. We help you choose by feel, not just by sample.',
+                'body' => '',
+                'highlightText' => '',
+                'image' => '',
+            ],
+            'products' => [
+                'eyebrow' => 'Products',
+                'heading' => 'Stone surfaces for every space.',
+                'subheading' => 'From kitchen countertops to bathroom vanities and fireplace surrounds — explore our full range of custom stone products.',
                 'body' => '',
                 'highlightText' => '',
                 'image' => '',

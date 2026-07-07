@@ -6,7 +6,7 @@ use App\Models\ProjectType;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class ContactFormRequest extends FormRequest
+class EstimateFormRequest extends FormRequest
 {
     public function authorize(): bool
     {

@@ -6,6 +6,10 @@ use App\Models\ContactInquiry;
 use App\Models\HeroSlide;
 use App\Models\Material;
 use App\Models\PortfolioItem;
+use App\Models\ProcessStep;
+use App\Models\Product;
+use App\Models\ProductImage;
+use App\Models\ProjectType;
 use App\Models\Service;
 use App\Models\SiteSetting;
 use App\Services\MailSettingsService;
@@ -31,7 +35,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $clearSiteContentCache = static fn () => SiteContentService::clearCache();
 
-        foreach ([HeroSlide::class, Material::class, PortfolioItem::class, Service::class, SiteSetting::class] as $model) {
+        foreach ([HeroSlide::class, Material::class, Product::class, ProductImage::class, ProcessStep::class, ProjectType::class, PortfolioItem::class, Service::class, SiteSetting::class] as $model) {
             $model::saved($clearSiteContentCache);
             $model::deleted($clearSiteContentCache);
         }

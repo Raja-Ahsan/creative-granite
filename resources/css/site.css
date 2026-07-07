@@ -110,9 +110,23 @@
 }
 
 .eyebrow {
-  font-size: 1rem;
-  letter-spacing: 0.22em;
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
   font-weight: 500;
+}
+
+@media (min-width: 640px) {
+  .eyebrow {
+    font-size: 1rem;
+    letter-spacing: 0.22em;
+  }
+}
+
+.contact-form-shell input,
+.contact-form-shell textarea,
+.contact-form-shell select {
+  max-width: 100%;
+  min-width: 0;
 }
 
 .grain {

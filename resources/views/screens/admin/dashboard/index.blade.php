@@ -6,6 +6,8 @@
         use App\Models\HeroSlide;
         use App\Models\Material;
         use App\Models\PortfolioItem;
+        use App\Models\ProcessStep;
+        use App\Models\Product;
         use App\Models\Service;
 
         $stats = [
@@ -22,6 +24,13 @@
                 'icon' => 'fa-solid fa-gem',
                 'color' => 'bg-accent/10 text-accent',
                 'route' => route('admin.materials.index'),
+            ],
+            [
+                'label' => 'Products',
+                'value' => Product::count(),
+                'icon' => 'fa-solid fa-box',
+                'color' => 'bg-accent/10 text-accent',
+                'route' => route('admin.products.index'),
             ],
             [
                 'label' => 'Portfolio',
@@ -42,6 +51,8 @@
         $quickLinks = [
             ['Hero Slides', 'fa-solid fa-images', route('admin.hero-slides.index', absolute: false), HeroSlide::count()],
             ['Materials', 'fa-solid fa-gem', route('admin.materials.index'), Material::count()],
+            ['Products', 'fa-solid fa-box', route('admin.products.index'), Product::count()],
+            ['Process', 'fa-solid fa-list-ol', route('admin.process-steps.index'), ProcessStep::count()],
             ['Portfolio', 'fa-solid fa-camera', route('admin.portfolio-items.index'), PortfolioItem::count()],
             ['Services', 'fa-solid fa-briefcase', route('admin.services.index'), Service::count()],
             ['Site Settings', 'fa-solid fa-gear', route('admin.site-settings.edit'), null],
@@ -73,7 +84,7 @@
     </div>
 
     {{-- Stats cards --}}
-    <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mb-8">
+    <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-4 mb-8">
         @foreach ($stats as $stat)
             <a href="{{ $stat['route'] }}" class="group block bg-white rounded-xl border border-bone shadow-sm hover:shadow-md hover:border-accent/30 transition-all duration-200 overflow-hidden">
                 <div class="p-5">
@@ -134,12 +145,20 @@
                     <span class="text-sm font-semibold text-ink">{{ Service::count() }}</span>
                 </div>
                 <div class="flex items-center justify-between p-3 rounded-lg bg-cream/60">
+                    <span class="text-sm text-ink-soft">Products</span>
+                    <span class="text-sm font-semibold text-ink">{{ Product::count() }}</span>
+                </div>
+                <div class="flex items-center justify-between p-3 rounded-lg bg-cream/60">
+                    <span class="text-sm text-ink-soft">Process Steps</span>
+                    <span class="text-sm font-semibold text-ink">{{ ProcessStep::count() }}</span>
+                </div>
+                <div class="flex items-center justify-between p-3 rounded-lg bg-cream/60">
                     <span class="text-sm text-ink-soft">Portfolio Items</span>
                     <span class="text-sm font-semibold text-ink">{{ PortfolioItem::count() }}</span>
                 </div>
                 <div class="flex items-center justify-between p-3 rounded-lg bg-ink text-cream">
                     <span class="text-sm text-cream/80">Total Content Items</span>
-                    <span class="text-sm font-semibold">{{ Material::count() + PortfolioItem::count() + HeroSlide::count() }}</span>
+                    <span class="text-sm font-semibold">{{ Material::count() + Product::count() + ProcessStep::count() + PortfolioItem::count() + HeroSlide::count() }}</span>
                 </div>
             </div>
         </div>
