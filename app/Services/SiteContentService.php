@@ -259,7 +259,7 @@ class SiteContentService
             ],
             'work' => [
                 'eyebrow' => 'Our work',
-                'heading' => 'Fabricated with precision, installed with intention.',
+                'heading' => 'Fabricated with precision, installed with intention',
                 'subheading' => 'A selection of completed spaces, material details, and in between moments each reflecting our approach to stone, design, and execution.',
                 'body' => '',
                 'highlightText' => '',
@@ -267,7 +267,7 @@ class SiteContentService
             ],
             'instagram' => [
                 'eyebrow' => 'Instagram',
-                'heading' => 'Follow our work.',
+                'heading' => 'Follow our work',
                 'subheading' => 'Behind the scenes, slab selections, and finished installs see what we are working on in the shop and in the field.',
                 'body' => '',
                 'highlightText' => '',
@@ -299,7 +299,7 @@ class SiteContentService
             ],
             'testimonial' => [
                 'eyebrow' => '',
-                'heading' => 'Trusted across utah.',
+                'heading' => 'Trusted across utah',
                 'subheading' => '',
                 'body' => '',
                 'highlightText' => '',
