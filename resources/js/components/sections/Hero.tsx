@@ -30,7 +30,7 @@ function HeroSlider({
             fetchPriority={i === 0 ? "high" : "low"}
             loading={i === 0 ? "eager" : "lazy"}
             decoding="async"
-            className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-[1600ms] ease-in-out ${
+            className={`absolute inset-0 h-full w-full object-cover object-[center_28%] transition-opacity duration-[1600ms] ease-in-out ${
               i === active ? "opacity-100" : "opacity-0"
             }`}
             style={{ transform: "scale(1.05)" }}
@@ -38,7 +38,7 @@ function HeroSlider({
         ))}
       </div>
 
-      <div className="pointer-events-none absolute bottom-8 left-1/2 z-30 flex -translate-x-1/2 gap-2.5 md:bottom-10">
+      <div className="pointer-events-none absolute bottom-6 left-1/2 z-30 flex -translate-x-1/2 gap-2.5 md:bottom-8">
         {slides.map((_, i) => (
           <span
             key={i}
@@ -84,7 +84,7 @@ export function Hero() {
     <section
       ref={sectionRef}
       id="top"
-      className="relative min-h-svh overflow-hidden bg-ink text-cream"
+      className="relative h-[58svh] min-h-[22rem] max-h-[36rem] overflow-hidden bg-ink text-cream sm:h-[62svh] sm:min-h-[26rem] sm:max-h-[42rem] md:h-[68svh] md:min-h-[30rem] md:max-h-[48rem]"
     >
       <HeroSlider parallaxRef={parallaxRef} slides={heroSlides} />
 
@@ -93,7 +93,7 @@ export function Hero() {
         aria-hidden
       />
 
-      <div className="relative z-20 flex min-h-svh items-center justify-center">
+      <div className="relative z-20 flex h-full items-center justify-center">
         <HeroIntro overlay />
       </div>
     </section>

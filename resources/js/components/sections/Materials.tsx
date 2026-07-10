@@ -19,7 +19,7 @@ export function Materials() {
               <span className="h-px w-12 bg-foreground/40" />
               <span className="eyebrow">{section.eyebrow}</span>
             </div>
-            <h2 className={`mt-6 max-w-2xl ${sectionHeadingLight}`}>{section.heading}</h2>
+            {/* <h2 className={`mt-6 max-w-2xl ${sectionHeadingLight}`}>{section.heading}</h2> */}
           </Reveal>
           {section.subheading && (
             <Reveal delay={200}>

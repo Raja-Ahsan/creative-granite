@@ -16,9 +16,9 @@ export function HeroIntro({ overlay = false }: HeroIntroProps) {
         <div
           className={`flex items-center justify-center gap-3 ${overlay ? "text-cream/60" : "text-foreground/60"}`}
         >
-          <span className={`h-px w-12 ${overlay ? "bg-cream/40" : "bg-foreground/40"}`} />
-          <span className="eyebrow tracking-[0.2em]">{section.eyebrow}</span>
-          <span className={`h-px w-12 ${overlay ? "bg-cream/40" : "bg-foreground/40"}`} />
+          {/* <span className={`h-px w-12 ${overlay ? "bg-cream/40" : "bg-foreground/40"}`} /> */}
+          {/* <span className="eyebrow tracking-[0.2em]">{section.eyebrow}</span>
+          <span className={`h-px w-12 ${overlay ? "bg-cream/40" : "bg-foreground/40"}`} /> */}
         </div>
       </Reveal>
 
@@ -51,7 +51,7 @@ export function HeroIntro({ overlay = false }: HeroIntroProps) {
 
   if (overlay) {
     return (
-      <div className="w-full px-6 py-16 text-center md:px-10 md:py-20">
+      <div className="w-full px-6 py-10 text-center md:px-10 md:py-14">
         {content}
       </div>
     );

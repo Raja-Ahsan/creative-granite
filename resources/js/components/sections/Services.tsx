@@ -15,7 +15,7 @@ export function Services() {
             <span className="h-px w-12 bg-cream/40" />
             <span className="eyebrow">{section.eyebrow}</span>
           </div>
-          <h2 className={`mt-6 max-w-2xl ${sectionHeadingDark}`}>{section.heading}</h2>
+          {/* <h2 className={`mt-6 max-w-2xl ${sectionHeadingDark}`}>{section.heading}</h2> */}
         </Reveal>
 
         <div className="mt-20 divide-y divide-cream/15 border-y border-cream/15">

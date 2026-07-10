@@ -19,11 +19,11 @@ export function InstagramSection() {
             </div>
             <h2 className={`mt-6 max-w-3xl ${sectionHeadingLight}`}>{section.heading}</h2>
           </Reveal>
-          {section.subheading && (
+          {/* {section.subheading && (
             <Reveal delay={200}>
               <p className={`max-w-sm ${bodyCopyLight}`}>{section.subheading}</p>
             </Reveal>
-          )}
+          )} */}
         </div>
 
         <div className="mt-12 grid grid-cols-2 gap-0 md:mt-16 md:grid-cols-4">
