@@ -34,7 +34,7 @@ export function HeroIntro({ overlay = false }: HeroIntroProps) {
 
       <Reveal delay={500} className="mt-7 flex justify-center md:mt-8">
         <a
-          href="/contact"
+          href="#estimate"
           data-cursor="estimate"
           className={
             overlay

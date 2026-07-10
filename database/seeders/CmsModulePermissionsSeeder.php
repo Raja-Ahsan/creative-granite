@@ -14,12 +14,19 @@ class CmsModulePermissionsSeeder extends Seeder
 
         $adminRoutes = [
             'admin.dashboard',
+            'contact-inquiries.index',
+            'contact-page.edit',
+            'estimate-requests.index',
             'site-content-module',
             'hero-slides.index',
             'materials.index',
+            'products.index',
+            'process-steps.index',
             'portfolio-items.index',
             'services.index',
             'site-settings.edit',
+            'email-settings.edit',
+            'email-templates.index',
         ];
 
         $permissions = [

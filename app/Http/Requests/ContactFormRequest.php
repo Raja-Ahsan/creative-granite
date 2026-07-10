@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Models\ProjectType;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ContactFormRequest extends FormRequest
 {
@@ -16,11 +18,16 @@ class ContactFormRequest extends FormRequest
      */
     public function rules(): array
     {
+        $projectTypeSlugs = ProjectType::query()
+            ->where('is_active', true)
+            ->pluck('slug')
+            ->all();
+
         return [
             'name' => ['required', 'string', 'max:120'],
             'email' => ['required', 'email', 'max:255'],
             'phone' => ['nullable', 'string', 'max:30'],
-            'project_type' => ['required', 'string', 'in:new-construction,remodel,multifamily,other'],
+            'project_type' => ['required', 'string', Rule::in($projectTypeSlugs)],
             'message' => ['required', 'string', 'max:5000'],
         ];
     }

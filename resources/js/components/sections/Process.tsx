@@ -1,17 +1,22 @@
 import { Reveal } from "@/components/site/Reveal";
-import { processSteps } from "@/services/content";
+import { useSection, useSiteContent } from "@/contexts/SiteContentContext";
 import { bodyCopySmall, sectionHeadingLight } from "@/utils/typography";
 
 export function Process() {
+  const { processSteps } = useSiteContent();
+  const section = useSection("process");
+
+  if (!processSteps.length) return null;
+
   return (
     <section id="process" className="relative py-28 md:py-40">
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
         <Reveal>
           <div className="flex items-center gap-3 text-foreground/60">
             <span className="h-px w-12 bg-foreground/40" />
-            <span className="eyebrow">Project timeline</span>
+            <span className="eyebrow">{section.eyebrow}</span>
           </div>
-          <h2 className={`mt-6 max-w-3xl ${sectionHeadingLight}`}>Four steps, no surprises.</h2>
+          <h2 className={`mt-6 max-w-3xl ${sectionHeadingLight}`}>{section.heading}</h2>
         </Reveal>
 
         <div className="mt-20 grid grid-cols-1 gap-px overflow-hidden bg-foreground/15 md:grid-cols-4">

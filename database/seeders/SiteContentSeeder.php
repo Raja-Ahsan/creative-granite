@@ -5,6 +5,9 @@ namespace Database\Seeders;
 use App\Models\HeroSlide;
 use App\Models\Material;
 use App\Models\PortfolioItem;
+use App\Models\ProcessStep;
+use App\Models\Product;
+use App\Models\ProjectType;
 use App\Models\Service;
 use App\Models\SiteSetting;
 use Illuminate\Database\Seeder;
@@ -16,6 +19,9 @@ class SiteContentSeeder extends Seeder
         $this->seedSettings();
         $this->seedHeroSlides();
         $this->seedMaterials();
+        $this->seedProducts();
+        $this->seedProcessSteps();
+        $this->seedProjectTypes();
         $this->seedPortfolio();
         $this->seedServices();
     }
@@ -32,6 +38,7 @@ class SiteContentSeeder extends Seeder
             ['key' => 'phone', 'value' => '8015745477', 'type' => 'phone', 'group' => 'contact'],
             ['key' => 'email', 'value' => 'info@creativegranite.com', 'type' => 'email', 'group' => 'contact'],
             ['key' => 'hours', 'value' => '8am – 5pm · Mon – Fri', 'type' => 'string', 'group' => 'contact'],
+            ['key' => 'contact_form_intro', 'value' => 'Tell us about your project — we will follow up with next steps, timing, and a path to estimate.', 'type' => 'string', 'group' => 'contact'],
             ['key' => 'founded_year', 'value' => '1998', 'type' => 'string', 'group' => 'general'],
             ['key' => 'footer_tagline', 'value' => 'Built on craftsmanship. Serving Utah since 1998.', 'type' => 'string', 'group' => 'general'],
         ];
@@ -60,16 +67,67 @@ class SiteContentSeeder extends Seeder
     private function seedMaterials(): void
     {
         $items = [
-            ['Granite', 'A durable natural stone known for its strength and variation. A reliable choice for kitchens and high-use surfaces.', '/materials/granite.jpg'],
-            ['Quartz', 'An engineered surface designed for consistency and low maintenance, offering a wide range of colors and styles.', '/materials/quartz.jpg'],
-            ['Marble', 'A natural stone known for soft movement and timeless appeal, often used in bathrooms and feature areas.', '/materials/marble.jpg'],
-            ['Quartzite', 'A natural stone valued for durability and distinctive movement, ideal for kitchens and high-traffic spaces.', '/materials/quartzite.jpg'],
+            ['Granite', 'A durable natural stone known for its strength and variation. A reliable choice for kitchens and high-use surfaces.', '/materials/granite.webp'],
+            ['Quartz', 'An engineered surface designed for consistency and low maintenance, offering a wide range of colors and styles.', '/materials/quartz.webp'],
+            ['Marble', 'A natural stone known for soft movement and timeless appeal, often used in bathrooms and feature areas.', '/materials/marble.webp'],
+            ['Quartzite', 'A natural stone valued for durability and distinctive movement, ideal for kitchens and high-traffic spaces.', '/materials/quartzite.webp'],
         ];
 
         foreach ($items as $index => [$name, $desc, $image]) {
             Material::updateOrCreate(
                 ['name' => $name],
                 ['description' => $desc, 'image_path' => $image, 'sort_order' => $index + 1, 'is_active' => true]
+            );
+        }
+    }
+
+    private function seedProducts(): void
+    {
+        $items = [
+            ['Kitchen Countertops', 'Custom-fabricated kitchen countertops in granite, quartz, marble, and quartzite. Precision templating and professional installation for new builds and remodels.', '/portfolio/portfolio_2.jpg'],
+            ['Bathroom Vanities', 'Elegant bathroom vanity tops and surrounds crafted to complement your design vision. Single and double vanity configurations available.', '/portfolio/024.jpg'],
+            ['Fireplace Surrounds', 'Statement fireplace surrounds and hearths in natural and engineered stone. Custom shapes, edge profiles, and finishes.', '/portfolio/067.jpg'],
+            ['Outdoor Kitchens', 'Weather-resistant stone surfaces for outdoor kitchens and BBQ islands. Durable materials selected for Utah climate.', '/portfolio/DSC_4182_1.jpg'],
+        ];
+
+        foreach ($items as $index => [$name, $desc, $image]) {
+            Product::updateOrCreate(
+                ['name' => $name],
+                ['description' => $desc, 'excerpt' => \Illuminate\Support\Str::limit($desc, 120), 'image_path' => $image, 'sort_order' => $index + 1, 'is_active' => true]
+            );
+        }
+    }
+
+    private function seedProcessSteps(): void
+    {
+        $steps = [
+            ['01', 'Initial Consultation', 'We discuss your project, timeline, and budget in our showroom or on-site.'],
+            ['02', 'Estimate & Material Selection', 'We provide a detailed quote and guide you through slab selection from our inventory.'],
+            ['03', 'Template & Measurement', 'Our team templates your space with precision for a perfect fit no guesswork.'],
+            ['04', 'Fabrication & Install', 'Hand finished edges, sealed surfaces, and a clean, on schedule installation.'],
+        ];
+
+        foreach ($steps as $index => [$number, $title, $description]) {
+            ProcessStep::updateOrCreate(
+                ['title' => $title],
+                ['step_number' => $number, 'description' => $description, 'sort_order' => $index + 1, 'is_active' => true]
+            );
+        }
+    }
+
+    private function seedProjectTypes(): void
+    {
+        $types = [
+            'New construction',
+            'Remodel & renovation',
+            'Multifamily & commercial',
+            'Other',
+        ];
+
+        foreach ($types as $index => $name) {
+            ProjectType::updateOrCreate(
+                ['name' => $name],
+                ['sort_order' => $index + 1, 'is_active' => true]
             );
         }
     }

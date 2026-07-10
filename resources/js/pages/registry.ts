@@ -2,12 +2,14 @@ import type { ComponentType } from "react";
 import { ContactPage } from "./ContactPage";
 import { GalleryPage } from "./GalleryPage";
 import { HomePage } from "./HomePage";
+import { ServiceDetailPage } from "./ServiceDetailPage";
 import { ServicesPage } from "./ServicesPage";
 
 export const pages = {
   home: HomePage,
   gallery: GalleryPage,
   services: ServicesPage,
+  "service-detail": ServiceDetailPage,
   contact: ContactPage,
 } satisfies Record<string, ComponentType>;
 
@@ -20,10 +22,18 @@ const pathPageMap: Record<string, PageName> = {
 };
 
 export function resolvePage(name: string | undefined): ComponentType {
-  const pathPage =
-    typeof window !== "undefined"
-      ? pathPageMap[window.location.pathname.replace(/\/$/, "") || "/"]
-      : undefined;
+  const path =
+    typeof window !== "undefined" ? window.location.pathname.replace(/\/$/, "") || "/" : "/";
+
+  if (typeof window !== "undefined" && window.__SITE_PAGE__ === "service-detail") {
+    return ServiceDetailPage;
+  }
+
+  if (path.startsWith("/services/") && path !== "/services") {
+    return ServiceDetailPage;
+  }
+
+  const pathPage = typeof window !== "undefined" ? pathPageMap[path] : undefined;
 
   const pageName =
     name ||

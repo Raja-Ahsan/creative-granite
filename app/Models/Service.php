@@ -15,6 +15,10 @@ class Service extends Model
         'title',
         'slug',
         'body',
+        'excerpt',
+        'main_image_path',
+        'meta_title',
+        'meta_description',
         'sort_order',
         'is_active',
     ];

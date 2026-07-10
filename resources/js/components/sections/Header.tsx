@@ -1,8 +1,14 @@
 import { useEffect, useRef, useState } from "react";
+import { useEstimateModal } from "@/contexts/EstimateModalContext";
 import { useSiteContent } from "@/contexts/SiteContentContext";
+
+function isEstimateLink(href: string): boolean {
+  return href === "#estimate" || href.endsWith("#estimate");
+}
 
 export function Header() {
   const { settings, navLeft, navRight } = useSiteContent();
+  const { openEstimateModal } = useEstimateModal();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const scrolledRef = useRef(false);
@@ -57,14 +63,26 @@ export function Header() {
         </a>
 
         <div className="flex items-center justify-end gap-6 lg:gap-8">
-          {navRight.map(([l, h]) => (
-            <a key={l} href={h} className="link-underline text-sm font-medium text-cream/80 hover:text-cream">
-              {l}
-            </a>
-          ))}
+          {navRight.map(([l, h]) =>
+            isEstimateLink(h) ? (
+              <button
+                key={l}
+                type="button"
+                onClick={openEstimateModal}
+                data-cursor="estimate"
+                className="link-underline text-sm font-medium text-cream/80 hover:text-cream"
+              >
+                {l}
+              </button>
+            ) : (
+              <a key={l} href={h} className="link-underline text-sm font-medium text-cream/80 hover:text-cream">
+                {l}
+              </a>
+            ),
+          )}
           <a
             href="/contact"
-            data-cursor="estimate"
+            data-cursor="contact"
             className="btn-magnetic btn-magnetic-inverse group inline-flex shrink-0 items-center gap-2 rounded-full border border-cream px-5 py-2.5 text-xs font-medium tracking-[0.18em] text-cream"
           >
             <span>Contact</span>
@@ -97,18 +115,36 @@ export function Header() {
       {open && (
         <div className="border-t border-cream/10 bg-ink/85 backdrop-blur-md md:hidden">
           <div className="flex flex-col px-6 py-6">
-            {navMobile.map(([l, h]) => (
-              <a
-                key={l}
-                href={h}
-                onClick={() => setOpen(false)}
-                className="border-b border-cream/10 py-4 font-display text-2xl text-cream"
-              >
-                {l}
-              </a>
-            ))}
-            <a href="/contact" onClick={() => setOpen(false)} className="mt-6 rounded-full bg-cream py-4 text-center text-sm tracking-widest text-ink">
-              Get an estimate
+            {navMobile.map(([l, h]) =>
+              isEstimateLink(h) ? (
+                <button
+                  key={l}
+                  type="button"
+                  onClick={() => {
+                    setOpen(false);
+                    openEstimateModal();
+                  }}
+                  className="border-b border-cream/10 py-4 text-left font-display text-2xl text-cream"
+                >
+                  {l}
+                </button>
+              ) : (
+                <a
+                  key={l}
+                  href={h}
+                  onClick={() => setOpen(false)}
+                  className="border-b border-cream/10 py-4 font-display text-2xl text-cream"
+                >
+                  {l}
+                </a>
+              ),
+            )}
+            <a
+              href="/contact"
+              onClick={() => setOpen(false)}
+              className="mt-6 rounded-full bg-cream py-4 text-center text-sm tracking-widest text-ink"
+            >
+              Contact
             </a>
           </div>
         </div>
