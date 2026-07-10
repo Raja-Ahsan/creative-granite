@@ -233,8 +233,7 @@ class SiteContentService
                 'eyebrow' => 'Who we are',
                 'heading' => 'Built on craftsmanship since',
                 'subheading' => '',
-                'body' => 'Creative Granite  Design is a Utah based stone
-fabrication company specializing in custom countertops and architectural
+                'body' => 'Creative Granite  Design is a Utah based stone fabrication company specializing in custom countertops and architectural
 surfaces. We partner with homeowners, builders, and designers to deliver
 precise fabrication, thoughtful material selection, and high quality
 installation across residential and multifamily projects.',
