@@ -185,7 +185,7 @@ class SiteContentService
     {
         return [
             ['Work', '/#work'],
-            ['Products', '/products'],
+            ['Products', '#'],
             ['Services', '/services'],
         ];
     }
@@ -202,7 +202,7 @@ class SiteContentService
     {
         return [
             ['Work', '/#work'],
-            ['Products', '/products'],
+            ['Products', '#'],
             ['Services', '/services'],
             ['Process', '/process'],
             ['Get an Estimate', '#estimate'],
@@ -233,10 +233,11 @@ class SiteContentService
                 'eyebrow' => 'Who we are',
                 'heading' => 'Built on craftsmanship since',
                 'subheading' => '',
-                'body' => 'Creative Granite  Design is a Utah based stone fabrication company specializing in custom countertops and architectural
-surfaces. We partner with homeowners, builders, and designers to deliver
-precise fabrication, thoughtful material selection, and high quality
-installation across residential and multifamily projects.',
+                'body' => 'Creative Granite + Design is a Utah-based stone
+                          fabrication company specializing in custom countertops and architectural
+                           surfaces. We partner with homeowners, builders, and designers to deliver
+                           precise fabrication, thoughtful material selection, and high-quality
+                            installation across residential and multifamily projects.',
                 'highlightText' => '1998',
                 'image' => '/images/site/LakeLine-20.jpg',
             ],
@@ -305,7 +306,7 @@ installation across residential and multifamily projects.',
                 'image' => '',
             ],
             'cta' => [
-                'eyebrow' => 'Start your project',
+                'eyebrow' => 'Final Call to Action',
                 'heading' => 'Start your project',
                 'subheading' => '',
                 'body' => 'Whether you’re building a custom home, planning a remodel, or managing a multifamily or commercial project, our team is here to help bring it to life.',
