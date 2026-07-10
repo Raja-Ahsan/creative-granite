@@ -8,6 +8,8 @@
   font-weight: 400;
   font-style: normal;
   font-display: swap;
+  /* Keep letters in brand fonts; render + - _ from fallback stack */
+  unicode-range: U+0020-002A, U+002C, U+002E-005A, U+005B-005E, U+0060-007A, U+007B-007E, U+00A0-00BE, U+00C0-00FF, U+0100-024F;
 }
 
 @font-face {
@@ -17,6 +19,8 @@
   font-weight: 400;
   font-style: normal;
   font-display: swap;
+  /* Keep letters in brand fonts; render + - _ from fallback stack */
+  unicode-range: U+0020-002A, U+002C, U+002E-005A, U+005B-005E, U+0060-007A, U+007B-007E, U+00A0-00BE, U+00C0-00FF, U+0100-024F;
 }
 
 @font-face {
@@ -25,6 +29,8 @@
   font-weight: 200;
   font-style: normal;
   font-display: swap;
+  /* Keep letters in brand fonts; render + - _ from fallback stack */
+  unicode-range: U+0020-002A, U+002C, U+002E-005A, U+005B-005E, U+0060-007A, U+007B-007E, U+00A0-00BE, U+00C0-00FF, U+0100-024F;
 }
 @font-face {
   font-family: "Biondi Sans";
@@ -32,6 +38,8 @@
   font-weight: 200;
   font-style: italic;
   font-display: swap;
+  /* Keep letters in brand fonts; render + - _ from fallback stack */
+  unicode-range: U+0020-002A, U+002C, U+002E-005A, U+005B-005E, U+0060-007A, U+007B-007E, U+00A0-00BE, U+00C0-00FF, U+0100-024F;
 }
 @font-face {
   font-family: "Biondi Sans";
@@ -39,6 +47,8 @@
   font-weight: 300;
   font-style: normal;
   font-display: swap;
+  /* Keep letters in brand fonts; render + - _ from fallback stack */
+  unicode-range: U+0020-002A, U+002C, U+002E-005A, U+005B-005E, U+0060-007A, U+007B-007E, U+00A0-00BE, U+00C0-00FF, U+0100-024F;
 }
 @font-face {
   font-family: "Biondi Sans";
@@ -46,6 +56,8 @@
   font-weight: 300;
   font-style: italic;
   font-display: swap;
+  /* Keep letters in brand fonts; render + - _ from fallback stack */
+  unicode-range: U+0020-002A, U+002C, U+002E-005A, U+005B-005E, U+0060-007A, U+007B-007E, U+00A0-00BE, U+00C0-00FF, U+0100-024F;
 }
 @font-face {
   font-family: "Biondi Sans";
@@ -53,6 +65,8 @@
   font-weight: 400;
   font-style: normal;
   font-display: swap;
+  /* Keep letters in brand fonts; render + - _ from fallback stack */
+  unicode-range: U+0020-002A, U+002C, U+002E-005A, U+005B-005E, U+0060-007A, U+007B-007E, U+00A0-00BE, U+00C0-00FF, U+0100-024F;
 }
 @font-face {
   font-family: "Biondi Sans";
@@ -60,6 +74,8 @@
   font-weight: 400;
   font-style: italic;
   font-display: swap;
+  /* Keep letters in brand fonts; render + - _ from fallback stack */
+  unicode-range: U+0020-002A, U+002C, U+002E-005A, U+005B-005E, U+0060-007A, U+007B-007E, U+00A0-00BE, U+00C0-00FF, U+0100-024F;
 }
 @font-face {
   font-family: "Biondi Sans";
@@ -67,6 +83,8 @@
   font-weight: 700;
   font-style: normal;
   font-display: swap;
+  /* Keep letters in brand fonts; render + - _ from fallback stack */
+  unicode-range: U+0020-002A, U+002C, U+002E-005A, U+005B-005E, U+0060-007A, U+007B-007E, U+00A0-00BE, U+00C0-00FF, U+0100-024F;
 }
 @font-face {
   font-family: "Biondi Sans";
@@ -74,6 +92,8 @@
   font-weight: 700;
   font-style: italic;
   font-display: swap;
+  /* Keep letters in brand fonts; render + - _ from fallback stack */
+  unicode-range: U+0020-002A, U+002C, U+002E-005A, U+005B-005E, U+0060-007A, U+007B-007E, U+00A0-00BE, U+00C0-00FF, U+0100-024F;
 }
 @font-face {
   font-family: "Biondi Sans";
@@ -81,6 +101,8 @@
   font-weight: 900;
   font-style: normal;
   font-display: swap;
+  /* Keep letters in brand fonts; render + - _ from fallback stack */
+  unicode-range: U+0020-002A, U+002C, U+002E-005A, U+005B-005E, U+0060-007A, U+007B-007E, U+00A0-00BE, U+00C0-00FF, U+0100-024F;
 }
 @font-face {
   font-family: "Biondi Sans";
@@ -88,6 +110,8 @@
   font-weight: 900;
   font-style: italic;
   font-display: swap;
+  /* Keep letters in brand fonts; render + - _ from fallback stack */
+  unicode-range: U+0020-002A, U+002C, U+002E-005A, U+005B-005E, U+0060-007A, U+007B-007E, U+00A0-00BE, U+00C0-00FF, U+0100-024F;
 }
 
 @layer base {

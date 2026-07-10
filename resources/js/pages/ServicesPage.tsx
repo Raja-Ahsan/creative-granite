@@ -1,5 +1,4 @@
 import { CTA, Footer, Header } from "@/components/sections";
-import { ServiceCard } from "@/components/sections/ServiceCard";
 import { Reveal } from "@/components/site/Reveal";
 import { useSection, useSiteContent } from "@/contexts/SiteContentContext";
 import { bodyCopyLight, sectionHeadingLight } from "@/utils/typography";
@@ -29,44 +28,51 @@ export function ServicesPage() {
               )}
             </Reveal>
 
-            <Reveal delay={120} className="mt-12 flex flex-wrap gap-8 border-t border-foreground/10 pt-10 md:gap-16">
-              <div>
-                {/* <div className="font-display text-4xl text-[#021E44] md:text-5xl">{services.length}</div> */}
-                <div className="eyebrow mt-2 text-foreground/50">Core services</div>
-              </div>
-              <div>
-                {/* <div className="font-display text-4xl text-[#021E44] md:text-5xl">{processSteps.length}</div> */}
-                <div className="eyebrow mt-2 text-foreground/50">Step process</div>
-              </div>
-              <div className="max-w-xs">
-                <p className="text-sm font-light leading-relaxed text-foreground/65">
-                  From new construction to remodels and multifamily — precision fabrication across Utah.
-                </p>
-              </div>
-            </Reveal>
+           
+            
           </div>
         </section>
 
-        {/* Service cards */}
+        {/* Services list */}
         <section className="relative bg-ink py-20 text-cream md:py-28">
           <div className="pointer-events-none absolute inset-0 grain opacity-40" />
-          <div className="relative mx-auto max-w-[1400px] space-y-6 px-6 md:space-y-8 md:px-10">
-            {services.map((service, i) => (
-              <ServiceCard
-                key={service.slug}
-                index={i}
-                title={service.title}
-                slug={service.slug}
-                excerpt={service.excerpt}
-                mainImage={service.mainImage}
-                reversed={i % 2 === 1}
-              />
-            ))}
+          <div className="relative mx-auto max-w-[1400px] px-6 md:px-10">
+            <div className="divide-y divide-cream/15 border-y border-cream/15">
+              {services.map((service, i) => (
+                <Reveal key={service.slug} delay={i * 100}>
+                  <a
+                    href={`/services/${service.slug}`}
+                    data-cursor="learn"
+                    className="group relative grid cursor-pointer grid-cols-12 gap-6 py-10 transition-colors duration-500 hover:bg-cream/[0.04] md:py-14"
+                  >
+                    <div className="col-span-2 md:col-span-1">
+                      <span className="font-mono text-sm opacity-50">0{i + 1}</span>
+                    </div>
+                    <div className="col-span-10 md:col-span-5">
+                      <h2 className="font-display text-2xl transition-transform duration-500 group-hover:translate-x-2 md:text-5xl">
+                        {service.title}
+                      </h2>
+                    </div>
+                    <div className="col-span-12 md:col-span-5">
+                      <p className="text-cream/70 md:text-lg">{service.excerpt}</p>
+                    </div>
+                    <div className="col-span-12 flex items-center justify-end md:col-span-1">
+                      <span
+                        className="text-2xl transition-transform duration-500 group-hover:rotate-45"
+                        style={{ fontFamily: "sans-serif" }}
+                      >
+                        +
+                      </span>
+                    </div>
+                  </a>
+                </Reveal>
+              ))}
+            </div>
           </div>
         </section>
 
         {/* Quick process strip */}
-        <section className="border-y border-foreground/10 bg-cream py-20 md:py-28">
+        {/* <section className="border-y border-foreground/10 bg-cream py-20 md:py-28">
           <div className="mx-auto max-w-[1400px] px-6 md:px-10">
             <Reveal>
               <div className="flex items-center gap-3 text-foreground/60">
@@ -92,7 +98,7 @@ export function ServicesPage() {
               ))}
             </div>
           </div>
-        </section>
+        </section> */}
 
         <CTA />
         <Footer />

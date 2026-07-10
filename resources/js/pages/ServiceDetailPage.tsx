@@ -17,13 +17,13 @@ export function ServiceDetailPage() {
     [service],
   );
 
-  const bodyHtml = useMemo(
-    () =>
-      service
-        ? prepareServiceBody(service.body, service.title, service.excerpt, service.mainImage)
-        : "",
-    [service],
-  );
+  const bodyHtml = useMemo(() => {
+    if (!service) return "";
+
+    const html = prepareServiceBody(service.body, service.title, service.excerpt, null);
+    // Text-only layout: strip inline images from rich text body
+    return html.replace(/<img[^>]*>/gi, "");
+  }, [service]);
 
   useEffect(() => {
     if (service) {
@@ -74,6 +74,7 @@ export function ServiceDetailPage() {
           </div>
         </section>
 
+        {/* Main image — disabled for text-only layout
         {service.mainImage && (
           <Reveal className="bg-cream py-12 md:py-16">
             <div className="mx-auto max-w-[1400px] px-6 md:px-10">
@@ -90,6 +91,7 @@ export function ServiceDetailPage() {
             </div>
           </Reveal>
         )}
+        */}
 
         <section className="border-t border-foreground/10 bg-cream pb-28 md:pb-40">
           <div className="mx-auto max-w-[800px] px-6 pt-14 md:px-10 md:pt-20">

@@ -24,11 +24,11 @@ export function Work() {
           )}
         </div>
 
-        <div className="mt-16 grid grid-cols-2 gap-0 md:grid-cols-3">
+        <div className="mt-16 grid grid-cols-2 gap-2 md:grid-cols-3 md:gap-3">
           {portfolio.slice(0, 9).map((p, i) => (
             <div
               key={`${p.src}-${i}`}
-              className="img-zoom group relative aspect-[4/3] h-[200px] w-full overflow-hidden rounded-none bg-bone md:h-full"
+              className="img-zoom group relative aspect-[4/3] h-[200px] w-full  overflow-hidden rounded-none bg-bone md:h-full"
               data-cursor="view"
             >
               <img
