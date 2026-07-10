@@ -233,7 +233,11 @@ class SiteContentService
                 'eyebrow' => 'Who we are',
                 'heading' => 'Built on craftsmanship since',
                 'subheading' => '',
-                'body' => 'Creative Granite  Design is a Utah based stone fabrication company specializing in custom countertops and architectural surfaces. We partner with homeowners, builders, and designers to deliver precise fabrication, thoughtful material selection, and high quality installation across residential and multifamily residential projects in Utah, Idaho, and Wyoming.',
+                'body' => 'Creative Granite  Design is a Utah based stone
+fabrication company specializing in custom countertops and architectural
+surfaces. We partner with homeowners, builders, and designers to deliver
+precise fabrication, thoughtful material selection, and high quality
+installation across residential and multifamily projects.',
                 'highlightText' => '1998',
                 'image' => '/images/site/LakeLine-20.jpg',
             ],
