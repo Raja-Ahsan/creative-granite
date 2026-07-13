@@ -24,7 +24,7 @@ export function GalleryPage() {
               </p>
             </Reveal>
 
-            <div className="mt-16 grid grid-cols-2 gap-2 md:grid-cols-3 md:gap-3">
+            <div className="mt-16 grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-5">
               {portfolio.map((item, i) => (
                 <div
                   key={`${item.src}-${i}`}

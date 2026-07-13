@@ -84,7 +84,7 @@ export function Hero() {
     <section
       ref={sectionRef}
       id="top"
-      className="relative h-[58svh] min-h-[22rem] max-h-[36rem] overflow-hidden bg-ink text-cream sm:h-[62svh] sm:min-h-[26rem] sm:max-h-[42rem] md:h-[68svh] md:min-h-[30rem] md:max-h-[48rem]"
+      className="relative h-[64svh] min-h-[24rem] max-h-[40rem] overflow-hidden bg-ink text-cream sm:h-[68svh] sm:min-h-[28rem] sm:max-h-[46rem] md:h-[74svh] md:min-h-[32rem] md:max-h-[52rem]"
     >
       <HeroSlider parallaxRef={parallaxRef} slides={heroSlides} />
 

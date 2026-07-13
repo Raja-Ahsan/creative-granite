@@ -32,12 +32,13 @@ export function Testimonial() {
           </div>
           <blockquote
             key={i}
-            className="mx-auto mt-4 max-w-3xl font-display text-[16px] leading-tight text-foreground md:text-[20px] animate-in fade-in slide-in-from-bottom-4 duration-700"
+            className="mx-auto mt-4 max-w-3xl font-display text-[18px] leading-tight text-foreground animate-in fade-in slide-in-from-bottom-4 duration-700"
           >
             "{cur.q}"
           </blockquote>
           <div className="eyebrow mt-5 text-foreground/60">
-            — {cur.a} · {cur.r}
+            — {cur.a}
+            {/* — {cur.a} · {cur.r} */}
           </div>
           <div className="mt-10 flex justify-center gap-2">
             {testimonials.map((_, k) => (
