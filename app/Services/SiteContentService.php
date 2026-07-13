@@ -254,7 +254,7 @@ natasha “Natasha”'],
         $sections = [
             'hero-intro' => [
                 'eyebrow' => 'Welcome to creative granite and design',
-                'heading' => 'Crafting Custom Stone for Inspired Spaces',
+                'heading' => '"Crafting Custom Stone for Inspired Spaces" ',
                 'subheading' => 'Serving homeowners, builders, and multifamily projects across Utah',
                 'body' => 'Premium granite, quartz, marble and quartzite. Hand fabricated in Utah for builders, designers and homeowners who care about the details no one is supposed to notice.',
                 'highlightText' => '',
@@ -290,7 +290,7 @@ natasha “Natasha”'],
             ],
             'work' => [
                 'eyebrow' => 'Our work',
-                'heading' => 'Fabricated with precision, installed with intention.',
+                'heading' => '"Fabricated with precision, installed with intention."',
                 'subheading' => 'A selection of completed spaces, material details, and in between moments each reflecting our approach to stone, design, and execution.',
                 'body' => '',
                 'highlightText' => '',
