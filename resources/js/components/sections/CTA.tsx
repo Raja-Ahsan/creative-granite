@@ -11,7 +11,7 @@ export function CTA() {
       <div className="pointer-events-none absolute inset-0 noise-overlay" />
       <div className="relative mx-auto max-w-[1400px] px-6 text-center md:px-10">
         <Reveal>
-          <div className="eyebrow text-foreground/60">{section.eyebrow}</div>
+          {/* <div className="eyebrow text-foreground/60">{section.eyebrow}</div> */}
           <h2 className={`mx-auto mt-8 max-w-4xl ${sectionHeadingLight}`}>{section.heading}</h2>
           {section.body && <p className={`mx-auto mt-10 max-w-[750px] ${bodyCopyCta}`}>{section.body}</p>}
           <div className="mt-12 flex flex-col items-center gap-5">

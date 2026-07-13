@@ -24,7 +24,7 @@ export function Work() {
           )}
         </div>
 
-        <div className="mt-16 grid grid-cols-2 gap-2 md:grid-cols-3 md:gap-3">
+        <div className="mt-16 grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-5">
           {portfolio.slice(0, 9).map((p, i) => (
             <div
               key={`${p.src}-${i}`}

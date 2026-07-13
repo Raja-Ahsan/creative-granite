@@ -16,10 +16,10 @@ export function ContactPage() {
         <section className="relative pb-28 pt-[calc(4.25rem+7rem)] md:pb-40 md:pt-[calc(6.5rem+10rem)]">
           <div className="mx-auto max-w-[1400px] px-6 md:px-10">
             <Reveal>
-              <div className="flex items-center gap-3 text-foreground/60">
+              {/* <div className="flex items-center gap-3 text-foreground/60">
                 <span className="h-px w-12 bg-foreground/40" />
                 <span className="eyebrow">{section.eyebrow}</span>
-              </div>
+              </div> */}
               <h1 className={`mt-6 max-w-3xl ${sectionHeadingLight}`}>{section.heading}</h1>
               {section.body && <p className={`mt-6 max-w-2xl ${bodyCopyLight}`}>{section.body}</p>}
             </Reveal>
@@ -32,7 +32,7 @@ export function ContactPage() {
             <div className="grid min-w-0 grid-cols-1 gap-10 border-y border-foreground/10 py-12 md:grid-cols-12 md:gap-16 md:py-20">
               <Reveal className="min-w-0 md:col-span-5">
                 <div className="eyebrow text-foreground/50">Visit</div>
-                <div className="mt-4 space-y-2 text-foreground/85" style={{ fontFamily: "Inter, sans-serif" }}>
+                <div className="footer-sans mt-4 space-y-2 text-foreground/85 !font-semibold !uppercase">
                   {settings.addressLine1 && <div>{settings.addressLine1}</div>}
                   {settings.addressLine2 && <div>{settings.addressLine2}</div>}
                 </div>
@@ -40,21 +40,21 @@ export function ContactPage() {
                 {settings.hours && (
                   <div className="mt-5">
                     <div className="eyebrow text-foreground/50">Hours</div>
-                    <p className="mt-2 leading-relaxed text-foreground/85">{settings.hours}</p>
+                    <p className="footer-sans mt-2 leading-relaxed text-foreground/85 !font-semibold !uppercase">{settings.hours}</p>
                   </div>
                 )}
 
-                <div className="footer-sans mt-5 space-y-2" style={{ fontFamily: "Inter, sans-serif" }}>
+                <div className="footer-sans mt-5 space-y-2">
                   {settings.phone && (
                     <div>
-                      <a href={`tel:${settings.phone}`} className="link-underline text-foreground/85">
+                      <a href={`tel:${settings.phone}`} className="footer-sans link-underline text-foreground/85 !font-semibold !uppercase">
                         {settings.phone}
                       </a>
                     </div>
                   )}
                   {settings.email && (
                     <div>
-                      <a href={`mailto:${settings.email}`} className="link-underline text-foreground/85">
+                      <a href={`mailto:${settings.email}`} className="footer-sans link-underline text-foreground/85 !font-semibold">
                         {settings.email}
                       </a>
                     </div>
@@ -67,7 +67,7 @@ export function ContactPage() {
                     target="_blank"
                     rel="noopener noreferrer"
                     data-cursor="view"
-                    className="link-underline mt-5 inline-block text-sm tracking-[0.2em] text-foreground/70 transition-colors hover:text-foreground" style={{ fontFamily: "Inter, sans-serif" }}
+                    className="footer-sans link-underline mt-5 inline-block text-sm tracking-[0.2em] text-foreground/70 transition-colors hover:text-foreground"
                   >
                     Get directions
                   </a>

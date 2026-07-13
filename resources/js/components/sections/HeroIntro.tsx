@@ -22,7 +22,9 @@ export function HeroIntro({ overlay = false }: HeroIntroProps) {
         </div>
       </Reveal>
 
-      <h1 className={`mt-4 md:mt-5 ${overlay ? sectionHeadingDark : sectionHeadingLight}`}>
+      <h1
+        className={`mt-4 md:mt-5 ${overlay ? sectionHeadingDark : sectionHeadingLight} text-[clamp(1.5rem,3.6vw,3rem)] max-w-[720px] mx-auto`}
+      >
         <SplitText text={section.heading ?? ""} wrap dense />
       </h1>
 
