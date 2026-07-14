@@ -1,4 +1,4 @@
-<div class="normal-case font-sans">
+<div class="font-sans">
     <p class="text-sm text-ink-soft mb-6">
         Once your account is deleted, all of its resources and data will be permanently deleted. Please download any data you wish to keep before proceeding.
     </p>
@@ -14,7 +14,7 @@
     </button>
 
     <x-modal name="confirm-user-deletion" :show="$errors->userDeletion->isNotEmpty()" focusable>
-        <form method="post" action="{{ route('profile.destroy') }}" class="p-6 normal-case font-sans">
+        <form method="post" action="{{ route('profile.destroy') }}" class="p-6 font-sans">
             @csrf
             @method('delete')
 

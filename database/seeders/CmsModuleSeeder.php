@@ -69,7 +69,7 @@ class CmsModuleSeeder extends Seeder
             ['materials.index', 'Materials', 'fa-solid fa-gem', 2],
             ['products.index', 'Products', 'fa-solid fa-box', 3],
             ['process-steps.index', 'Process', 'fa-solid fa-list-ol', 4],
-            ['portfolio-items.index', 'Portfolio', 'fa-solid fa-camera', 5],
+            ['portfolio-items.index', 'Our Work Gallery', 'fa-solid fa-camera', 5],
             ['services.index', 'Services', 'fa-solid fa-briefcase', 6],
             ['site-settings.edit', 'Site Settings', 'fa-solid fa-gear', 7],
             ['email-settings.edit', 'Email Settings', 'fa-solid fa-envelope', 8],

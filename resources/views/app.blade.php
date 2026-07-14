@@ -23,6 +23,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap">
+    @if (filled(config('services.adobe_fonts.kit')))
+        <link rel="stylesheet" href="https://use.typekit.net/{{ config('services.adobe_fonts.kit') }}.css">
+    @endif
     @viteReactRefresh
     @vite(['resources/css/site.css', 'resources/js/site.tsx'])
     <script>

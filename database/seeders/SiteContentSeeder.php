@@ -146,10 +146,14 @@ class SiteContentSeeder extends Seeder
             ['/portfolio/DSC_4182.jpg', 'Carrara Island'],
         ];
 
-        foreach ($items as [$path, $title]) {
+        foreach ($items as $index => [$path, $title]) {
             PortfolioItem::updateOrCreate(
                 ['image_path' => $path, 'title' => $title],
-                []
+                [
+                    'sort_order' => $index + 1,
+                    'is_featured' => $index < 3,
+                    'is_active' => true,
+                ]
             );
         }
     }

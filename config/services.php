@@ -35,4 +35,8 @@ return [
         ],
     ],
 
+    'adobe_fonts' => [
+        'kit' => env('ADOBE_FONTS_KIT'),
+    ],
+
 ];

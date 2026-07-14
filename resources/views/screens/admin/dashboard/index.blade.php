@@ -33,7 +33,7 @@
                 'route' => route('admin.products.index'),
             ],
             [
-                'label' => 'Portfolio',
+                'label' => 'Our Work Gallery',
                 'value' => PortfolioItem::count(),
                 'icon' => 'fa-solid fa-camera',
                 'color' => 'bg-ink/10 text-ink',
@@ -53,13 +53,13 @@
             ['Materials', 'fa-solid fa-gem', route('admin.materials.index'), Material::count()],
             ['Products', 'fa-solid fa-box', route('admin.products.index'), Product::count()],
             ['Process', 'fa-solid fa-list-ol', route('admin.process-steps.index'), ProcessStep::count()],
-            ['Portfolio', 'fa-solid fa-camera', route('admin.portfolio-items.index'), PortfolioItem::count()],
+            ['Our Work Gallery', 'fa-solid fa-camera', route('admin.portfolio-items.index'), PortfolioItem::count()],
             ['Services', 'fa-solid fa-briefcase', route('admin.services.index'), Service::count()],
             ['Site Settings', 'fa-solid fa-gear', route('admin.site-settings.edit'), null],
         ];
 
         $recentActivity = [
-            ['action' => 'Portfolio gallery updated', 'time' => 'This week', 'icon' => 'fa-solid fa-camera'],
+            ['action' => 'Our Work Gallery updated', 'time' => 'This week', 'icon' => 'fa-solid fa-camera'],
             ['action' => 'Materials library reviewed', 'time' => 'This week', 'icon' => 'fa-solid fa-gem'],
             ['action' => 'Hero slides reviewed', 'time' => 'Recently', 'icon' => 'fa-solid fa-images'],
             ['action' => 'Site settings checked', 'time' => 'Recently', 'icon' => 'fa-solid fa-gear'],
@@ -153,7 +153,7 @@
                     <span class="text-sm font-semibold text-ink">{{ ProcessStep::count() }}</span>
                 </div>
                 <div class="flex items-center justify-between p-3 rounded-lg bg-cream/60">
-                    <span class="text-sm text-ink-soft">Portfolio Items</span>
+                    <span class="text-sm text-ink-soft">Our Work Gallery</span>
                     <span class="text-sm font-semibold text-ink">{{ PortfolioItem::count() }}</span>
                 </div>
                 <div class="flex items-center justify-between p-3 rounded-lg bg-ink text-cream">

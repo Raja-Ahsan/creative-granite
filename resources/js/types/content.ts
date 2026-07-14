@@ -1,5 +1,5 @@
 export type HeroSlide = { src: string; alt: string };
-export type PortfolioItem = { src: string; title: string; tag: string };
+export type PortfolioItem = { src: string; title: string; tag: string; featured?: boolean };
 export type InstagramPost = { src: string; alt: string; url?: string };
 export type Material = { name: string; desc: string; image: string };
 export type ProductImage = { src: string; alt: string };

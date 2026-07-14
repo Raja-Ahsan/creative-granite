@@ -1,10 +1,18 @@
+import { ImageLightbox } from "@/components/site/ImageLightbox";
 import { Reveal } from "@/components/site/Reveal";
 import { useSection, useSiteContent } from "@/contexts/SiteContentContext";
 import { bodyCopyLight, sectionHeadingLight } from "@/utils/typography";
+import { useMemo, useState } from "react";
 
 export function Work() {
   const { portfolio } = useSiteContent();
   const section = useSection("work");
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
+  const featuredWork = useMemo(
+    () => portfolio.filter((item) => item.featured),
+    [portfolio],
+  );
 
   return (
     <section id="work" className="relative py-28 md:py-40">
@@ -24,24 +32,28 @@ export function Work() {
           )}
         </div>
 
-        <div className="mt-16 grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-5">
-          {portfolio.slice(0, 9).map((p, i) => (
-            <div
-              key={`${p.src}-${i}`}
-              className="img-zoom group relative aspect-[4/3] h-[200px] w-full  overflow-hidden rounded-none bg-bone md:h-full"
-              data-cursor="view"
-            >
-              <img
-                src={p.src}
-                alt={p.title}
-                loading="lazy"
-                decoding="async"
-                className="h-full w-full object-cover"
-              />
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent" />
-            </div>
-          ))}
-        </div>
+        {featuredWork.length > 0 && (
+          <div className="mt-16 grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-5">
+            {featuredWork.map((item, i) => (
+              <button
+                key={`${item.src}-${i}`}
+                type="button"
+                onClick={() => setLightboxIndex(i)}
+                className="img-zoom group relative aspect-[4/3] h-[200px] w-full overflow-hidden rounded-none bg-bone text-left md:min-h-[500px]"
+                data-cursor="view"
+                aria-label="View image fullscreen"
+              >
+                <img
+                  src={item.src}
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                  className="h-full w-full object-cover"
+                />
+              </button>
+            ))}
+          </div>
+        )}
 
         <Reveal delay={200} className="mt-12 flex justify-center md:mt-16">
           <a
@@ -54,6 +66,13 @@ export function Work() {
           </a>
         </Reveal>
       </div>
+
+      <ImageLightbox
+        images={featuredWork}
+        index={lightboxIndex}
+        onClose={() => setLightboxIndex(null)}
+        onChange={setLightboxIndex}
+      />
     </section>
   );
 }

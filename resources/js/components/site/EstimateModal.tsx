@@ -195,7 +195,7 @@ export function EstimateModal() {
                     required
                     value={form.project_type || defaultProjectType}
                     onChange={(e) => updateField("project_type", e.target.value)}
-                    className={`${fieldClass} footer-sans cursor-pointer font-normal normal-case`}
+                    className={`${fieldClass} footer-sans cursor-pointer font-normal`}
                   >
                     {projectTypes.map((option) => (
                       <option key={option.value} value={option.value}>

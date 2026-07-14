@@ -25,7 +25,7 @@
             <div
                 id="email-preview-body"
                 class="px-8 py-8 text-base leading-relaxed text-[#2a2622]"
-                style="font-family: Georgia, 'Times New Roman', serif;"
+                style="font-family: 'adobe-jenson-pro-display', Georgia, 'Times New Roman', serif;"
             >
                 <p class="text-sm text-gray-400">Start typing in the editor to preview your email.</p>
             </div>

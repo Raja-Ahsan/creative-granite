@@ -22,8 +22,10 @@ export default {
                 foreground: '#2a2622',
             },
             fontFamily: {
-                sans: ['"Biondi Sans"', '"Helvetica Neue"', 'Arial', ...defaultTheme.fontFamily.sans],
+                heading: ['Luxerie', 'Didot', '"Bodoni 72"', '"Times New Roman"', 'serif'],
                 display: ['Luxerie', 'Didot', '"Bodoni 72"', '"Times New Roman"', 'serif'],
+                body: ['"adobe-jenson-pro-display"', 'serif'],
+                sans: ['"adobe-jenson-pro-display"', 'serif'],
                 mono: ['"JetBrains Mono"', ...defaultTheme.fontFamily.mono],
             },
         },
