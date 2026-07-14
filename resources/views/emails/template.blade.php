@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ $emailSubject ?? config('app.name') }}</title>
 </head>
-<body style="margin: 0; padding: 0; background-color: #f5f0ea; font-family: Georgia, 'Times New Roman', serif;">
+<body style="margin: 0; padding: 0; background-color: #f5f0ea; font-family: 'adobe-jenson-pro-display', Georgia, 'Times New Roman', serif;">
     <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color: #f5f0ea; padding: 32px 16px;">
         <tr>
             <td align="center">

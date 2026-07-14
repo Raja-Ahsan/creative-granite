@@ -125,7 +125,7 @@ export function ProductDetailPage() {
             )}
 
             <Reveal delay={150} className="mt-16 flex flex-col gap-4 border-t border-foreground/10 pt-10 sm:flex-row sm:items-center sm:justify-between">
-              <p className="text-sm font-light text-foreground/65" style={{ fontFamily: "Inter, sans-serif" }}>
+              <p className="text-sm font-light text-foreground/65">
                 Interested in {product.name.toLowerCase()}?
               </p>
               <a

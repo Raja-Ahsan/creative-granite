@@ -18,7 +18,7 @@ export function WhoWeAre() {
       <Reveal delay={100} className="overflow-visible">
         <h2 className={`mt-4 max-w-2xl md:mt-5 ${sectionHeadingLight}`}>
           {section.heading}{" "}
-          <span className="font-sans font-light tracking-[-0.02em]">
+          <span className="font-heading font-normal tracking-[-0.005em]">
             {section.highlightText ?? settings.foundedYear}
           </span>
         </h2>

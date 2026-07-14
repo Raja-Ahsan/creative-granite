@@ -9,9 +9,9 @@ import {
 } from "@/services/contactForm";
 
 const fieldClass =
-  "mt-2 box-border min-w-0 w-full max-w-full border-b border-foreground/20 bg-transparent py-3 text-foreground outline-none transition-colors placeholder:text-foreground/35 focus:border-foreground";
+  "mt-2 box-border min-w-0 w-full max-w-full border-b border-[#2a262280] bg-transparent py-3 text-[#2a262280] outline-none transition-colors placeholder:text-[#2a262280] focus:border-[#2a2622]";
 
-const labelClass = "eyebrow block text-foreground/50 normal-case";
+const labelClass = "eyebrow block text-[#2a262280]";
 
 const swalTheme = {
   confirmButtonColor: "#2a2622",
@@ -121,7 +121,7 @@ export function ContactForm() {
 
   if (!projectTypes.length) {
     return (
-      <p className="text-sm font-light text-foreground/65">
+      <p className="text-sm font-light text-[#2a262280]">
         The contact form is temporarily unavailable. Please call or email us directly.
       </p>
     );
@@ -195,7 +195,7 @@ export function ContactForm() {
             required
             value={form.project_type}
             onChange={(event) => updateField("project_type", event.target.value)}
-            className={`${fieldClass} footer-sans cursor-pointer font-normal normal-case`}
+            className={`${fieldClass} footer-sans cursor-pointer font-normal`}
           >
             {projectTypes.map((option) => (
               <option key={option.value} value={option.value}>

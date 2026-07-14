@@ -15,7 +15,7 @@ export function Footer() {
                 className="h-20 w-auto max-w-[260px] object-contain object-left sm:h-24 md:h-28"
               />
             </a>
-            <p className="max-w-[250px] text-cream/85">{settings.footerTagline}</p>
+            <p className="max-w-[250px] text-[14px] text-cream/85">{settings.footerTagline}</p>
             <a
               href="/contact"
               data-cursor="appointment"
@@ -84,10 +84,10 @@ export function Footer() {
 
         <div className="flex flex-wrap items-center justify-between gap-4 py-8 text-xs text-cream/85">
           <div>
-            © {new Date().getFullYear()} Creative granite <span style={{ fontFamily: "sans-serif" }}>&</span> design.
+            © {new Date().getFullYear()} Creative granite & design.
             All rights reserved.
           </div>
-          <div className="font-mono tracking-widest">Built with intention.</div>
+          <div className="tracking-widest">Built with intention.</div>
         </div>
       </div>
     </footer>

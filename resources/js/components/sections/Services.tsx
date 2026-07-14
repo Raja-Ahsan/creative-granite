@@ -38,10 +38,7 @@ export function Services() {
                   <p className="text-cream/70 md:text-lg">{service.excerpt}</p>
                 </div>
                 <div className="col-span-12 flex items-center justify-end md:col-span-1">
-                  <span
-                    className="text-2xl transition-transform duration-500 group-hover:rotate-45"
-                    style={{ fontFamily: "sans-serif" }}
-                  >
+                  <span className="text-2xl transition-transform duration-500 group-hover:rotate-45">
                     +
                   </span>
                 </div>

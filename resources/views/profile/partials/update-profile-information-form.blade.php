@@ -2,7 +2,7 @@
     @csrf
 </form>
 
-<form method="post" action="{{ route('profile.update') }}" class="space-y-5 normal-case font-sans">
+<form method="post" action="{{ route('profile.update') }}" class="space-y-5 font-sans">
     @csrf
     @method('patch')
 
@@ -18,8 +18,7 @@
             id="email"
             name="email"
             type="email"
-            class="mt-1 block w-full rounded-lg normal-case"
-            style="text-transform: lowercase;"
+            class="mt-1 block w-full rounded-lg"
             :value="old('email', $user->email)"
             required
             autocomplete="username"

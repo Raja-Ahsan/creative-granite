@@ -124,7 +124,7 @@ export function Header() {
                     setOpen(false);
                     openEstimateModal();
                   }}
-                  className="border-b border-cream/10 py-4 text-left font-display text-2xl text-cream"
+                  className="border-b border-cream/10 py-4 text-left text-2xl text-cream"
                 >
                   {l}
                 </button>
@@ -133,7 +133,7 @@ export function Header() {
                   key={l}
                   href={h}
                   onClick={() => setOpen(false)}
-                  className="border-b border-cream/10 py-4 font-display text-2xl text-cream"
+                  className="border-b border-cream/10 py-4 text-2xl text-cream"
                 >
                   {l}
                 </a>

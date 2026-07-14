@@ -4,7 +4,7 @@ export const sectionHeading =
 export const sectionHeadingLight = `${sectionHeading} text-[#021E44]`;
 export const sectionHeadingDark = `${sectionHeading} text-cream`;
 
-/** Default paragraph — matches creative-granite-react (Biondi Sans, 16px, normal case). */
+/** Default paragraph — body copy uses adobe-jenson-pro-display via global typography. */
 export const bodyCopy = "text-foreground/70";
 export const bodyCopyLight = bodyCopy;
 export const bodyCopyDark = "text-cream/70";

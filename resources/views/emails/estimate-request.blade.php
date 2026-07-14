@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>New Estimate Request</title>
 </head>
-<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #2a2622;">
+<body style="font-family: 'adobe-jenson-pro-display', Georgia, 'Times New Roman', serif; line-height: 1.6; color: #2a2622;">
     <h1 style="font-size: 20px; margin-bottom: 16px;">New estimate request</h1>
 
     <p><strong>Name:</strong> {{ $estimate['name'] }}</p>

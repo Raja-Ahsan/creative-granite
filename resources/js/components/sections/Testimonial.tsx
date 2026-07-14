@@ -32,7 +32,7 @@ export function Testimonial() {
           </div>
           <blockquote
             key={i}
-            className="mx-auto mt-4 max-w-3xl font-display text-[18px] leading-tight text-foreground animate-in fade-in slide-in-from-bottom-4 duration-700"
+            className="mx-auto mt-4 max-w-3xl text-[18px] leading-tight text-foreground animate-in fade-in slide-in-from-bottom-4 duration-700"
           >
             "{cur.q}"
           </blockquote>

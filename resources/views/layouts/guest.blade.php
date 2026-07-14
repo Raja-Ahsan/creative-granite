@@ -7,6 +7,9 @@
 
         <title>Admin — {{ config('app.name', 'Creative Granite') }}</title>
 
+        @if (filled(config('services.adobe_fonts.kit')))
+            <link rel="stylesheet" href="https://use.typekit.net/{{ config('services.adobe_fonts.kit') }}.css">
+        @endif
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans text-cream antialiased bg-ink">
