@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>New Contact Inquiry</title>
 </head>
-<body style="font-family: 'adobe-jenson-pro-display', Georgia, 'Times New Roman', serif; line-height: 1.6; color: #2a2622;">
+<body style="font-family: 'Biondi Sans', 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #2a2622;">
     <h1 style="font-size: 20px; margin-bottom: 16px;">New contact inquiry</h1>
 
     <p><strong>Name:</strong> {{ $inquiry['name'] }}</p>

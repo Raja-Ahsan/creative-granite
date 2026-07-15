@@ -136,7 +136,7 @@
                 convert_urls: true,
                 branding: false,
                 promotion: false,
-                content_style: 'body { font-family: "adobe-jenson-pro-display", serif; font-size: 15px; line-height: 1.7; text-transform: uppercase; } h1,h2,h3,h4,h5,h6 { font-family: Luxerie, Didot, "Bodoni 72", "Times New Roman", serif; font-weight: 400; text-transform: uppercase; } img { max-width: 100%; height: auto; }',
+                content_style: 'body { font-family: "Biondi Sans", "Helvetica Neue", Arial, sans-serif; font-size: 15px; line-height: 1.7; text-transform: none; } h1,h2,h3,h4,h5,h6 { font-family: Luxerie, Didot, "Bodoni 72", "Times New Roman", serif; font-weight: 400; text-transform: uppercase; } img { max-width: 100%; height: auto; }',
                 images_upload_handler: (blobInfo, progress) =>
                     new Promise((resolve, reject) => {
                         const xhr = new XMLHttpRequest();

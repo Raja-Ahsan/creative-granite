@@ -58,6 +58,17 @@ export function GalleryPage() {
                 Gallery images will appear here once added in the admin Our Work Gallery.
               </p>
             )}
+
+            <Reveal delay={200} className="mt-12 flex justify-center md:mt-16">
+              <a
+                href="#estimate"
+                data-cursor="estimate"
+                className="btn-magnetic inline-flex items-center gap-3 rounded-full border border-foreground bg-foreground px-10 py-5 text-xs font-medium tracking-[0.25em] text-cream"
+              >
+                <span>Get an Estimate</span>
+                <span className="relative z-[2]">→</span>
+              </a>
+            </Reveal>
           </div>
         </section>
         <Footer />

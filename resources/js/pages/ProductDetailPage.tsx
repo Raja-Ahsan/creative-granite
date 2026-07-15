@@ -133,7 +133,7 @@ export function ProductDetailPage() {
                 data-cursor="estimate"
                 className="btn-magnetic inline-flex shrink-0 items-center gap-3 rounded-full border border-foreground bg-foreground px-10 py-5 text-xs font-medium tracking-[0.25em] text-cream"
               >
-                <span>Get an estimate</span>
+                <span>Get an Estimate</span>
                 <span className="relative z-[2]">→</span>
               </a>
             </Reveal>

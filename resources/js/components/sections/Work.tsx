@@ -14,6 +14,9 @@ export function Work() {
     [portfolio],
   );
 
+  // Home collage uses 5 tiles: 3 portrait on top, 2 landscape below (desktop/laptop).
+  const homeGallery = useMemo(() => featuredWork.slice(0, 5), [featuredWork]);
+
   return (
     <section id="work" className="relative py-28 md:py-40">
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
@@ -32,26 +35,35 @@ export function Work() {
           )}
         </div>
 
-        {featuredWork.length > 0 && (
-          <div className="mt-16 grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-5">
-            {featuredWork.map((item, i) => (
-              <button
-                key={`${item.src}-${i}`}
-                type="button"
-                onClick={() => setLightboxIndex(i)}
-                className="img-zoom group relative aspect-[4/3] h-[200px] w-full overflow-hidden rounded-none bg-bone text-left md:min-h-[500px]"
-                data-cursor="view"
-                aria-label="View image fullscreen"
-              >
-                <img
-                  src={item.src}
-                  alt=""
-                  loading="lazy"
-                  decoding="async"
-                  className="h-full w-full object-cover"
-                />
-              </button>
-            ))}
+        {homeGallery.length > 0 && (
+          <div className="mt-16 grid grid-cols-2 gap-2 md:grid-cols-6 md:gap-3 lg:gap-4">
+            {homeGallery.map((item, i) => {
+              // Desktop/laptop: 3 tall on top, 2 wide below. Mobile: simple 2-column grid.
+              const desktopSpan =
+                i < 3
+                  ? "md:col-span-2 md:aspect-[3/4] md:min-h-[380px] lg:min-h-[460px]"
+                  : "md:col-span-3 md:aspect-[16/10] md:min-h-[240px] lg:min-h-[300px]";
+              const mobileSpan = i === 4 ? "col-span-2 md:col-span-3" : "";
+
+              return (
+                <button
+                  key={`${item.src}-${i}`}
+                  type="button"
+                  onClick={() => setLightboxIndex(i)}
+                  className={`img-zoom group relative aspect-[4/3] h-[200px] w-full overflow-hidden rounded-none bg-bone text-left md:h-auto ${desktopSpan} ${mobileSpan}`}
+                  data-cursor="view"
+                  aria-label="View image fullscreen"
+                >
+                  <img
+                    src={item.src}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    className="h-full w-full object-cover"
+                  />
+                </button>
+              );
+            })}
           </div>
         )}
 
@@ -59,7 +71,7 @@ export function Work() {
           <a
             href="/gallery"
             data-cursor="view"
-            className="btn-magnetic inline-flex items-center gap-3 rounded-full border border-foreground bg-foreground px-10 py-5 text-xs font-medium tracking-[0.25em] text-cream"
+            className="btn-magnetic inline-flex items-center gap-3 rounded-full border border-foreground bg-transparent px-10 py-5 text-xs font-medium tracking-[0.25em] text-foreground"
           >
             <span>View Gallery</span>
             <span className="relative z-[2]">→</span>
@@ -68,7 +80,7 @@ export function Work() {
       </div>
 
       <ImageLightbox
-        images={featuredWork}
+        images={homeGallery}
         index={lightboxIndex}
         onClose={() => setLightboxIndex(null)}
         onChange={setLightboxIndex}

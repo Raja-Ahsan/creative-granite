@@ -59,7 +59,7 @@ export function InstagramSection() {
             target="_blank"
             rel="noopener noreferrer"
             data-cursor="follow"
-            className="btn-magnetic inline-flex items-center rounded-full border border-foreground bg-foreground px-10 py-5 text-xs font-medium tracking-[0.25em] text-cream"
+            className="btn-magnetic inline-flex items-center rounded-full border border-foreground bg-transparent px-10 py-5 text-xs font-medium tracking-[0.25em] text-foreground"
           >
             {/* <Instagram className="relative z-[2] h-4 w-4" strokeWidth={1.5} /> */}
             <span>Follow on Instagram</span>

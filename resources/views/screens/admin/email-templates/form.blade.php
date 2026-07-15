@@ -230,7 +230,7 @@
                 remove_script_host: false,
                 convert_urls: true,
                 content_style:
-                    'body { font-family: "adobe-jenson-pro-display", Georgia, "Times New Roman", serif; font-size: 16px; line-height: 1.7; color: #2a2622; text-transform: uppercase; } ' +
+                    'body { font-family: "Biondi Sans", "Helvetica Neue", Arial, sans-serif; font-size: 16px; line-height: 1.7; color: #2a2622; text-transform: none; } ' +
                     'h1,h2,h3,h4,h5,h6 { font-family: Luxerie, Didot, "Bodoni 72", "Times New Roman", serif; font-weight: 400; text-transform: uppercase; } ' +
                     'p { margin: 0 0 1em; } h2, h3 { margin: 0 0 0.75em; font-weight: 600; }',
                 setup: (editor) => {

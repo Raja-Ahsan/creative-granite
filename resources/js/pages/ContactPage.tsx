@@ -32,7 +32,7 @@ export function ContactPage() {
             <div className="grid min-w-0 grid-cols-1 gap-10 border-y border-foreground/10 py-12 md:grid-cols-12 md:gap-16 md:py-20">
               <Reveal className="min-w-0 md:col-span-5">
                 <div className="eyebrow text-[#2a262280]">Visit</div>
-                <div className="footer-sans mt-4 space-y-2 text-[#2a262280] !font-semibold !uppercase">
+                <div className="footer-sans mt-4 space-y-2 font-light text-[#2a262280]">
                   {settings.addressLine1 && <div>{settings.addressLine1}</div>}
                   {settings.addressLine2 && <div>{settings.addressLine2}</div>}
                 </div>
@@ -40,21 +40,21 @@ export function ContactPage() {
                 {settings.hours && (
                   <div className="mt-5">
                     <div className="eyebrow text-[#2a262280]">Hours</div>
-                    <p className="footer-sans mt-2 leading-relaxed text-[#2a262280] !font-semibold !uppercase">{settings.hours}</p>
+                    <p className="footer-sans mt-2 font-light leading-relaxed text-[#2a262280]">{settings.hours}</p>
                   </div>
                 )}
 
-                <div className="footer-sans mt-5 space-y-2">
+                <div className="footer-sans mt-5 space-y-2 font-light">
                   {settings.phone && (
                     <div>
-                      <a href={`tel:${settings.phone}`} className="footer-sans link-underline text-[#2a262280] !font-semibold !uppercase">
+                      <a href={`tel:${settings.phone}`} className="footer-sans link-underline font-light text-[#2a262280]">
                         {settings.phone}
                       </a>
                     </div>
                   )}
                   {settings.email && (
                     <div>
-                      <a href={`mailto:${settings.email}`} className="footer-sans link-underline text-[#2a262280] !font-semibold">
+                      <a href={`mailto:${settings.email}`} className="footer-sans link-underline font-light text-[#2a262280]">
                         {settings.email}
                       </a>
                     </div>
@@ -79,6 +79,14 @@ export function ContactPage() {
                 <p className="mt-6 max-w-full break-words text-pretty text-[#2a262280] sm:mt-8 md:max-w-md">
                   {settings.contactFormIntro}
                 </p>
+                <a
+                  href="#estimate"
+                  data-cursor="estimate"
+                  className="btn-magnetic mt-6 inline-flex items-center gap-3 rounded-full border border-foreground bg-foreground px-8 py-4 text-xs font-medium tracking-[0.2em] text-cream"
+                >
+                  <span>Get an Estimate</span>
+                  <span className="relative z-[2]">→</span>
+                </a>
                 <div className="contact-form-shell mt-8 min-w-0 w-full sm:mt-10">
                   <ContactForm />
                 </div>
