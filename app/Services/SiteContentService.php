@@ -85,11 +85,14 @@ class SiteContentService
             'materials' => Material::query()
                 ->where('is_active', true)
                 ->orderBy('sort_order')
+                ->orderBy('id')
                 ->get()
                 ->map(fn (Material $material) => [
                     'name' => $material->name,
                     'desc' => $material->description,
                     'image' => $material->image_path,
+                    'sortOrder' => (int) $material->sort_order,
+                    'featured' => (bool) $material->is_featured,
                 ])
                 ->values()
                 ->all(),

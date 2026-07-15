@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Concerns\GeneratesSlug;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -18,6 +19,7 @@ class Material extends Model
         'description',
         'image_path',
         'sort_order',
+        'is_featured',
         'is_active',
     ];
 
@@ -25,8 +27,17 @@ class Material extends Model
     {
         return [
             'is_active' => 'boolean',
+            'is_featured' => 'boolean',
             'sort_order' => 'integer',
         ];
+    }
+
+    public function scopeOrdered(Builder $query): Builder
+    {
+        return $query
+            ->orderByDesc('is_featured')
+            ->orderBy('sort_order')
+            ->orderBy('id');
     }
 
     public function portfolioItems(): HasMany

@@ -72,12 +72,12 @@ export function CustomCursor() {
     <>
       <div
         ref={dot}
-        className="pointer-events-none fixed left-0 top-0 z-[100] hidden h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white mix-blend-difference md:block"
+        className="pointer-events-none fixed left-0 top-0 z-[10050] hidden h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white mix-blend-difference md:block"
         style={{ transition: "width 0.2s, height 0.2s" }}
       />
       <div
         ref={ring}
-        className={`pointer-events-none fixed left-0 top-0 z-[99] hidden items-center justify-center rounded-full border-2 border-white mix-blend-difference md:flex transition-[width,height,background] duration-300 ${
+        className={`pointer-events-none fixed left-0 top-0 z-[10040] hidden items-center justify-center rounded-full border-2 border-white mix-blend-difference md:flex transition-[width,height,background] duration-300 ${
           hover ? "h-20 w-20 bg-white/10" : "h-10 w-10"
         }`}
       >
