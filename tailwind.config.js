@@ -24,8 +24,8 @@ export default {
             fontFamily: {
                 heading: ['Luxerie', 'Didot', '"Bodoni 72"', '"Times New Roman"', 'serif'],
                 display: ['Luxerie', 'Didot', '"Bodoni 72"', '"Times New Roman"', 'serif'],
-                body: ['"adobe-jenson-pro-display"', 'serif'],
-                sans: ['"adobe-jenson-pro-display"', 'serif'],
+                body: ['"Biondi Sans"', '"Helvetica Neue"', 'Arial', ...defaultTheme.fontFamily.sans],
+                sans: ['"Biondi Sans"', '"Helvetica Neue"', 'Arial', ...defaultTheme.fontFamily.sans],
                 mono: ['"JetBrains Mono"', ...defaultTheme.fontFamily.mono],
             },
         },

@@ -20,7 +20,7 @@ export function CTA() {
               data-cursor="estimate"
               className="btn-magnetic inline-flex items-center gap-3 rounded-full border border-foreground bg-foreground px-10 py-5 text-xs font-medium tracking-[0.25em] text-cream"
             >
-              <span>Get an estimate</span>
+              <span>Get an Estimate</span>
               <span className="relative z-[2]">→</span>
             </a>
 
@@ -37,12 +37,11 @@ export function CTA() {
             )}
 
             <a
-              href="#"
-              data-cursor="appointment"
-              className="btn-magnetic mt-2 inline-flex items-center gap-3 rounded-full border border-foreground bg-foreground px-10 py-5 text-xs font-medium tracking-[0.25em] text-cream"
+              href="/contact"
+              data-cursor="contact"
+              className="link-underline mt-1 text-sm tracking-[0.2em] text-foreground/70 transition-colors hover:text-foreground"
             >
-              <span>Book an appointment</span>
-              <span className="relative z-[2]">→</span>
+              Or book an appointment
             </a>
           </div>
         </Reveal>

@@ -33,7 +33,10 @@ export function Header() {
     };
   }, []);
 
-  const navMobile = [...navLeft, ...navRight] as const;
+  const textNavRight = navRight.filter(([, h]) => !isEstimateLink(h));
+  const estimateNav = navRight.find(([, h]) => isEstimateLink(h));
+  const estimateLabel = estimateNav?.[0] ?? "Get an Estimate";
+  const navMobile = [...navLeft, ...textNavRight] as const;
 
   return (
     <header
@@ -63,31 +66,23 @@ export function Header() {
         </a>
 
         <div className="flex items-center justify-end gap-6 lg:gap-8">
-          {navRight.map(([l, h]) =>
-            isEstimateLink(h) ? (
-              <button
-                key={l}
-                type="button"
-                onClick={openEstimateModal}
-                data-cursor="estimate"
-                className="link-underline text-sm font-medium text-cream/80 hover:text-cream"
-              >
-                {l}
-              </button>
-            ) : (
-              <a key={l} href={h} className="link-underline text-sm font-medium text-cream/80 hover:text-cream">
-                {l}
-              </a>
-            ),
-          )}
-          <a
-            href="/contact"
-            data-cursor="contact"
-            className="btn-magnetic btn-magnetic-inverse group inline-flex shrink-0 items-center gap-2 rounded-full border border-cream px-5 py-2.5 text-xs font-medium tracking-[0.18em] text-cream"
-          >
-            <span>Contact</span>
-            <span className="relative z-[2] inline-block transition-transform group-hover:translate-x-1">→</span>
+          {textNavRight.map(([l, h]) => (
+            <a key={l} href={h} className="link-underline text-sm font-medium text-cream/80 hover:text-cream">
+              {l}
+            </a>
+          ))}
+          <a href="/contact" className="link-underline text-sm font-medium text-cream/80 hover:text-cream">
+            Contact
           </a>
+          <button
+            type="button"
+            onClick={openEstimateModal}
+            data-cursor="estimate"
+            className="btn-magnetic btn-magnetic-inverse group inline-flex shrink-0 items-center gap-2 rounded-full border border-cream bg-cream px-5 py-2.5 text-xs font-medium tracking-[0.18em] text-ink"
+          >
+            <span>{estimateLabel}</span>
+            <span className="relative z-[2] inline-block transition-transform group-hover:translate-x-1">→</span>
+          </button>
         </div>
       </div>
 
@@ -115,37 +110,34 @@ export function Header() {
       {open && (
         <div className="border-t border-cream/10 bg-ink/85 backdrop-blur-md md:hidden">
           <div className="flex flex-col px-6 py-6">
-            {navMobile.map(([l, h]) =>
-              isEstimateLink(h) ? (
-                <button
-                  key={l}
-                  type="button"
-                  onClick={() => {
-                    setOpen(false);
-                    openEstimateModal();
-                  }}
-                  className="border-b border-cream/10 py-4 text-left text-2xl text-cream"
-                >
-                  {l}
-                </button>
-              ) : (
-                <a
-                  key={l}
-                  href={h}
-                  onClick={() => setOpen(false)}
-                  className="border-b border-cream/10 py-4 text-2xl text-cream"
-                >
-                  {l}
-                </a>
-              ),
-            )}
+            {navMobile.map(([l, h]) => (
+              <a
+                key={l}
+                href={h}
+                onClick={() => setOpen(false)}
+                className="border-b border-cream/10 py-4 text-2xl text-cream"
+              >
+                {l}
+              </a>
+            ))}
             <a
               href="/contact"
               onClick={() => setOpen(false)}
-              className="mt-6 rounded-full bg-cream py-4 text-center text-sm tracking-widest text-ink"
+              className="border-b border-cream/10 py-4 text-2xl text-cream"
             >
               Contact
             </a>
+            <button
+              type="button"
+              onClick={() => {
+                setOpen(false);
+                openEstimateModal();
+              }}
+              data-cursor="estimate"
+              className="mt-6 rounded-full bg-cream py-4 text-center text-sm font-medium tracking-widest text-ink"
+            >
+              {estimateLabel}
+            </button>
           </div>
         </div>
       )}

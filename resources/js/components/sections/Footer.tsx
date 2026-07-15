@@ -1,7 +1,9 @@
+import { useEstimateModal } from "@/contexts/EstimateModalContext";
 import { useSiteContent } from "@/contexts/SiteContentContext";
 
 export function Footer() {
   const { settings, footerNavLinks, footerSocialLinks } = useSiteContent();
+  const { openEstimateModal } = useEstimateModal();
 
   return (
     <footer className="relative bg-ink pt-20 text-cream">
@@ -16,14 +18,15 @@ export function Footer() {
               />
             </a>
             <p className="max-w-[250px] text-[14px] text-cream/85">{settings.footerTagline}</p>
-            <a
-              href="/contact"
-              data-cursor="appointment"
-              className="btn-magnetic btn-magnetic-inverse mt-6 inline-flex items-center gap-3 rounded-full border border-cream px-7 py-3.5 text-xs font-medium tracking-[0.2em] text-cream"
+            <button
+              type="button"
+              onClick={openEstimateModal}
+              data-cursor="estimate"
+              className="btn-magnetic btn-magnetic-inverse mt-6 inline-flex items-center gap-3 rounded-full border border-cream bg-cream px-7 py-3.5 text-xs font-medium tracking-[0.2em] text-ink"
             >
-              <span>Book appointment</span>
+              <span>Get an Estimate</span>
               <span className="relative z-[2]">→</span>
-            </a>
+            </button>
           </div>
           <div className="col-span-6 md:col-span-2">
             <div className="eyebrow text-cream/50">Navigate</div>
@@ -62,17 +65,17 @@ export function Footer() {
                 </div>
               )}
 
-              <div className="mt-4 space-y-1">
+              <div className="mt-4 space-y-1 font-light">
                 {settings.phone && (
                   <div>
-                    <a href={`tel:${settings.phone}`} className="footer-sans link-underline">
+                    <a href={`tel:${settings.phone}`} className="link-underline font-light text-cream/85">
                       {settings.phone}
                     </a>
                   </div>
                 )}
                 {settings.email && (
                   <div>
-                    <a href={`mailto:${settings.email}`} className="footer-sans link-underline">
+                    <a href={`mailto:${settings.email}`} className="link-underline font-light text-cream/85">
                       {settings.email}
                     </a>
                   </div>

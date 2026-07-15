@@ -231,7 +231,7 @@ natasha “Natasha”'],
     {
         return [
             ['Process', '/process'],
-            ['Get an estimate', '#estimate'],
+            ['Get an Estimate', '#estimate'],
         ];
     }
 
@@ -242,7 +242,7 @@ natasha “Natasha”'],
             ['Products', '#'],
             ['Services', '/services'],
             ['Process', '/process'],
-            ['Get an Estimate', '#estimate'],
+            ['Connect us', '/contact'],
         ];
     }
 
@@ -336,7 +336,7 @@ natasha “Natasha”'],
             ],
             'testimonial' => [
                 'eyebrow' => '',
-                'heading' => 'Trusted across utah',
+                'heading' => 'Trusted across Utah',
                 'subheading' => '',
                 'body' => '',
                 'highlightText' => '',

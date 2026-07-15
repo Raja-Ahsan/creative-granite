@@ -44,7 +44,7 @@ export function HeroIntro({ overlay = false }: HeroIntroProps) {
               : "btn-magnetic inline-flex items-center gap-3 rounded-full border border-foreground bg-foreground px-8 py-4 text-xs font-medium tracking-[0.2em] text-cream md:px-10 md:py-5"
           }
         >
-          <span>Get an estimate</span>
+          <span>Get an Estimate</span>
           <span className="relative z-[2]">→</span>
         </a>
       </Reveal>

@@ -4,7 +4,7 @@ export const sectionHeading =
 export const sectionHeadingLight = `${sectionHeading} text-[#021E44]`;
 export const sectionHeadingDark = `${sectionHeading} text-cream`;
 
-/** Default paragraph — body copy uses adobe-jenson-pro-display via global typography. */
+/** Default paragraph — body copy uses Biondi Sans via global typography. */
 export const bodyCopy = "text-foreground/70";
 export const bodyCopyLight = bodyCopy;
 export const bodyCopyDark = "text-cream/70";

@@ -150,6 +150,6 @@ export const navRight: NavLink[] = [
   ["Contact", "#contact"],
 ];
 
-export const footerNavLinks = ["Work", "Products", "Services", "Process", "Get an Estimate"] as const;
+export const footerNavLinks = ["Work", "Products", "Services", "Process", "Connect us"] as const;
 
 export const footerSocialLinks = ["Instagram", "Facebook", "LinkedIn"] as const;
