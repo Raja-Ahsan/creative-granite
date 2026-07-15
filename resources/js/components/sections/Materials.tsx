@@ -1,14 +1,25 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Reveal } from "@/components/site/Reveal";
 import { useSection, useSiteContent } from "@/contexts/SiteContentContext";
-import { bodyCopyLight, sectionHeadingLight } from "@/utils/typography";
+import { bodyCopyLight } from "@/utils/typography";
 
 export function Materials() {
   const { materials } = useSiteContent();
   const section = useSection("materials");
   const [active, setActive] = useState(0);
 
-  if (!materials.length) return null;
+  const orderedMaterials = useMemo(
+    () =>
+      [...materials].sort((a, b) => {
+        const orderA = a.sortOrder ?? Number.MAX_SAFE_INTEGER;
+        const orderB = b.sortOrder ?? Number.MAX_SAFE_INTEGER;
+        if (orderA !== orderB) return orderA - orderB;
+        return a.name.localeCompare(b.name);
+      }),
+    [materials],
+  );
+
+  if (!orderedMaterials.length) return null;
 
   return (
     <section id="materials" className="relative bg-bone py-28 md:py-40">
@@ -29,48 +40,52 @@ export function Materials() {
         </div>
 
         <div className="mt-16 grid grid-cols-1 gap-px overflow-hidden rounded-sm bg-foreground/15 md:grid-cols-2">
-          {materials.map((m, i) => (
-            <div
-              key={m.name}
-              onMouseEnter={() => setActive(i)}
-              data-cursor="select"
-              className={`group relative flex cursor-pointer flex-col overflow-hidden bg-cream p-8 transition-colors duration-700 md:p-12 ${
-                active === i ? "bg-foreground text-cream" : ""
-              }`}
-            >
-              <div className="img-zoom relative mb-8 aspect-[4/3] w-full overflow-hidden rounded-sm">
-                <img
-                  src={m.image}
-                  alt={`${m.name} surface`}
-                  loading="lazy"
-                  decoding="async"
-                  className="h-full w-full object-cover"
-                />
-              </div>
-              <div className="flex flex-1 flex-col">
-                <div className="flex items-start justify-between">
-                  <span className="font-mono text-xs opacity-60">0{i + 1}</span>
-                  <span
-                    className={`h-2 w-2 rounded-full transition-all duration-500 ${
-                      active === i ? "bg-accent scale-150" : "bg-foreground/30"
-                    }`}
+          {orderedMaterials.map((material, i) => {
+            const indexLabel = String(material.sortOrder || i + 1).padStart(2, "0");
+
+            return (
+              <div
+                key={`${material.name}-${material.sortOrder ?? i}`}
+                onMouseEnter={() => setActive(i)}
+                data-cursor="select"
+                className={`group relative flex cursor-pointer flex-col overflow-hidden bg-cream p-8 transition-colors duration-700 md:p-12 ${
+                  active === i ? "bg-foreground text-cream" : ""
+                }`}
+              >
+                <div className="img-zoom relative mb-8 aspect-[4/3] w-full overflow-hidden rounded-sm">
+                  <img
+                    src={material.image}
+                    alt={`${material.name} surface`}
+                    loading="lazy"
+                    decoding="async"
+                    className="h-full w-full object-cover"
                   />
                 </div>
-                <h3 className="mt-6 font-display text-5xl md:text-6xl">{m.name}</h3>
-                <p
-                  className={`mt-6 max-w-md transition-opacity ${
-                    active === i ? "text-cream/90" : "text-foreground/70"
-                  }`}
-                >
-                  {m.desc}
-                </p>
-                <div className="mt-10 flex items-center justify-between border-t border-current/20 pt-6 opacity-70">
-                  <span className="eyebrow">Explore</span>
-                  <span className="text-xl transition-transform duration-500 group-hover:translate-x-2">→</span>
+                <div className="flex flex-1 flex-col">
+                  <div className="flex items-start justify-between">
+                    <span className="font-mono text-xs opacity-60">{indexLabel}</span>
+                    <span
+                      className={`h-2 w-2 rounded-full transition-all duration-500 ${
+                        active === i ? "scale-150 bg-accent" : "bg-foreground/30"
+                      }`}
+                    />
+                  </div>
+                  <h3 className="mt-6 font-display text-5xl md:text-6xl">{material.name}</h3>
+                  <p
+                    className={`mt-6 max-w-md transition-opacity ${
+                      active === i ? "text-cream/90" : "text-foreground/70"
+                    }`}
+                  >
+                    {material.desc}
+                  </p>
+                  <div className="mt-10 flex items-center justify-between border-t border-current/20 pt-6 opacity-70">
+                    <span className="eyebrow">Explore</span>
+                    <span className="text-xl transition-transform duration-500 group-hover:translate-x-2">→</span>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
