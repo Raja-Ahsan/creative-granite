@@ -37,7 +37,8 @@ class SiteContentService
             'settings' => [
                 'logo' => $settings['logo_path'] ?? '/images/site/update-logo.png',
                 'aboutStoneBath' => $settings['about_image_path'] ?? '/images/site/LakeLine-20.jpg',
-                'instagramUrl' => $settings['instagram_url'] ?? '#',
+                'instagramUrl' => $settings['instagram_url']
+                    ?: (config('services.instagram.profile_url') ?: 'https://www.instagram.com/creativegraniteanddesign/'),
                 'showroomMapsUrl' => $settings['showroom_maps_url'] ?? '',
                 'addressLine1' => $settings['address_line_1'] ?? '',
                 'addressLine2' => $settings['address_line_2'] ?? '',
@@ -81,7 +82,7 @@ class SiteContentService
                 ])
                 ->values()
                 ->all(),
-            'instagramPosts' => $this->staticInstagramPosts(),
+            'instagramPosts' => $this->resolveInstagramPosts(),
             'materials' => Material::query()
                 ->where('is_active', true)
                 ->orderBy('sort_order')
@@ -150,8 +151,21 @@ class SiteContentService
         ];
     }
 
+    private function resolveInstagramPosts(): array
+    {
+        $live = app(InstagramFeedService::class)->getPosts(8);
+        if ($live !== []) {
+            return $live;
+        }
+
+        return $this->staticInstagramPosts();
+    }
+
     private function staticInstagramPosts(): array
     {
+        $profile = config('services.instagram.profile_url')
+            ?: 'https://www.instagram.com/creativegraniteanddesign/';
+
         $files = [
             'DSC_3969.jpg',
             'DSC_3986 (1).jpg',
@@ -167,13 +181,13 @@ class SiteContentService
             'Sabal-24.jpg',
         ];
 
-        return array_map(function (string $file) {
+        return array_map(function (string $file) use ($profile) {
             $label = pathinfo($file, PATHINFO_FILENAME);
 
             return [
                 'src' => '/portfolio/instagram/'.rawurlencode($file),
                 'alt' => 'Creative Granite stone fabrication — '.$label,
-                'url' => '#',
+                'url' => $profile,
             ];
         }, $files);
     }
@@ -281,7 +295,7 @@ natasha “Natasha”'],
             'materials' => [
                 'eyebrow' => 'Materials',
                 'heading' => 'The slab decides everything.',
-                'subheading' => 'Four core surfaces, each with its own temperament. We help you choose by feel, not just by sample.',
+                'subheading' => 'Our most requested natural and engineered surfaces, each with its own character and performance. Additional materials are available upon request.',
                 'body' => '',
                 'highlightText' => '',
                 'image' => '',

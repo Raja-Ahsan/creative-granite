@@ -39,4 +39,19 @@ return [
         'kit' => env('ADOBE_FONTS_KIT'),
     ],
 
+    /*
+    | Instagram Graph API (Business / Creator account)
+    | Docs: https://developers.facebook.com/docs/instagram-platform/
+    |
+    | INSTAGRAM_ACCESS_TOKEN  — long-lived token (required for live feed)
+    | INSTAGRAM_USER_ID       — optional IG user id when using Facebook Graph
+    | INSTAGRAM_PROFILE_URL   — public profile link for “Follow” button
+    */
+    'instagram' => [
+        'access_token' => env('INSTAGRAM_ACCESS_TOKEN'),
+        'user_id' => env('INSTAGRAM_USER_ID'),
+        'profile_url' => env('INSTAGRAM_PROFILE_URL', 'https://www.instagram.com/creativegraniteanddesign/'),
+        'cache_minutes' => (int) env('INSTAGRAM_CACHE_MINUTES', 60),
+    ],
+
 ];
