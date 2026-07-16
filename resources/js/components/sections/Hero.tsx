@@ -30,7 +30,7 @@ function HeroSlider({
             fetchPriority={i === 0 ? "high" : "low"}
             loading={i === 0 ? "eager" : "lazy"}
             decoding="async"
-            className={`absolute inset-0 h-full w-full object-cover object-[center_28%] transition-opacity duration-[1600ms] ease-in-out ${
+            className={`absolute inset-0 h-full w-full object-cover object-[center_70%] transition-opacity duration-[1600ms] ease-in-out ${
               i === active ? "opacity-100" : "opacity-0"
             }`}
             style={{ transform: "scale(1.05)" }}
