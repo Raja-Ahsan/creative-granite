@@ -308,6 +308,7 @@ natasha “Natasha”'],
                 'highlightText' => '',
                 'image' => '',
             ],
+            #todo: add products section
             'work' => [
                 'eyebrow' => 'Our work',
                 'heading' => 'Fabricated with precision. installed with intention.',
