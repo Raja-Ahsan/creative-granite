@@ -1,7 +1,7 @@
 import { ImageLightbox } from "@/components/site/ImageLightbox";
 import { Reveal } from "@/components/site/Reveal";
 import { useSection, useSiteContent } from "@/contexts/SiteContentContext";
-import { bodyCopyLight, sectionHeadingLight } from "@/utils/typography";
+import { bodyCopyLight } from "@/utils/typography";
 import { useMemo, useState } from "react";
 
 export function Work() {
@@ -17,6 +17,16 @@ export function Work() {
   // Home collage uses 5 tiles: 3 portrait on top, 2 landscape below (desktop/laptop).
   const homeGallery = useMemo(() => featuredWork.slice(0, 5), [featuredWork]);
 
+  // Keep each sentence on its own line (break after ".") on mobile and desktop.
+  const headingLines = useMemo(
+    () =>
+      (section.heading ?? "")
+        .split(/(?<=\.)\s+/)
+        .map((line) => line.trim())
+        .filter(Boolean),
+    [section.heading],
+  );
+
   return (
     <section id="work" className="relative py-28 md:py-40">
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
@@ -26,7 +36,15 @@ export function Work() {
               <span className="h-px w-12 bg-foreground/40" />
               <span className="eyebrow">{section.eyebrow}</span>
             </div>
-            <h2 className={`mt-6 max-w-3xl ${sectionHeadingLight}`}>{section.heading}</h2>
+            <h2
+              className={`mt-6 max-w-3xl font-display uppercase leading-[0.95] tracking-[-0.02em] text-[#021E44] text-[clamp(1.2rem,4.6vw,3.75rem)]`}
+            >
+              {headingLines.map((line, index) => (
+                <span key={`${line}-${index}`} className="block whitespace-nowrap md:whitespace-normal">
+                  {line}
+                </span>
+              ))}
+            </h2>
           </Reveal>
           {section.subheading && (
             <Reveal delay={200}>
