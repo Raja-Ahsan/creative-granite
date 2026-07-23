@@ -135,8 +135,8 @@ export function InstagramSection() {
           />
         </div>
 
-        {/* Mobile: 2-column square masonry */}
-        <div className="mx-auto mt-12 aspect-square w-full md:hidden">
+        {/* Mobile: taller 2-column masonry (desktop stays square) */}
+        <div className="mx-auto mt-12 aspect-[1/4] w-full md:hidden">
           <MasonryColumns
             columns={mobileColumns}
             ratios={MOBILE_RATIOS}
