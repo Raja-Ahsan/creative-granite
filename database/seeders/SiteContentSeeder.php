@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\HeroSlide;
+use App\Models\InstagramPost;
 use App\Models\Material;
 use App\Models\PortfolioItem;
 use App\Models\ProcessStep;
@@ -24,6 +25,7 @@ class SiteContentSeeder extends Seeder
         $this->seedProjectTypes();
         $this->seedPortfolio();
         $this->seedServices();
+        $this->seedInstagramPosts();
     }
 
     private function seedSettings(): void
@@ -41,6 +43,10 @@ class SiteContentSeeder extends Seeder
             ['key' => 'contact_form_intro', 'value' => 'Tell us about your project — we will follow up with next steps, timing, and a path to estimate.', 'type' => 'string', 'group' => 'contact'],
             ['key' => 'founded_year', 'value' => '1998', 'type' => 'string', 'group' => 'general'],
             ['key' => 'footer_tagline', 'value' => 'Built on craftsmanship. Serving Utah since 1998.', 'type' => 'string', 'group' => 'general'],
+            ['key' => 'who_we_are_eyebrow', 'value' => 'Who we are', 'type' => 'string', 'group' => 'who_we_are'],
+            ['key' => 'who_we_are_heading', 'value' => 'Built on craftsmanship since', 'type' => 'string', 'group' => 'who_we_are'],
+            ['key' => 'who_we_are_highlight_text', 'value' => '1998', 'type' => 'string', 'group' => 'who_we_are'],
+            ['key' => 'who_we_are_body', 'value' => 'Creative Granite + Design is a Utah-based stone fabrication company specializing in custom countertops and architectural surfaces. We partner with homeowners, builders, and designers to deliver precise fabrication, thoughtful material selection, and high-quality installation across residential and multifamily projects.', 'type' => 'string', 'group' => 'who_we_are'],
         ];
 
         foreach ($settings as $setting) {
@@ -171,6 +177,42 @@ class SiteContentSeeder extends Seeder
                 ['title' => $title],
                 ['body' => $body, 'sort_order' => $index + 1, 'is_active' => true]
             );
+        }
+    }
+
+    private function seedInstagramPosts(): void
+    {
+        if (InstagramPost::query()->exists()) {
+            return;
+        }
+
+        $files = [
+            'DSC_3969.jpg',
+            'DSC_3986 (1).jpg',
+            'DSC_4008.jpg',
+            'DSC_4011.jpg',
+            'DSC_4068.jpg',
+            'DSC_4165.jpg',
+            'DSC_4181 (1).jpg',
+            'DSC_4192.jpg',
+            'DSC_4204 (1).jpg',
+            'Journeys End-12.jpg',
+            'LakeLine-20.jpg',
+            'Sabal-24.jpg',
+        ];
+
+        foreach ($files as $index => $file) {
+            $label = pathinfo($file, PATHINFO_FILENAME);
+
+            InstagramPost::create([
+                'title' => $label,
+                'image_path' => '/portfolio/instagram/'.rawurlencode($file),
+                'alt_text' => 'Creative Granite stone fabrication — '.$label,
+                'external_url' => 'https://www.instagram.com/creativegraniteanddesign/',
+                'sort_order' => $index + 1,
+                'is_featured' => true,
+                'is_active' => true,
+            ]);
         }
     }
 }

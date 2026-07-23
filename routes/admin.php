@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\ContactInquiryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EditorUploadController;
 use App\Http\Controllers\Admin\HeroSlideController;
+use App\Http\Controllers\Admin\InstagramPostController;
 use App\Http\Controllers\Admin\MaterialController;
 use App\Http\Controllers\Admin\PortfolioItemController;
 use App\Http\Controllers\Admin\ProcessStepController;
@@ -16,18 +17,23 @@ use App\Http\Controllers\Admin\EmailComposeController;
 use App\Http\Controllers\Admin\EmailSettingController;
 use App\Http\Controllers\Admin\EmailTemplateController;
 use App\Http\Controllers\Admin\SiteSettingController;
+use App\Http\Controllers\Admin\WhoWeAreController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['web', 'auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::resource('hero-slides', HeroSlideController::class)->except(['show']);
+    Route::resource('instagram-posts', InstagramPostController::class)->except(['show']);
     Route::resource('materials', MaterialController::class)->except(['show']);
     Route::resource('products', ProductController::class)->except(['show']);
     Route::resource('process-steps', ProcessStepController::class)->except(['show']);
     Route::resource('portfolio-items', PortfolioItemController::class)->except(['show']);
     Route::resource('services', ServiceController::class)->except(['show']);
     Route::post('editor/upload-image', [EditorUploadController::class, 'store'])->name('editor.upload-image');
+
+    Route::get('who-we-are', [WhoWeAreController::class, 'edit'])->name('who-we-are.edit');
+    Route::put('who-we-are', [WhoWeAreController::class, 'update'])->name('who-we-are.update');
 
     Route::get('site-settings', [SiteSettingController::class, 'edit'])->name('site-settings.edit');
     Route::put('site-settings', [SiteSettingController::class, 'update'])->name('site-settings.update');

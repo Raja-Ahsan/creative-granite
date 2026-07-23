@@ -8,7 +8,7 @@ export function WhoWeAre() {
   const image = section.image ?? settings.aboutStoneBath;
 
   return (
-    <section className="relative mx-auto max-w-[1400px] px-6 py-16 md:px-10 md:py-24">
+    <section id="who-we-are" className="relative mx-auto max-w-[1400px] px-6 py-16 md:px-10 md:py-24">
       <Reveal>
         <div className="flex items-center gap-3 text-foreground/60">
           <span className="h-px w-12 bg-foreground/40" />

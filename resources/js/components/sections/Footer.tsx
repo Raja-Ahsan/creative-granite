@@ -59,13 +59,13 @@ export function Footer() {
               {settings.addressLine2 && <div>{settings.addressLine2}</div>}
 
               {settings.hours && (
-                <div className="mt-4">
-                  <div className="eyebrow text-cream/50">Hours</div>
-                  <p className="mt-2 leading-relaxed">{settings.hours}</p>
+                <div>
+                  <div className="eyebrow my-5 text-cream/50">Hours</div>
+                  <p className="leading-relaxed">{settings.hours}</p>
                 </div>
               )}
 
-              <div className="mt-4 space-y-1 font-light">
+              <div className="mt-5 space-y-1 font-light">
                 {settings.phone && (
                   <div>
                     <a href={`tel:${settings.phone}`} className="link-underline font-light text-cream/85">
