@@ -26,7 +26,7 @@ export function WhoWeAre() {
 
       <div className="mt-8 grid grid-cols-1 items-stretch gap-6 md:mt-10 md:grid-cols-2 md:gap-8">
         <div className="group w-full min-w-0">
-          <div className="relative min-h-[18rem] w-full overflow-hidden md:min-h-[28rem]">
+          <div className="relative min-h-[18rem] w-full overflow-hidden md:min-h-[60rem]">
             <img
               src={image}
               alt="Natural stone powder room with marble vanity crafted by Creative Granite + Design"
