@@ -19,6 +19,8 @@ class CmsModulePermissionsSeeder extends Seeder
             'estimate-requests.index',
             'site-content-module',
             'hero-slides.index',
+            'who-we-are.edit',
+            'instagram-posts.index',
             'materials.index',
             'products.index',
             'process-steps.index',

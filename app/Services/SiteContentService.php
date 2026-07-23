@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\HeroSlide;
+use App\Models\InstagramPost;
 use App\Models\Material;
 use App\Models\PortfolioItem;
 use App\Models\ProcessStep;
@@ -153,12 +154,34 @@ class SiteContentService
 
     private function resolveInstagramPosts(): array
     {
-        $live = app(InstagramFeedService::class)->getPosts(8);
+        $profile = config('services.instagram.profile_url')
+            ?: 'https://www.instagram.com/creativegraniteanddesign/';
+
+        $adminPosts = InstagramPost::query()
+            ->active()
+            ->featured()
+            ->orderBy('sort_order')
+            ->orderBy('id')
+            ->limit(12)
+            ->get()
+            ->map(fn (InstagramPost $post) => [
+                'src' => $post->image_path,
+                'alt' => $post->alt_text ?: ($post->title ?: 'Creative Granite & Design on Instagram'),
+                'url' => $post->external_url ?: $profile,
+            ])
+            ->values()
+            ->all();
+
+        if ($adminPosts !== []) {
+            return $adminPosts;
+        }
+
+        $live = app(InstagramFeedService::class)->getPosts(12);
         if ($live !== []) {
             return $live;
         }
 
-        return $this->staticInstagramPosts();
+        return array_slice($this->staticInstagramPosts(), 0, 12);
     }
 
     private function staticInstagramPosts(): array
@@ -271,6 +294,12 @@ natasha “Natasha”'],
 
     private function staticSections(): array
     {
+        $settings = SiteSetting::query()
+            ->pluck('value', 'key')
+            ->all();
+
+        $defaultWhoBody = 'Creative Granite + Design is a Utah-based stone fabrication company specializing in custom countertops and architectural surfaces. We partner with homeowners, builders, and designers to deliver precise fabrication, thoughtful material selection, and high-quality installation across residential and multifamily projects.';
+
         $sections = [
             'hero-intro' => [
                 'eyebrow' => 'Welcome to creative granite and design',
@@ -281,16 +310,13 @@ natasha “Natasha”'],
                 'image' => '',
             ],
             'who-we-are' => [
-                'eyebrow' => 'Who we are',
-                'heading' => 'Built on craftsmanship since',
+                'eyebrow' => $settings['who_we_are_eyebrow'] ?? 'Who we are',
+                'heading' => $settings['who_we_are_heading'] ?? 'Built on craftsmanship since',
                 'subheading' => '',
-                'body' => 'Creative Granite + Design is a Utah-based stone
-                          fabrication company specializing in custom countertops and architectural
-                           surfaces. We partner with homeowners, builders, and designers to deliver
-                           precise fabrication, thoughtful material selection, and high-quality
-                            installation across residential and multifamily projects.',
-                'highlightText' => '1998',
-                'image' => '/images/site/LakeLine-20.jpg',
+                'body' => $settings['who_we_are_body'] ?? $defaultWhoBody,
+                'highlightText' => $settings['who_we_are_highlight_text']
+                    ?? ($settings['founded_year'] ?? '1998'),
+                'image' => $settings['about_image_path'] ?? '/images/site/LakeLine-20.jpg',
             ],
             'materials' => [
                 'eyebrow' => 'Materials',
@@ -308,7 +334,6 @@ natasha “Natasha”'],
                 'highlightText' => '',
                 'image' => '',
             ],
-            #todo: add products section
             'work' => [
                 'eyebrow' => 'Our work',
                 'heading' => 'Fabricated with precision. installed with intention.',

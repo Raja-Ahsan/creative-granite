@@ -65,15 +65,17 @@ class CmsModuleSeeder extends Seeder
         );
 
         $modules = [
-            ['hero-slides.index', 'Hero Slides', 'fa-solid fa-images', 1],
-            ['materials.index', 'Materials', 'fa-solid fa-gem', 2],
-            ['products.index', 'Products', 'fa-solid fa-box', 3],
-            ['process-steps.index', 'Process', 'fa-solid fa-list-ol', 4],
-            ['portfolio-items.index', 'Our Work Gallery', 'fa-solid fa-camera', 5],
-            ['services.index', 'Services', 'fa-solid fa-briefcase', 6],
-            ['site-settings.edit', 'Site Settings', 'fa-solid fa-gear', 7],
-            ['email-settings.edit', 'Email Settings', 'fa-solid fa-envelope', 8],
-            ['email-templates.index', 'Email Templates', 'fa-solid fa-envelope-open-text', 9],
+            ['who-we-are.edit', 'Who We Are', 'fa-solid fa-people-group', 1],
+            ['hero-slides.index', 'Hero Slides', 'fa-solid fa-images', 2],
+            ['instagram-posts.index', 'Instagram Feed', 'fa-brands fa-instagram', 3],
+            ['materials.index', 'Materials', 'fa-solid fa-gem', 4],
+            ['products.index', 'Products', 'fa-solid fa-box', 5],
+            ['process-steps.index', 'Process', 'fa-solid fa-list-ol', 6],
+            ['portfolio-items.index', 'Our Work Gallery', 'fa-solid fa-camera', 7],
+            ['services.index', 'Services', 'fa-solid fa-briefcase', 8],
+            ['site-settings.edit', 'Site Settings', 'fa-solid fa-gear', 9],
+            ['email-settings.edit', 'Email Settings', 'fa-solid fa-envelope', 10],
+            ['email-templates.index', 'Email Templates', 'fa-solid fa-envelope-open-text', 11],
         ];
 
         foreach ($modules as [$route, $name, $icon, $order]) {
