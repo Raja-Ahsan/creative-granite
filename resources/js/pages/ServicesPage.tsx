@@ -180,8 +180,8 @@ export function ServicesPage() {
             <Reveal delay={100} className="mt-10 md:mt-14">
               <div className="aspect-[16/10] w-full overflow-hidden bg-bone md:aspect-[21/9]">
                 <img
-                  src={`${IMG}/repairs-hero.jpg`}
-                  alt="Stone fabrication and repair support"
+                  src={`${IMG}/repairs-hero.png`}
+                  alt="Stone fabrication and repair craftsmanship"
                   className="h-full w-full object-cover"
                   loading="lazy"
                   decoding="async"
