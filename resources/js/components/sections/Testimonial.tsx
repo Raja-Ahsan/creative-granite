@@ -50,8 +50,8 @@ export function Testimonial() {
               </p>
             </div>
 
-            <div className="mt-12 md:mt-16">
-              <div className="flex items-end gap-4">
+            <div className="mt-12 flex items-end justify-between gap-6 md:mt-16">
+              <div className="flex min-w-0 items-end gap-4">
                 <span className="font-heading text-[clamp(4.5rem,10vw,6.5rem)] leading-none tracking-[-0.04em] text-cream">
                   5.0
                 </span>
@@ -96,6 +96,14 @@ export function Testimonial() {
                   </div>
                 </div>
               </div>
+
+              <img
+                src="/images/utah-valley-best-of-2026.png"
+                alt="Utah Valley Magazine Best of Winner 2026"
+                className="h-24 w-24 shrink-0 object-contain sm:h-28 sm:w-28 md:h-32 md:w-32 lg:h-36 lg:w-36"
+                loading="lazy"
+                decoding="async"
+              />
             </div>
           </Reveal>
 

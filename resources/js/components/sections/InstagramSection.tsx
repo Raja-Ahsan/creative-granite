@@ -145,6 +145,9 @@ export function InstagramSection() {
           />
         </div>
 
+
+        
+
         <Reveal delay={200} className="mt-12 flex justify-center md:mt-16">
           <a
             href={instagramUrl}
