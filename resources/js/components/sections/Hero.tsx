@@ -101,11 +101,6 @@ export function Hero() {
     >
       <HeroSlider parallaxRef={parallaxRef} slides={heroSlides} />
 
-      <div
-        className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-b from-ink/80 via-ink/55 to-ink/75"
-        aria-hidden
-      />
-
       <div className="relative z-20 flex h-full items-center justify-center pb-24 md:pb-28">
         <HeroIntro overlay />
       </div>
