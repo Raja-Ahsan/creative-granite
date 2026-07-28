@@ -5,6 +5,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ContactFormController;
 use App\Http\Controllers\EstimateFormController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\GalleryDetailController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProcessController;
 use App\Http\Controllers\ProductDetailController;
@@ -15,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
 Route::get('/gallery', GalleryController::class)->name('gallery');
+Route::get('/gallery/{slug}', GalleryDetailController::class)->name('gallery.show');
 Route::get('/products', ProductsController::class)->name('products');
 Route::get('/products/{product:slug}', ProductDetailController::class)->name('products.show');
 Route::get('/process', ProcessController::class)->name('process');
