@@ -1,4 +1,5 @@
 import type {
+  GalleryAlbum,
   HeroSlide,
   InstagramPost,
   Material,
@@ -19,6 +20,7 @@ export type SiteContentPayload = {
   projectTypes: ProjectTypeOption[];
   heroSlides: HeroSlide[];
   portfolio: PortfolioItem[];
+  galleryAlbums: GalleryAlbum[];
   instagramPosts: InstagramPost[];
   materials: Material[];
   products: Product[];
@@ -56,6 +58,7 @@ export const defaultSiteContent: SiteContentPayload = {
   projectTypes: [],
   heroSlides: [],
   portfolio: [],
+  galleryAlbums: [],
   instagramPosts: [],
   materials: [],
   products: [],

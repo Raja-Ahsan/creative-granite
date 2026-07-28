@@ -1,25 +1,48 @@
 import { useEffect, useMemo, useState } from "react";
 import { Footer, Header } from "@/components/sections";
 import { ImageLightbox } from "@/components/site/ImageLightbox";
+import { PhotoMasonryCollage } from "@/components/site/PhotoMasonryCollage";
 import { Reveal } from "@/components/site/Reveal";
-import { findWorkGallery, workGalleryKind } from "@/data/workPage";
+import { useSiteContent } from "@/contexts/SiteContentContext";
 import { SiteLayout } from "@/layouts/SiteLayout";
 import { useWorkGallerySlug } from "@/router/SiteRouter";
 import { bodyCopyLight, sectionHeadingLight } from "@/utils/typography";
 
 export function WorkGalleryPage() {
   const slug = useWorkGallerySlug();
-  const item = findWorkGallery(slug);
-  const kind = slug ? workGalleryKind(slug) : null;
+  const { galleryAlbums } = useSiteContent();
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
-  const images = useMemo(() => {
+  const item = useMemo(
+    () => galleryAlbums.find((album) => album.slug === slug),
+    [galleryAlbums, slug],
+  );
+
+  const collageImages = useMemo(() => {
+    if (!item) return [];
+    if (item.images?.length) return item.images;
+    return item.gallery ? [item.gallery] : [];
+  }, [item]);
+
+  const collageTiles = useMemo(
+    () =>
+      collageImages.map((src, i) => ({
+        src,
+        alt: item ? `${item.title} ${i + 1}` : `Gallery ${i + 1}`,
+      })),
+    [collageImages, item],
+  );
+
+  const lightboxImages = useMemo(() => {
     if (!item) return [];
     return [
       { src: item.cover, title: item.title },
-      { src: item.gallery, title: `${item.title} gallery` },
+      ...collageImages.map((src, i) => ({
+        src,
+        title: `${item.title} ${i + 1}`,
+      })),
     ];
-  }, [item]);
+  }, [item, collageImages]);
 
   useEffect(() => {
     if (item) {
@@ -44,6 +67,8 @@ export function WorkGalleryPage() {
     );
   }
 
+  const isProject = item.kind === "project";
+
   return (
     <SiteLayout>
       <main>
@@ -61,12 +86,12 @@ export function WorkGalleryPage() {
               </a>
               <div className="mt-8 flex items-center gap-3 text-foreground/60">
                 <span className="h-px w-12 bg-foreground/40" />
-                <span className="eyebrow">{kind === "project" ? "Featured Project" : "Category"}</span>
+                <span className="eyebrow">{isProject ? "Featured Project" : "Category"}</span>
               </div>
               <h1 className={`mt-6 max-w-4xl ${sectionHeadingLight}`}>{item.title}</h1>
               <p className={`mt-6 max-w-xl ${bodyCopyLight}`}>
-                A photo gallery from this {kind === "project" ? "project" : "collection"} — browse
-                the images below.
+                A photo gallery from this {isProject ? "project" : "collection"} — browse the images
+                below.
               </p>
             </Reveal>
 
@@ -89,23 +114,15 @@ export function WorkGalleryPage() {
                 </button>
               </Reveal>
 
-              <Reveal delay={140}>
-                <button
-                  type="button"
-                  onClick={() => setLightboxIndex(1)}
-                  className="img-zoom group relative block w-full overflow-hidden bg-bone text-left"
-                  data-cursor="view"
-                  aria-label={`View ${item.title} gallery`}
-                >
-                  <img
-                    src={item.gallery}
-                    alt={`${item.title} photo gallery`}
-                    className="h-auto w-full object-contain"
-                    loading="lazy"
-                    decoding="async"
+              {collageTiles.length > 0 && (
+                <Reveal delay={140}>
+                  <PhotoMasonryCollage
+                    images={collageTiles}
+                    limit={12}
+                    onImageClick={(index) => setLightboxIndex(index + 1)}
                   />
-                </button>
-              </Reveal>
+                </Reveal>
+              )}
             </div>
           </div>
         </section>
@@ -114,7 +131,7 @@ export function WorkGalleryPage() {
       </main>
 
       <ImageLightbox
-        images={images}
+        images={lightboxImages}
         index={lightboxIndex}
         onClose={() => setLightboxIndex(null)}
         onChange={setLightboxIndex}

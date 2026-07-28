@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\GalleryAlbum;
 use App\Models\HeroSlide;
 use App\Models\InstagramPost;
 use App\Models\Material;
@@ -26,6 +27,7 @@ class SiteContentSeeder extends Seeder
         $this->seedPortfolio();
         $this->seedServices();
         $this->seedInstagramPosts();
+        $this->seedGalleryAlbums();
     }
 
     private function seedSettings(): void
@@ -47,6 +49,11 @@ class SiteContentSeeder extends Seeder
             ['key' => 'who_we_are_heading', 'value' => 'Built on craftsmanship since', 'type' => 'string', 'group' => 'who_we_are'],
             ['key' => 'who_we_are_highlight_text', 'value' => '1998', 'type' => 'string', 'group' => 'who_we_are'],
             ['key' => 'who_we_are_body', 'value' => 'Creative Granite + Design is a Utah-based stone fabrication company specializing in custom countertops and architectural surfaces. We partner with homeowners, builders, and designers to deliver precise fabrication, thoughtful material selection, and high-quality installation across residential and multifamily projects.', 'type' => 'string', 'group' => 'who_we_are'],
+            ['key' => 'gallery_eyebrow', 'value' => 'Our Work', 'type' => 'string', 'group' => 'gallery'],
+            ['key' => 'gallery_heading', 'value' => 'Our Work', 'type' => 'string', 'group' => 'gallery'],
+            ['key' => 'gallery_body', 'value' => 'Explore a collection of kitchens, bathrooms, fireplaces, commercial spaces, and custom stone applications.', 'type' => 'string', 'group' => 'gallery'],
+            ['key' => 'gallery_featured_eyebrow', 'value' => 'Featured Projects', 'type' => 'string', 'group' => 'gallery'],
+            ['key' => 'gallery_featured_heading', 'value' => 'A grid of our best projects.', 'type' => 'string', 'group' => 'gallery'],
         ];
 
         foreach ($settings as $setting) {
@@ -211,6 +218,51 @@ class SiteContentSeeder extends Seeder
                 'external_url' => 'https://www.instagram.com/creativegraniteanddesign/',
                 'sort_order' => $index + 1,
                 'is_featured' => true,
+                'is_active' => true,
+            ]);
+        }
+    }
+
+    private function seedGalleryAlbums(): void
+    {
+        if (GalleryAlbum::query()->exists()) {
+            return;
+        }
+
+        $categories = [
+            ['kitchens', 'Kitchens', 'kitchens-cover.jpg', 'kitchens-gallery.png'],
+            ['bathrooms', 'Bathrooms', 'bathrooms-cover.jpg', 'bathrooms-gallery.png'],
+            ['fireplaces', 'Fireplaces', 'fireplaces-cover.jpg', 'fireplaces-gallery.png'],
+            ['multifamily', 'Multifamily', 'multifamily-cover.jpg', 'multifamily-gallery.png'],
+        ];
+
+        foreach ($categories as $index => [$slug, $title, $cover, $gallery]) {
+            GalleryAlbum::create([
+                'title' => $title,
+                'slug' => $slug,
+                'kind' => GalleryAlbum::KIND_CATEGORY,
+                'cover_path' => '/images/work/'.$cover,
+                'gallery_path' => '/images/work/'.$gallery,
+                'sort_order' => $index + 1,
+                'is_active' => true,
+            ]);
+        }
+
+        $projects = [
+            ['norfolk', 'Norfolk', 'norfolk-cover.jpg', 'norfolk-gallery.png'],
+            ['sabal', 'Sabal', 'sabal-cover.png', 'sabal-gallery.png'],
+            ['lancaster', 'Lancaster', 'lancaster-cover.jpg', 'lancaster-gallery.png'],
+            ['2026-parade-home', '2026 Parade Home', 'parade-home-cover.jpg', 'parade-home-gallery.png'],
+        ];
+
+        foreach ($projects as $index => [$slug, $title, $cover, $gallery]) {
+            GalleryAlbum::create([
+                'title' => $title,
+                'slug' => $slug,
+                'kind' => GalleryAlbum::KIND_PROJECT,
+                'cover_path' => '/images/work/'.$cover,
+                'gallery_path' => '/images/work/'.$gallery,
+                'sort_order' => $index + 1,
                 'is_active' => true,
             ]);
         }
