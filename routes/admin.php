@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\ContactPageController;
 use App\Http\Controllers\Admin\ContactInquiryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EditorUploadController;
+use App\Http\Controllers\Admin\GalleryAlbumController;
 use App\Http\Controllers\Admin\HeroSlideController;
 use App\Http\Controllers\Admin\InstagramPostController;
 use App\Http\Controllers\Admin\MaterialController;
@@ -25,6 +26,7 @@ Route::middleware(['web', 'auth', 'admin'])->prefix('admin')->name('admin.')->gr
 
     Route::resource('hero-slides', HeroSlideController::class)->except(['show']);
     Route::resource('instagram-posts', InstagramPostController::class)->except(['show']);
+    Route::resource('gallery-albums', GalleryAlbumController::class)->except(['show']);
     Route::resource('materials', MaterialController::class)->except(['show']);
     Route::resource('products', ProductController::class)->except(['show']);
     Route::resource('process-steps', ProcessStepController::class)->except(['show']);

@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\Models\ContactInquiry;
+use App\Models\GalleryAlbum;
+use App\Models\GalleryAlbumImage;
 use App\Models\HeroSlide;
 use App\Models\InstagramPost;
 use App\Models\Material;
@@ -36,7 +38,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $clearSiteContentCache = static fn () => SiteContentService::clearCache();
 
-        foreach ([HeroSlide::class, InstagramPost::class, Material::class, Product::class, ProductImage::class, ProcessStep::class, ProjectType::class, PortfolioItem::class, Service::class, SiteSetting::class] as $model) {
+        foreach ([GalleryAlbum::class, GalleryAlbumImage::class, HeroSlide::class, InstagramPost::class, Material::class, Product::class, ProductImage::class, ProcessStep::class, ProjectType::class, PortfolioItem::class, Service::class, SiteSetting::class] as $model) {
             $model::saved($clearSiteContentCache);
             $model::deleted($clearSiteContentCache);
         }

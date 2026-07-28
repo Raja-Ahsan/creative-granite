@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Models\GalleryAlbum;
+use App\Models\GalleryAlbumImage;
 use App\Models\HeroSlide;
 use App\Models\InstagramPost;
 use App\Models\Material;
@@ -81,6 +83,32 @@ class SiteContentService
                     'tag' => '',
                     'featured' => (bool) $item->is_featured,
                 ])
+                ->values()
+                ->all(),
+            'galleryAlbums' => GalleryAlbum::query()
+                ->with(['images' => fn ($query) => $query->orderBy('sort_order')->orderBy('id')])
+                ->active()
+                ->ordered()
+                ->get()
+                ->map(function (GalleryAlbum $album) {
+                    $images = $album->images
+                        ->map(fn (GalleryAlbumImage $image) => $image->image_path)
+                        ->values()
+                        ->all();
+
+                    if ($images === [] && $album->gallery_path) {
+                        $images = [$album->gallery_path];
+                    }
+
+                    return [
+                        'slug' => $album->slug,
+                        'title' => $album->title,
+                        'kind' => $album->kind,
+                        'cover' => $album->cover_path,
+                        'gallery' => $images[0] ?? $album->gallery_path ?? '',
+                        'images' => $images,
+                    ];
+                })
                 ->values()
                 ->all(),
             'instagramPosts' => $this->resolveInstagramPosts(),
@@ -338,6 +366,22 @@ natasha “Natasha”'],
                 'eyebrow' => 'Our work',
                 'heading' => 'Fabricated with precision. installed with intention.',
                 'subheading' => 'A selection of completed spaces, material details, and in between moments each reflecting our approach to stone, design, and execution.',
+                'body' => '',
+                'highlightText' => '',
+                'image' => '',
+            ],
+            'gallery' => [
+                'eyebrow' => $settings['gallery_eyebrow'] ?? 'Our Work',
+                'heading' => $settings['gallery_heading'] ?? 'Our Work',
+                'subheading' => '',
+                'body' => $settings['gallery_body'] ?? 'Explore a collection of kitchens, bathrooms, fireplaces, commercial spaces, and custom stone applications.',
+                'highlightText' => '',
+                'image' => '',
+            ],
+            'gallery-featured' => [
+                'eyebrow' => $settings['gallery_featured_eyebrow'] ?? 'Featured Projects',
+                'heading' => $settings['gallery_featured_heading'] ?? 'A grid of our best projects.',
+                'subheading' => '',
                 'body' => '',
                 'highlightText' => '',
                 'image' => '',
