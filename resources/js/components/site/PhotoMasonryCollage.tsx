@@ -79,6 +79,7 @@ function MasonryColumns({
   columns,
   ratios,
   className,
+  columnCount,
   getHref,
   onImageClick,
   showInstagramIcon,
@@ -86,19 +87,19 @@ function MasonryColumns({
   columns: CollageImage[][];
   ratios: readonly (readonly number[])[];
   className: string;
+  /** How images were distributed: index = row * columnCount + col */
+  columnCount: number;
   getHref?: (image: CollageImage, globalIndex: number) => string | undefined;
   onImageClick?: (globalIndex: number) => void;
   showInstagramIcon?: boolean;
 }) {
-  let globalIndex = 0;
-
   return (
     <div className={className}>
       {columns.map((colImages, colIndex) => (
         <div key={colIndex} className="flex h-full min-w-0 flex-1 flex-col gap-1.5 md:gap-2">
           {colImages.map((image, rowIndex) => {
-            const index = globalIndex;
-            globalIndex += 1;
+            // Must match how columns are filled (i % columnCount), not visual walk order
+            const index = rowIndex * columnCount + colIndex;
             return (
               <Tile
                 key={`${image.src}-${colIndex}-${rowIndex}`}
@@ -167,6 +168,7 @@ export function PhotoMasonryCollage({
         <MasonryColumns
           columns={desktopColumns}
           ratios={COLLAGE_DESKTOP_RATIOS}
+          columnCount={4}
           getHref={getHref}
           onImageClick={onImageClick}
           showInstagramIcon={showInstagramIcon}
@@ -179,6 +181,7 @@ export function PhotoMasonryCollage({
         <MasonryColumns
           columns={mobileColumns}
           ratios={COLLAGE_MOBILE_RATIOS}
+          columnCount={2}
           getHref={getHref}
           onImageClick={onImageClick}
           showInstagramIcon={showInstagramIcon}
