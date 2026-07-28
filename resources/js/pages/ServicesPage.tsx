@@ -154,42 +154,8 @@ export function ServicesPage() {
           </section>
         ))}
 
-        {/* Edge profiles */}
-        <section className="relative overflow-hidden bg-ink text-cream">
-          <div className="pointer-events-none absolute inset-0 grain opacity-35" />
-          <div className="relative mx-auto grid max-w-[1400px] md:grid-cols-12">
-            <div className="flex flex-col justify-center px-6 py-16 md:col-span-4 md:px-10 md:py-24 lg:px-14">
-              <Reveal>
-                <div className="flex items-center gap-3 text-cream/50">
-                  <span className="h-px w-10 bg-cream/30" />
-                  <span className="eyebrow text-cream/50">Finishes</span>
-                </div>
-                <h2 className="mt-6 max-w-[12ch] font-display text-[clamp(1.75rem,3.6vw,3rem)] uppercase leading-[0.95] tracking-[-0.02em] text-cream">
-                  Choose Your Edge
-                </h2>
-                <p className="mt-6 max-w-sm text-sm leading-relaxed text-cream/65 md:text-base">
-                  From clean eased edges to ogee, bullnose, bevel, and waterfall styles — select the
-                  profile that fits your design.
-                </p>
-              </Reveal>
-            </div>
-
-            <Reveal delay={100} className="md:col-span-8">
-              <div className="flex h-full items-center border-t border-cream/10 md:border-l md:border-t-0">
-                <img
-                  src={`${IMG}/edge-profiles.png`}
-                  alt="Countertop edge profiles including eased, bevel, ogee, cove, bullnose, waterfall, and Dupont"
-                  className="h-auto w-full object-contain"
-                  loading="lazy"
-                  decoding="async"
-                />
-              </div>
-            </Reveal>
-          </div>
-        </section>
-
         {/* 04. Repairs & Warranty */}
-        <section className="relative bg-ink py-20 text-cream md:py-28">
+        <section className="relative bg-ink pb-20 pt-10 text-cream md:pb-28 md:pt-10">
           <div className="pointer-events-none absolute inset-0 grain opacity-40" />
           <div className="relative mx-auto max-w-[1400px] px-6 md:px-10">
             <Reveal>
@@ -214,8 +180,8 @@ export function ServicesPage() {
             <Reveal delay={100} className="mt-10 md:mt-14">
               <div className="aspect-[16/10] w-full overflow-hidden bg-bone md:aspect-[21/9]">
                 <img
-                  src={`${IMG}/repairs-hero.png`}
-                  alt="Stone fabrication and repair craftsmanship"
+                  src={`${IMG}/repairs-hero-blue.png`}
+                  alt="Stone cutting and fabrication with diamond blade"
                   className="h-full w-full object-cover"
                   loading="lazy"
                   decoding="async"

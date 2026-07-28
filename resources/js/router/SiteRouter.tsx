@@ -15,6 +15,7 @@ import { ProductDetailPage } from "@/pages/ProductDetailPage";
 import { ProductsPage } from "@/pages/ProductsPage";
 import { ServiceDetailPage } from "@/pages/ServiceDetailPage";
 import { ServicesPage } from "@/pages/ServicesPage";
+import { WorkGalleryPage } from "@/pages/WorkGalleryPage";
 
 type SiteRouterContextValue = {
   pathname: string;
@@ -35,6 +36,7 @@ function resolvePage(pathname: string) {
   const path = normalizePath(pathname);
 
   if (path === "/gallery") return GalleryPage;
+  if (path.startsWith("/gallery/")) return WorkGalleryPage;
   if (path === "/products") return ProductsPage;
   if (path === "/process") return ProcessPage;
   if (path === "/services") return ServicesPage;
@@ -194,6 +196,12 @@ export function useServiceSlug(): string | undefined {
   const { pathname } = useSiteRouter();
   const match = pathname.match(/^\/services\/([^/]+)$/);
   return match?.[1];
+}
+
+export function useWorkGallerySlug(): string | undefined {
+  const { pathname } = useSiteRouter();
+  const match = pathname.match(/^\/gallery\/([^/]+)$/);
+  return match?.[1] ? decodeURIComponent(match[1]) : undefined;
 }
 
 export function useProductSlug(): string | undefined {

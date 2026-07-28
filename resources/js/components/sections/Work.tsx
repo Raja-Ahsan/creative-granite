@@ -91,7 +91,7 @@ export function Work() {
             data-cursor="view"
             className="btn-magnetic inline-flex items-center gap-3 rounded-full border border-foreground bg-transparent px-10 py-5 text-xs font-medium tracking-[0.25em] text-foreground"
           >
-            <span>View Gallery</span>
+            <span>View Our Work</span>
             <span className="relative z-[2]">→</span>
           </a>
         </Reveal>
