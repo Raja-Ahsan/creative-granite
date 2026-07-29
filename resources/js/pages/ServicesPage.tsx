@@ -180,8 +180,8 @@ export function ServicesPage() {
             <Reveal delay={100} className="mt-10 md:mt-14">
               <div className="aspect-[16/10] w-full overflow-hidden bg-bone md:aspect-[21/9]">
                 <img
-                  src={`${IMG}/repairs-hero-blue.png`}
-                  alt="Stone cutting and fabrication with diamond blade"
+                  src={`${IMG}/repairs-hero-voyager.png`}
+                  alt="Park Industries Voyager XP bridge saw fabricating stone"
                   className="h-full w-full object-cover"
                   loading="lazy"
                   decoding="async"
@@ -204,16 +204,15 @@ export function ServicesPage() {
                     ))}
                   </ul>
                   <div className="mt-auto pt-10">
-                    <a
-                      href={`${IMG}/cgd-warranty.pdf`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      data-cursor="view"
+                    <button
+                      type="button"
+                      onClick={openEstimateModal}
+                      data-cursor="estimate"
                       className="btn-magnetic inline-flex items-center gap-3 rounded-full border border-cream bg-transparent px-8 py-4 text-xs font-medium tracking-[0.22em] text-cream"
                     >
-                      <span>Download Warranty PDF</span>
+                      <span>Request a Warranty Repair.</span>
                       <span className="relative z-[2]">→</span>
-                    </a>
+                    </button>
                   </div>
                 </div>
               </Reveal>

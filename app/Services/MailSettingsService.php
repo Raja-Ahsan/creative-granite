@@ -150,10 +150,18 @@ class MailSettingsService
     public function contactRecipient(): string
     {
         $settings = $this->getSettings();
-
-        return $settings['mail_contact_recipient']
+        $recipient = $settings['mail_contact_recipient']
             ?: SiteSetting::getValue('email')
             ?: config('mail.from.address');
+
+        $siteEmail = SiteSetting::getValue('email');
+        $placeholders = ['hello@example.com', 'admin@example.com', ''];
+
+        if ($siteEmail && in_array((string) $recipient, $placeholders, true)) {
+            return $siteEmail;
+        }
+
+        return (string) $recipient;
     }
 
     private function saveSetting(string $key, string $value): void
