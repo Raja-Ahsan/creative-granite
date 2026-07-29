@@ -50,8 +50,8 @@ class SiteContentSeeder extends Seeder
             ['key' => 'who_we_are_highlight_text', 'value' => '1998', 'type' => 'string', 'group' => 'who_we_are'],
             ['key' => 'who_we_are_body', 'value' => 'Creative Granite + Design is a Utah-based stone fabrication company specializing in custom countertops and architectural surfaces. We partner with homeowners, builders, and designers to deliver precise fabrication, thoughtful material selection, and high-quality installation across residential and multifamily projects.', 'type' => 'string', 'group' => 'who_we_are'],
             ['key' => 'gallery_eyebrow', 'value' => 'Our Work', 'type' => 'string', 'group' => 'gallery'],
-            ['key' => 'gallery_heading', 'value' => 'Our Work', 'type' => 'string', 'group' => 'gallery'],
-            ['key' => 'gallery_body', 'value' => 'Explore a collection of kitchens, bathrooms, fireplaces, commercial spaces, and custom stone applications.', 'type' => 'string', 'group' => 'gallery'],
+            ['key' => 'gallery_heading', 'value' => 'Explore Our Portfolio', 'type' => 'string', 'group' => 'gallery'],
+            ['key' => 'gallery_body', 'value' => 'Discover a curated collection of kitchens, bathrooms, fireplaces, commercial spaces, and custom stone applications that showcase our craftsmanship and attention to detail.', 'type' => 'string', 'group' => 'gallery'],
             ['key' => 'gallery_featured_eyebrow', 'value' => 'Featured Projects', 'type' => 'string', 'group' => 'gallery'],
             ['key' => 'gallery_featured_heading', 'value' => 'A grid of our best projects.', 'type' => 'string', 'group' => 'gallery'],
         ];

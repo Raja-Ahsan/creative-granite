@@ -9,98 +9,93 @@ class CmsModuleSeeder extends Seeder
 {
     public function run(): void
     {
-        $dashboard = CmsModule::updateOrCreate(
-            ['route_name' => 'admin.dashboard'],
-            [
-                'name' => 'Dashboard',
-                'icon' => 'fa-regular fa-house',
-                'sort_order' => 1,
-                'status' => 'active',
-                'parent_id' => 0,
-            ]
-        );
+        $dashboard = $this->upsertRoot('admin.dashboard', 'Dashboard', 'fa-regular fa-house', 1);
 
-        CmsModule::updateOrCreate(
-            ['route_name' => 'contact-inquiries.index'],
-            [
-                'name' => 'Contact Enquiries',
-                'icon' => 'fa-solid fa-inbox',
-                'sort_order' => 2,
-                'status' => 'active',
-                'parent_id' => 0,
-            ]
-        );
+        $home = $this->upsertRoot('home-module', 'Home Page', 'fa-solid fa-house-chimney', 2);
+        $gallery = $this->upsertRoot('gallery-module', 'Gallery Page', 'fa-solid fa-images', 3);
+        $services = $this->upsertRoot('services-module', 'Services Page', 'fa-solid fa-briefcase', 4);
+        $contact = $this->upsertRoot('contact-module', 'Contact & Leads', 'fa-solid fa-address-book', 5);
+        $settings = $this->upsertRoot('settings-module', 'Settings', 'fa-solid fa-gear', 6);
 
-        CmsModule::updateOrCreate(
-            ['route_name' => 'contact-page.edit'],
-            [
-                'name' => 'Contact Page',
-                'icon' => 'fa-solid fa-address-card',
-                'sort_order' => 3,
-                'status' => 'active',
-                'parent_id' => 0,
-            ]
-        );
-
-        CmsModule::updateOrCreate(
-            ['route_name' => 'estimate-requests.index'],
-            [
-                'name' => 'Estimate Requests',
-                'icon' => 'fa-solid fa-file-invoice',
-                'sort_order' => 4,
-                'status' => 'active',
-                'parent_id' => 0,
-            ]
-        );
-
-        $siteContent = CmsModule::updateOrCreate(
-            ['route_name' => 'site-content-module'],
-            [
-                'name' => 'Site Content',
-                'icon' => 'fa-solid fa-globe',
-                'sort_order' => 5,
-                'status' => 'active',
-                'parent_id' => 0,
-            ]
-        );
-
-        $modules = [
-            ['who-we-are.edit', 'Who We Are', 'fa-solid fa-people-group', 1],
-            ['hero-slides.index', 'Hero Slides', 'fa-solid fa-images', 2],
-            ['instagram-posts.index', 'Instagram Feed', 'fa-brands fa-instagram', 3],
-            ['gallery-albums.index', 'Gallery Albums', 'fa-solid fa-table-cells-large', 4],
-            ['materials.index', 'Materials', 'fa-solid fa-gem', 5],
-            ['products.index', 'Products', 'fa-solid fa-box', 6],
-            ['process-steps.index', 'Process', 'fa-solid fa-list-ol', 7],
-            ['portfolio-items.index', 'Homepage Work Collage', 'fa-solid fa-camera', 8],
-            ['services.index', 'Services', 'fa-solid fa-briefcase', 9],
-            ['site-settings.edit', 'Site Settings', 'fa-solid fa-gear', 10],
-            ['email-settings.edit', 'Email Settings', 'fa-solid fa-envelope', 11],
-            ['email-templates.index', 'Email Templates', 'fa-solid fa-envelope-open-text', 12],
+        $groups = [
+            $home->id => [
+                ['hero-slides.index', 'Hero Banner', 'fa-solid fa-panorama', 1],
+                ['who-we-are.edit', 'Who We Are', 'fa-solid fa-people-group', 2],
+                ['materials.index', 'Materials', 'fa-solid fa-gem', 3],
+                ['products.index', 'Products', 'fa-solid fa-box', 4],
+                ['process-steps.index', 'Process', 'fa-solid fa-list-ol', 5],
+                ['portfolio-items.index', 'Our Work Collage', 'fa-solid fa-camera', 6],
+                ['instagram-posts.index', 'Instagram Feed', 'fa-brands fa-instagram', 7],
+            ],
+            $gallery->id => [
+                ['gallery-albums.index', 'Gallery Albums', 'fa-solid fa-table-cells-large', 1],
+            ],
+            $services->id => [
+                ['services.index', 'Services Content', 'fa-solid fa-briefcase', 1],
+            ],
+            $contact->id => [
+                ['contact-page.edit', 'Contact Page', 'fa-solid fa-address-card', 1],
+                ['contact-inquiries.index', 'Contact Enquiries', 'fa-solid fa-inbox', 2],
+                ['estimate-requests.index', 'Estimate Requests', 'fa-solid fa-file-invoice', 3],
+            ],
+            $settings->id => [
+                ['site-settings.edit', 'Site Settings', 'fa-solid fa-sliders', 1],
+                ['email-settings.edit', 'Email Settings', 'fa-solid fa-envelope', 2],
+                ['email-templates.index', 'Email Templates', 'fa-solid fa-envelope-open-text', 3],
+            ],
         ];
 
-        foreach ($modules as [$route, $name, $icon, $order]) {
-            CmsModule::updateOrCreate(
-                ['route_name' => $route],
-                [
-                    'name' => $name,
-                    'icon' => $icon,
-                    'sort_order' => $order,
-                    'status' => 'active',
-                    'parent_id' => $siteContent->id,
-                ]
-            );
+        $childRoutes = [];
+
+        foreach ($groups as $parentId => $children) {
+            foreach ($children as [$route, $name, $icon, $order]) {
+                $childRoutes[] = $route;
+                CmsModule::updateOrCreate(
+                    ['route_name' => $route],
+                    [
+                        'name' => $name,
+                        'icon' => $icon,
+                        'sort_order' => $order,
+                        'status' => 'active',
+                        'parent_id' => $parentId,
+                    ]
+                );
+            }
         }
 
         $allowed = array_merge(
-            ['admin.dashboard', 'contact-inquiries.index', 'contact-page.edit', 'estimate-requests.index', 'site-content-module'],
-            array_column($modules, 0)
+            [
+                'admin.dashboard',
+                'home-module',
+                'gallery-module',
+                'services-module',
+                'contact-module',
+                'settings-module',
+            ],
+            $childRoutes
         );
 
+        // Remove legacy flat / old Site Content parent
         CmsModule::query()
             ->where(function ($q) use ($allowed) {
                 $q->whereNotIn('route_name', $allowed)->orWhereNull('route_name');
             })
             ->delete();
+
+        unset($dashboard);
+    }
+
+    private function upsertRoot(string $routeName, string $name, string $icon, int $order): CmsModule
+    {
+        return CmsModule::updateOrCreate(
+            ['route_name' => $routeName],
+            [
+                'name' => $name,
+                'icon' => $icon,
+                'sort_order' => $order,
+                'status' => 'active',
+                'parent_id' => 0,
+            ]
+        );
     }
 }
