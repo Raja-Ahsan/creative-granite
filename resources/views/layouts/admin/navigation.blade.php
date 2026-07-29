@@ -59,31 +59,34 @@
                         </div>
 
                         <div class="max-h-80 overflow-y-auto">
-                            @forelse ($recentInquiries as $inquiry)
+                            @forelse ($recentNotifications as $notification)
                                 <a
-                                    href="{{ route('admin.contact-inquiries.show', $inquiry) }}"
-                                    class="block border-b border-bone/70 px-4 py-3 transition hover:bg-cream/50 {{ $inquiry->isUnread() ? 'bg-amber-50/50' : '' }}"
+                                    href="{{ $notification['url'] }}"
+                                    class="block border-b border-bone/70 px-4 py-3 transition hover:bg-cream/50 {{ $notification['unread'] ? 'bg-amber-50/50' : '' }}"
                                     @click="notificationsOpen = false"
                                 >
                                     <div class="flex items-start justify-between gap-2">
-                                        <p class="text-sm font-medium text-ink">{{ $inquiry->name }}</p>
-                                        @if ($inquiry->isUnread())
+                                        <p class="text-sm font-medium text-ink">{{ $notification['name'] }}</p>
+                                        @if ($notification['unread'])
                                             <span class="mt-1 h-2 w-2 shrink-0 rounded-full bg-amber-500"></span>
                                         @endif
                                     </div>
-                                    <p class="mt-1 truncate text-xs text-ink-soft">{{ $inquiry->projectTypeLabel() }}</p>
-                                    <p class="mt-1 text-[11px] text-ink-soft/70">{{ $inquiry->created_at->diffForHumans() }}</p>
+                                    <p class="mt-1 truncate text-xs text-ink-soft">{{ $notification['label'] }}</p>
+                                    <p class="mt-1 text-[11px] text-ink-soft/70">{{ $notification['created_at']?->diffForHumans() }}</p>
                                 </a>
                             @empty
                                 <div class="px-4 py-8 text-center text-sm text-ink-soft">
-                                    No contact enquiries yet.
+                                    No form submissions yet.
                                 </div>
                             @endforelse
                         </div>
 
-                        <div class="border-t border-bone bg-cream/30 px-4 py-3">
+                        <div class="border-t border-bone bg-cream/30 px-4 py-3 flex flex-wrap gap-x-4 gap-y-2">
+                            <a href="{{ route('admin.estimate-requests.index') }}" class="text-xs font-semibold uppercase tracking-wider text-accent hover:underline">
+                                Estimate requests
+                            </a>
                             <a href="{{ route('admin.contact-inquiries.index') }}" class="text-xs font-semibold uppercase tracking-wider text-accent hover:underline">
-                                View all enquiries
+                                Contact enquiries
                             </a>
                         </div>
                     </div>

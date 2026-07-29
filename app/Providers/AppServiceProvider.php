@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\ContactInquiry;
+use App\Models\EstimateRequest;
 use App\Models\GalleryAlbum;
 use App\Models\GalleryAlbumImage;
 use App\Models\HeroSlide;
@@ -51,20 +52,46 @@ class AppServiceProvider extends ServiceProvider
 
         View::composer('layouts.admin.navigation', function ($view) {
             $unreadCount = 0;
-            $recentInquiries = collect();
+            $recentNotifications = collect();
 
-            if (
-                auth()->check()
-                && auth()->user()->role === 'admin'
-                && Schema::hasTable('contact_inquiries')
-            ) {
-                $unreadCount = ContactInquiry::unread()->count();
-                $recentInquiries = ContactInquiry::recent()->limit(8)->get();
+            if (auth()->check() && auth()->user()->role === 'admin') {
+                $contacts = collect();
+                $estimates = collect();
+
+                if (Schema::hasTable('contact_inquiries')) {
+                    $unreadCount += ContactInquiry::unread()->count();
+                    $contacts = ContactInquiry::recent()->limit(8)->get()->map(fn (ContactInquiry $item) => [
+                        'type' => 'contact',
+                        'name' => $item->name,
+                        'label' => $item->projectTypeLabel(),
+                        'url' => route('admin.contact-inquiries.show', $item),
+                        'unread' => $item->isUnread(),
+                        'created_at' => $item->created_at,
+                    ]);
+                }
+
+                if (Schema::hasTable('estimate_requests')) {
+                    $unreadCount += EstimateRequest::unread()->count();
+                    $estimates = EstimateRequest::recent()->limit(8)->get()->map(fn (EstimateRequest $item) => [
+                        'type' => 'estimate',
+                        'name' => $item->name,
+                        'label' => 'Estimate — '.$item->projectTypeLabel(),
+                        'url' => route('admin.estimate-requests.show', $item),
+                        'unread' => $item->isUnread(),
+                        'created_at' => $item->created_at,
+                    ]);
+                }
+
+                $recentNotifications = $contacts
+                    ->concat($estimates)
+                    ->sortByDesc(fn (array $item) => $item['created_at']?->timestamp ?? 0)
+                    ->take(10)
+                    ->values();
             }
 
             $view->with([
                 'unreadInquiriesCount' => $unreadCount,
-                'recentInquiries' => $recentInquiries,
+                'recentNotifications' => $recentNotifications,
             ]);
         });
     }
