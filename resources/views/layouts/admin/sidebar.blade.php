@@ -1,8 +1,17 @@
 @php
     $modules = dynamic_sidebar();
 
-    $adminUrl = function (string $routeName): string {
-        if ($routeName === 'site-content-module') {
+    $placeholderModules = [
+        'site-content-module',
+        'home-module',
+        'gallery-module',
+        'services-module',
+        'contact-module',
+        'settings-module',
+    ];
+
+    $adminUrl = function (string $routeName) use ($placeholderModules): string {
+        if (in_array($routeName, $placeholderModules, true)) {
             return '#';
         }
 
@@ -62,32 +71,56 @@
         @foreach ($modules as $module)
             @php
                 $hasChildren = $module->children && $module->children->count() > 0;
+                $groupOpen = false;
+                if ($hasChildren) {
+                    foreach ($module->children as $child) {
+                        if (request()->routeIs($adminRoutePattern($child->route_name))) {
+                            $groupOpen = true;
+                            break;
+                        }
+                    }
+                }
             @endphp
 
             @if ($hasChildren)
-                <div class="pt-4 pb-2 px-3 flex items-center gap-2">
-                    @if ($module->icon)
-                        <i class="{{ $module->icon }} text-accent text-xs"></i>
-                    @endif
-                    <span class="text-[10px] font-semibold uppercase tracking-[0.18em] text-cream/40">
-                        {{ $module->name }}
-                    </span>
-                </div>
-
-                @foreach ($module->children as $child)
-                    @php
-                        $childActive = request()->routeIs($adminRoutePattern($child->route_name));
-                    @endphp
-                    <a
-                        href="{{ $adminUrl($child->route_name) }}"
-                        class="group flex items-center gap-3 px-3 py-2.5 rounded-r-md text-sm transition-all duration-150 {{ $linkClasses($childActive) }}"
+                <div class="pt-2" x-data="{ open: {{ $groupOpen ? 'true' : 'false' }} }">
+                    <button
+                        type="button"
+                        class="flex w-full items-center gap-3 rounded-md px-3 py-2.5 text-left text-sm text-cream/80 transition hover:bg-white/5 hover:text-cream"
+                        @click="open = !open"
+                        :aria-expanded="open.toString()"
                     >
-                        <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-md {{ $childActive ? 'bg-accent/20 text-accent' : 'bg-white/5 text-cream/60 group-hover:bg-white/10 group-hover:text-cream' }} transition">
-                            <i class="{{ $child->icon ?? 'fa-solid fa-circle' }} text-sm"></i>
+                        <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-white/5 text-accent">
+                            <i class="{{ $module->icon ?? 'fa-solid fa-folder' }} text-sm"></i>
                         </span>
-                        <span class="truncate">{{ $child->name }}</span>
-                    </a>
-                @endforeach
+                        <span class="flex-1 truncate font-medium">{{ $module->name }}</span>
+                        <i
+                            class="fa-solid fa-chevron-down text-[10px] text-cream/40 transition-transform duration-200"
+                            :class="{ 'rotate-180': open }"
+                        ></i>
+                    </button>
+
+                    <div
+                        x-show="open"
+                        x-cloak
+                        class="mt-1 space-y-0.5 border-l border-cream/10 ml-5 pl-2"
+                    >
+                        @foreach ($module->children as $child)
+                            @php
+                                $childActive = request()->routeIs($adminRoutePattern($child->route_name));
+                            @endphp
+                            <a
+                                href="{{ $adminUrl($child->route_name) }}"
+                                class="group flex items-center gap-3 px-3 py-2 rounded-r-md text-sm transition-all duration-150 {{ $linkClasses($childActive) }}"
+                            >
+                                <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md {{ $childActive ? 'bg-accent/20 text-accent' : 'bg-white/5 text-cream/60 group-hover:bg-white/10 group-hover:text-cream' }} transition">
+                                    <i class="{{ $child->icon ?? 'fa-solid fa-circle' }} text-xs"></i>
+                                </span>
+                                <span class="truncate">{{ $child->name }}</span>
+                            </a>
+                        @endforeach
+                    </div>
+                </div>
             @else
                 @php
                     $linkActive = request()->routeIs($adminRoutePattern($module->route_name));
