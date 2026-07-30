@@ -13,6 +13,8 @@ use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\ProjectType;
 use App\Models\Service;
+use App\Models\ServicePageSection;
+use App\Models\ServicePageSectionImage;
 use App\Models\SiteSetting;
 use Illuminate\Support\Facades\Cache;
 
@@ -160,6 +162,7 @@ class SiteContentService
                 ])
                 ->values()
                 ->all(),
+            'servicesPage' => $this->resolveServicesPage($settings),
             'processSteps' => ProcessStep::query()
                 ->where('is_active', true)
                 ->orderBy('sort_order')
@@ -178,6 +181,62 @@ class SiteContentService
             'footerSocialLinks' => $this->staticFooterSocialLinks(),
             'sections' => $this->staticSections(),
         ];
+    }
+
+    private function resolveServicesPage(array $settings): array
+    {
+        $sections = ServicePageSection::query()
+            ->with(['images' => fn ($query) => $query->orderBy('sort_order')->orderBy('id')])
+            ->active()
+            ->ordered()
+            ->get()
+            ->map(fn (ServicePageSection $section) => [
+                'number' => $section->number_label,
+                'title' => $section->title,
+                'body' => $section->body ?? '',
+                'hero' => $section->hero_path,
+                'supporting' => $section->images
+                    ->map(fn (ServicePageSectionImage $image) => $image->image_path)
+                    ->values()
+                    ->all(),
+            ])
+            ->values()
+            ->all();
+
+        return [
+            'eyebrow' => $settings['services_page_eyebrow'] ?? 'Services',
+            'heading' => $settings['services_page_heading'] ?? 'Stone Fabrication for Every Stage of Your Project.',
+            'body' => $settings['services_page_body'] ?? 'From custom homes and remodels to multifamily and commercial spaces, we fabricate, install, and support premium stone surfaces built to last.',
+            'heroImage' => $settings['services_page_hero_path'] ?? '/images/services/hero.png',
+            'sections' => $sections,
+            'repairs' => [
+                'number' => $settings['services_page_repairs_number'] ?? '04',
+                'eyebrow' => $settings['services_page_repairs_eyebrow'] ?? 'Repairs & Warranty',
+                'heading' => $settings['services_page_repairs_heading'] ?? 'Stand Behind Every Installation',
+                'body' => $settings['services_page_repairs_body'] ?? "Our commitment doesn't end after installation. We provide warranty support for qualifying workmanship and offer repair services to help keep your stone surfaces looking their best.",
+                'image' => $settings['services_page_repairs_image_path'] ?? '/images/services/repairs-hero-voyager.png',
+                'warrantyTitle' => $settings['services_page_warranty_title'] ?? 'Warranty',
+                'warrantyPoints' => $this->linesToList($settings['services_page_warranty_points'] ?? "One-year workmanship warranty\nWarranty support for qualifying fabrication and installation issues\nDedicated service team"),
+                'warrantyCta' => $settings['services_page_warranty_cta'] ?? 'Request a Warranty Repair.',
+                'repairsTitle' => $settings['services_page_repairs_card_title'] ?? 'Repairs',
+                'repairsPoints' => $this->linesToList($settings['services_page_repairs_points'] ?? "Repair services available by request\nContact us for an evaluation and quote"),
+                'repairsCta' => $settings['services_page_repairs_cta'] ?? 'Request a Repair Estimate',
+            ],
+            'cta' => [
+                'heading' => $settings['services_page_cta_heading'] ?? 'Ready to Start Your Project?',
+                'body' => $settings['services_page_cta_body'] ?? "Whether you're building a custom home, remodeling an existing space, or managing a multifamily or commercial project, our team is ready to bring your vision to life.",
+                'button' => $settings['services_page_cta_button'] ?? 'Get an Estimate',
+            ],
+        ];
+    }
+
+    private function linesToList(?string $value): array
+    {
+        if ($value === null || trim($value) === '') {
+            return [];
+        }
+
+        return array_values(array_filter(array_map('trim', preg_split('/\r\n|\r|\n/', $value) ?: [])));
     }
 
     private function resolveInstagramPosts(): array

@@ -27,6 +27,40 @@ export type Service = {
   mainImage?: string | null;
 };
 
+export type ServicePageSection = {
+  number: string;
+  title: string;
+  body: string;
+  hero: string;
+  supporting: string[];
+};
+
+export type ServicesPageContent = {
+  eyebrow: string;
+  heading: string;
+  body: string;
+  heroImage: string;
+  sections: ServicePageSection[];
+  repairs: {
+    number: string;
+    eyebrow: string;
+    heading: string;
+    body: string;
+    image: string;
+    warrantyTitle: string;
+    warrantyPoints: string[];
+    warrantyCta: string;
+    repairsTitle: string;
+    repairsPoints: string[];
+    repairsCta: string;
+  };
+  cta: {
+    heading: string;
+    body: string;
+    button: string;
+  };
+};
+
 export type ServiceDetail = Service;
 export type ProcessStep = { n: string; t: string; d: string };
 export type Testimonial = { q: string; a: string; r: string };

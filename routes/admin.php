@@ -13,6 +13,8 @@ use App\Http\Controllers\Admin\PortfolioItemController;
 use App\Http\Controllers\Admin\ProcessStepController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProjectTypeController;
+use App\Http\Controllers\Admin\ServicePageSectionController;
+use App\Http\Controllers\Admin\ServicesPageController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\EmailComposeController;
 use App\Http\Controllers\Admin\EmailSettingController;
@@ -32,6 +34,9 @@ Route::middleware(['web', 'auth', 'admin'])->prefix('admin')->name('admin.')->gr
     Route::resource('process-steps', ProcessStepController::class)->except(['show']);
     Route::resource('portfolio-items', PortfolioItemController::class)->except(['show']);
     Route::resource('services', ServiceController::class)->except(['show']);
+    Route::get('services-page', [ServicesPageController::class, 'edit'])->name('services-page.edit');
+    Route::put('services-page', [ServicesPageController::class, 'update'])->name('services-page.update');
+    Route::resource('service-page-sections', ServicePageSectionController::class)->except(['show']);
     Route::post('editor/upload-image', [EditorUploadController::class, 'store'])->name('editor.upload-image');
 
     Route::get('who-we-are', [WhoWeAreController::class, 'edit'])->name('who-we-are.edit');

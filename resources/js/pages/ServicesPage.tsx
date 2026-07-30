@@ -1,56 +1,14 @@
 import { Footer, Header } from "@/components/sections";
 import { Reveal } from "@/components/site/Reveal";
 import { useEstimateModal } from "@/contexts/EstimateModalContext";
+import { useSiteContent } from "@/contexts/SiteContentContext";
 import { SiteLayout } from "@/layouts/SiteLayout";
 import { bodyCopyLight, sectionHeadingLight } from "@/utils/typography";
 
-const IMG = "/images/services";
-
-const primaryServices = [
-  {
-    n: "01",
-    title: "New Construction & Residential",
-    body: "Partnering with builders, designers, and homeowners to fabricate and install custom stone surfaces with precision from planning through installation.",
-    hero: `${IMG}/new-construction-hero.jpg`,
-    supporting: [
-      `${IMG}/new-construction-1.jpg`,
-      `${IMG}/new-construction-2.jpg`,
-      `${IMG}/new-construction-3.jpg`,
-    ],
-  },
-  {
-    n: "02",
-    title: "Remodel & Renovation",
-    body: "Transform kitchens, bathrooms, fireplaces, and living spaces with expertly fabricated stone tailored to your vision.",
-    hero: `${IMG}/remodel-hero.png`,
-    supporting: [`${IMG}/remodel-1.jpg`, `${IMG}/remodel-2.jpg`, `${IMG}/remodel-3.jpg`],
-  },
-  {
-    n: "03",
-    title: "Multifamily & Commercial",
-    body: "Reliable stone fabrication and installation for multifamily developments, hospitality, retail, healthcare, office, and commercial environments.",
-    hero: `${IMG}/commercial-hero.jpg`,
-    supporting: [
-      `${IMG}/commercial-1.jpg`,
-      `${IMG}/commercial-2.jpg`,
-      `${IMG}/commercial-3.jpg`,
-    ],
-  },
-] as const;
-
-const warrantyPoints = [
-  "One-year workmanship warranty",
-  "Warranty support for qualifying fabrication and installation issues",
-  "Dedicated service team",
-] as const;
-
-const repairPoints = [
-  "Repair services available by request",
-  "Contact us for an evaluation and quote",
-] as const;
-
 export function ServicesPage() {
   const { openEstimateModal } = useEstimateModal();
+  const { servicesPage } = useSiteContent();
+  const { repairs, cta } = servicesPage;
 
   return (
     <SiteLayout>
@@ -64,23 +22,18 @@ export function ServicesPage() {
             <Reveal>
               <div className="flex items-center gap-3 text-foreground/60">
                 <span className="h-px w-12 bg-foreground/40" />
-                <span className="eyebrow">Services</span>
+                <span className="eyebrow">{servicesPage.eyebrow}</span>
               </div>
-              <h1 className={`mt-6 max-w-4xl ${sectionHeadingLight}`}>
-                Stone Fabrication for Every Stage of Your Project.
-              </h1>
-              <p className={`mt-8 max-w-2xl ${bodyCopyLight}`}>
-                From custom homes and remodels to multifamily and commercial spaces, we fabricate,
-                install, and support premium stone surfaces built to last.
-              </p>
+              <h1 className={`mt-6 max-w-4xl ${sectionHeadingLight}`}>{servicesPage.heading}</h1>
+              <p className={`mt-8 max-w-2xl ${bodyCopyLight}`}>{servicesPage.body}</p>
             </Reveal>
           </div>
 
           <Reveal delay={120} className="relative mt-12 md:mt-16">
             <div className="aspect-[16/9] w-full overflow-hidden bg-bone md:aspect-[21/9]">
               <img
-                src={`${IMG}/hero.png`}
-                alt="Custom stone kitchen fabrication by Creative Granite"
+                src={servicesPage.heroImage}
+                alt={servicesPage.heading}
                 className="h-full w-full object-cover"
                 fetchPriority="high"
                 decoding="async"
@@ -89,10 +42,10 @@ export function ServicesPage() {
           </Reveal>
         </section>
 
-        {/* Primary services 01–03 */}
-        {primaryServices.map((service, index) => (
+        {/* Primary services */}
+        {servicesPage.sections.map((service, index) => (
           <section
-            key={service.n}
+            key={`${service.number}-${service.title}`}
             className={`relative py-20 md:py-28 ${index % 2 === 0 ? "bg-ink text-cream" : "bg-cream text-foreground"}`}
           >
             <div
@@ -105,7 +58,7 @@ export function ServicesPage() {
                     <span
                       className={`font-mono text-sm tracking-[0.16em] ${index % 2 === 0 ? "text-cream/45" : "text-foreground/40"}`}
                     >
-                      {service.n}
+                      {service.number}
                     </span>
                   </div>
                   <div className="col-span-12 md:col-span-10">
@@ -137,7 +90,7 @@ export function ServicesPage() {
 
               <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-3 md:mt-4 md:gap-4">
                 {service.supporting.map((src, i) => (
-                  <Reveal key={src} delay={140 + i * 60}>
+                  <Reveal key={`${src}-${i}`} delay={140 + i * 60}>
                     <div className="aspect-[4/3] overflow-hidden bg-bone">
                       <img
                         src={src}
@@ -154,25 +107,21 @@ export function ServicesPage() {
           </section>
         ))}
 
-        {/* 04. Repairs & Warranty */}
+        {/* Repairs & Warranty */}
         <section className="relative bg-ink pb-20 pt-10 text-cream md:pb-28 md:pt-10">
           <div className="pointer-events-none absolute inset-0 grain opacity-40" />
           <div className="relative mx-auto max-w-[1400px] px-6 md:px-10">
             <Reveal>
               <div className="grid grid-cols-12 gap-6 md:gap-10">
                 <div className="col-span-12 md:col-span-2">
-                  <span className="font-mono text-sm tracking-[0.16em] text-cream/45">04</span>
+                  <span className="font-mono text-sm tracking-[0.16em] text-cream/45">{repairs.number}</span>
                 </div>
                 <div className="col-span-12 md:col-span-10">
-                  <p className="eyebrow text-cream/50">Repairs &amp; Warranty</p>
+                  <p className="eyebrow text-cream/50">{repairs.eyebrow}</p>
                   <h2 className="mt-4 max-w-3xl font-display text-[clamp(1.75rem,3.8vw,3.25rem)] uppercase leading-[0.95] tracking-[-0.02em] text-cream">
-                    Stand Behind Every Installation
+                    {repairs.heading}
                   </h2>
-                  <p className="mt-6 max-w-2xl text-base leading-relaxed text-cream/70 md:text-lg">
-                    Our commitment doesn&apos;t end after installation. We provide warranty support
-                    for qualifying workmanship and offer repair services to help keep your stone
-                    surfaces looking their best.
-                  </p>
+                  <p className="mt-6 max-w-2xl text-base leading-relaxed text-cream/70 md:text-lg">{repairs.body}</p>
                 </div>
               </div>
             </Reveal>
@@ -180,8 +129,8 @@ export function ServicesPage() {
             <Reveal delay={100} className="mt-10 md:mt-14">
               <div className="aspect-[16/10] w-full overflow-hidden bg-bone md:aspect-[21/9]">
                 <img
-                  src={`${IMG}/repairs-hero-voyager.png`}
-                  alt="Park Industries Voyager XP bridge saw fabricating stone"
+                  src={repairs.image}
+                  alt={repairs.heading}
                   className="h-full w-full object-cover"
                   loading="lazy"
                   decoding="async"
@@ -193,10 +142,10 @@ export function ServicesPage() {
               <Reveal delay={120}>
                 <div className="flex h-full flex-col border border-cream/15 bg-cream/[0.04] p-8 md:p-10">
                   <h3 className="font-display text-2xl uppercase tracking-[-0.01em] text-cream md:text-3xl">
-                    Warranty
+                    {repairs.warrantyTitle}
                   </h3>
                   <ul className="mt-8 space-y-4 text-cream/75">
-                    {warrantyPoints.map((point) => (
+                    {repairs.warrantyPoints.map((point) => (
                       <li key={point} className="flex gap-3 text-sm leading-relaxed md:text-base">
                         <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
                         <span>{point}</span>
@@ -210,7 +159,7 @@ export function ServicesPage() {
                       data-cursor="estimate"
                       className="btn-magnetic inline-flex items-center gap-3 rounded-full border border-cream bg-transparent px-8 py-4 text-xs font-medium tracking-[0.22em] text-cream"
                     >
-                      <span>Request a Warranty Repair.</span>
+                      <span>{repairs.warrantyCta}</span>
                       <span className="relative z-[2]">→</span>
                     </button>
                   </div>
@@ -220,10 +169,10 @@ export function ServicesPage() {
               <Reveal delay={180}>
                 <div className="flex h-full flex-col border border-cream/15 bg-cream/[0.04] p-8 md:p-10">
                   <h3 className="font-display text-2xl uppercase tracking-[-0.01em] text-cream md:text-3xl">
-                    Repairs
+                    {repairs.repairsTitle}
                   </h3>
                   <ul className="mt-8 space-y-4 text-cream/75">
-                    {repairPoints.map((point) => (
+                    {repairs.repairsPoints.map((point) => (
                       <li key={point} className="flex gap-3 text-sm leading-relaxed md:text-base">
                         <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
                         <span>{point}</span>
@@ -237,7 +186,7 @@ export function ServicesPage() {
                       data-cursor="estimate"
                       className="btn-magnetic inline-flex items-center gap-3 rounded-full border border-cream bg-cream px-8 py-4 text-xs font-medium tracking-[0.22em] text-ink"
                     >
-                      <span>Request a Repair Estimate</span>
+                      <span>{repairs.repairsCta}</span>
                       <span className="relative z-[2]">→</span>
                     </button>
                   </div>
@@ -252,13 +201,8 @@ export function ServicesPage() {
           <div className="pointer-events-none absolute inset-0 noise-overlay" />
           <div className="relative mx-auto max-w-[1400px] px-6 text-center md:px-10">
             <Reveal>
-              <h2 className={`mx-auto max-w-4xl ${sectionHeadingLight}`}>
-                Ready to Start Your Project?
-              </h2>
-              <p className={`mx-auto mt-8 max-w-[750px] text-lg ${bodyCopyLight}`}>
-                Whether you&apos;re building a custom home, remodeling an existing space, or managing
-                a multifamily or commercial project, our team is ready to bring your vision to life.
-              </p>
+              <h2 className={`mx-auto max-w-4xl ${sectionHeadingLight}`}>{cta.heading}</h2>
+              <p className={`mx-auto mt-8 max-w-[750px] text-lg ${bodyCopyLight}`}>{cta.body}</p>
               <div className="mt-12 flex justify-center">
                 <button
                   type="button"
@@ -266,7 +210,7 @@ export function ServicesPage() {
                   data-cursor="estimate"
                   className="btn-magnetic inline-flex items-center gap-3 rounded-full border border-foreground bg-foreground px-10 py-5 text-xs font-medium tracking-[0.25em] text-cream"
                 >
-                  <span>Get an Estimate</span>
+                  <span>{cta.button}</span>
                   <span className="relative z-[2]">→</span>
                 </button>
               </div>

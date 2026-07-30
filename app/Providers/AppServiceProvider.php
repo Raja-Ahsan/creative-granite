@@ -15,6 +15,8 @@ use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\ProjectType;
 use App\Models\Service;
+use App\Models\ServicePageSection;
+use App\Models\ServicePageSectionImage;
 use App\Models\SiteSetting;
 use App\Services\MailSettingsService;
 use App\Services\SiteContentService;
@@ -39,7 +41,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $clearSiteContentCache = static fn () => SiteContentService::clearCache();
 
-        foreach ([GalleryAlbum::class, GalleryAlbumImage::class, HeroSlide::class, InstagramPost::class, Material::class, Product::class, ProductImage::class, ProcessStep::class, ProjectType::class, PortfolioItem::class, Service::class, SiteSetting::class] as $model) {
+        foreach ([GalleryAlbum::class, GalleryAlbumImage::class, HeroSlide::class, InstagramPost::class, Material::class, Product::class, ProductImage::class, ProcessStep::class, ProjectType::class, PortfolioItem::class, Service::class, ServicePageSection::class, ServicePageSectionImage::class, SiteSetting::class] as $model) {
             $model::saved($clearSiteContentCache);
             $model::deleted($clearSiteContentCache);
         }
