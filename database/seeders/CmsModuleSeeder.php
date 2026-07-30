@@ -9,11 +9,11 @@ class CmsModuleSeeder extends Seeder
 {
     public function run(): void
     {
-        $dashboard = $this->upsertRoot('admin.dashboard', 'Dashboard', 'fa-regular fa-house', 1);
+        $this->upsertRoot('admin.dashboard', 'Dashboard', 'fa-regular fa-house', 1);
 
         $home = $this->upsertRoot('home-module', 'Home Page', 'fa-solid fa-house-chimney', 2);
         $gallery = $this->upsertRoot('gallery-module', 'Gallery Page', 'fa-solid fa-images', 3);
-        $services = $this->upsertRoot('services-module', 'Services Page', 'fa-solid fa-briefcase', 4);
+        $servicesPage = $this->upsertRoot('services-module', 'Services Page', 'fa-solid fa-briefcase', 4);
         $contact = $this->upsertRoot('contact-module', 'Contact & Leads', 'fa-solid fa-address-book', 5);
         $settings = $this->upsertRoot('settings-module', 'Settings', 'fa-solid fa-gear', 6);
 
@@ -26,12 +26,14 @@ class CmsModuleSeeder extends Seeder
                 ['process-steps.index', 'Process', 'fa-solid fa-list-ol', 5],
                 ['portfolio-items.index', 'Our Work Collage', 'fa-solid fa-camera', 6],
                 ['instagram-posts.index', 'Instagram Feed', 'fa-brands fa-instagram', 7],
+                ['services.index', 'Homepage Services', 'fa-solid fa-list', 8],
             ],
             $gallery->id => [
                 ['gallery-albums.index', 'Gallery Albums', 'fa-solid fa-table-cells-large', 1],
             ],
-            $services->id => [
-                ['services.index', 'Services Content', 'fa-solid fa-briefcase', 1],
+            $servicesPage->id => [
+                ['services-page.edit', 'Page Settings', 'fa-solid fa-sliders', 1],
+                ['service-page-sections.index', 'Page Sections', 'fa-solid fa-layer-group', 2],
             ],
             $contact->id => [
                 ['contact-page.edit', 'Contact Page', 'fa-solid fa-address-card', 1],
@@ -75,14 +77,11 @@ class CmsModuleSeeder extends Seeder
             $childRoutes
         );
 
-        // Remove legacy flat / old Site Content parent
         CmsModule::query()
             ->where(function ($q) use ($allowed) {
                 $q->whereNotIn('route_name', $allowed)->orWhereNull('route_name');
             })
             ->delete();
-
-        unset($dashboard);
     }
 
     private function upsertRoot(string $routeName, string $name, string $icon, int $order): CmsModule

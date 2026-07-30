@@ -11,6 +11,8 @@ use App\Models\ProcessStep;
 use App\Models\Product;
 use App\Models\ProjectType;
 use App\Models\Service;
+use App\Models\ServicePageSection;
+use App\Models\ServicePageSectionImage;
 use App\Models\SiteSetting;
 use Illuminate\Database\Seeder;
 
@@ -28,6 +30,7 @@ class SiteContentSeeder extends Seeder
         $this->seedServices();
         $this->seedInstagramPosts();
         $this->seedGalleryAlbums();
+        $this->seedServicesPage();
     }
 
     private function seedSettings(): void
@@ -265,6 +268,93 @@ class SiteContentSeeder extends Seeder
                 'sort_order' => $index + 1,
                 'is_active' => true,
             ]);
+        }
+    }
+
+    private function seedServicesPage(): void
+    {
+        $settings = [
+            ['key' => 'services_page_eyebrow', 'value' => 'Services', 'type' => 'string', 'group' => 'services_page'],
+            ['key' => 'services_page_heading', 'value' => 'Stone Fabrication for Every Stage of Your Project.', 'type' => 'string', 'group' => 'services_page'],
+            ['key' => 'services_page_body', 'value' => 'From custom homes and remodels to multifamily and commercial spaces, we fabricate, install, and support premium stone surfaces built to last.', 'type' => 'string', 'group' => 'services_page'],
+            ['key' => 'services_page_hero_path', 'value' => '/images/services/hero.png', 'type' => 'image', 'group' => 'services_page'],
+            ['key' => 'services_page_repairs_number', 'value' => '04', 'type' => 'string', 'group' => 'services_page'],
+            ['key' => 'services_page_repairs_eyebrow', 'value' => 'Repairs & Warranty', 'type' => 'string', 'group' => 'services_page'],
+            ['key' => 'services_page_repairs_heading', 'value' => 'Stand Behind Every Installation', 'type' => 'string', 'group' => 'services_page'],
+            ['key' => 'services_page_repairs_body', 'value' => "Our commitment doesn't end after installation. We provide warranty support for qualifying workmanship and offer repair services to help keep your stone surfaces looking their best.", 'type' => 'string', 'group' => 'services_page'],
+            ['key' => 'services_page_repairs_image_path', 'value' => '/images/services/repairs-hero-voyager.png', 'type' => 'image', 'group' => 'services_page'],
+            ['key' => 'services_page_warranty_title', 'value' => 'Warranty', 'type' => 'string', 'group' => 'services_page'],
+            ['key' => 'services_page_warranty_points', 'value' => "One-year workmanship warranty\nWarranty support for qualifying fabrication and installation issues\nDedicated service team", 'type' => 'string', 'group' => 'services_page'],
+            ['key' => 'services_page_warranty_cta', 'value' => 'Request a Warranty Repair.', 'type' => 'string', 'group' => 'services_page'],
+            ['key' => 'services_page_repairs_card_title', 'value' => 'Repairs', 'type' => 'string', 'group' => 'services_page'],
+            ['key' => 'services_page_repairs_points', 'value' => "Repair services available by request\nContact us for an evaluation and quote", 'type' => 'string', 'group' => 'services_page'],
+            ['key' => 'services_page_repairs_cta', 'value' => 'Request a Repair Estimate', 'type' => 'string', 'group' => 'services_page'],
+            ['key' => 'services_page_cta_heading', 'value' => 'Ready to Start Your Project?', 'type' => 'string', 'group' => 'services_page'],
+            ['key' => 'services_page_cta_body', 'value' => "Whether you're building a custom home, remodeling an existing space, or managing a multifamily or commercial project, our team is ready to bring your vision to life.", 'type' => 'string', 'group' => 'services_page'],
+            ['key' => 'services_page_cta_button', 'value' => 'Get an Estimate', 'type' => 'string', 'group' => 'services_page'],
+        ];
+
+        foreach ($settings as $setting) {
+            SiteSetting::updateOrCreate(['key' => $setting['key']], $setting);
+        }
+
+        if (ServicePageSection::query()->exists()) {
+            return;
+        }
+
+        $sections = [
+            [
+                '01',
+                'New Construction & Residential',
+                'Partnering with builders, designers, and homeowners to fabricate and install custom stone surfaces with precision from planning through installation.',
+                '/images/services/new-construction-hero.jpg',
+                [
+                    '/images/services/new-construction-1.jpg',
+                    '/images/services/new-construction-2.jpg',
+                    '/images/services/new-construction-3.jpg',
+                ],
+            ],
+            [
+                '02',
+                'Remodel & Renovation',
+                'Transform kitchens, bathrooms, fireplaces, and living spaces with expertly fabricated stone tailored to your vision.',
+                '/images/services/remodel-hero.png',
+                [
+                    '/images/services/remodel-1.jpg',
+                    '/images/services/remodel-2.jpg',
+                    '/images/services/remodel-3.jpg',
+                ],
+            ],
+            [
+                '03',
+                'Multifamily & Commercial',
+                'Reliable stone fabrication and installation for multifamily developments, hospitality, retail, healthcare, office, and commercial environments.',
+                '/images/services/commercial-hero.jpg',
+                [
+                    '/images/services/commercial-1.jpg',
+                    '/images/services/commercial-2.jpg',
+                    '/images/services/commercial-3.jpg',
+                ],
+            ],
+        ];
+
+        foreach ($sections as $index => [$number, $title, $body, $hero, $images]) {
+            $section = ServicePageSection::create([
+                'number_label' => $number,
+                'title' => $title,
+                'body' => $body,
+                'hero_path' => $hero,
+                'sort_order' => $index + 1,
+                'is_active' => true,
+            ]);
+
+            foreach ($images as $imageIndex => $path) {
+                ServicePageSectionImage::create([
+                    'service_page_section_id' => $section->id,
+                    'image_path' => $path,
+                    'sort_order' => $imageIndex + 1,
+                ]);
+            }
         }
     }
 }
