@@ -8,9 +8,10 @@ import { bodyCopyLight, sectionHeadingLight } from "@/utils/typography";
 
 export function GalleryPage() {
   const { openEstimateModal } = useEstimateModal();
-  const { galleryAlbums } = useSiteContent();
+  const { galleryAlbums, settings} = useSiteContent();
   const intro = useSection("gallery");
   const featuredSection = useSection("gallery-featured");
+  const instagramUrl = settings.instagramUrl || "#";
 
   const categories = useMemo(
     () => galleryAlbums.filter((album) => album.kind === "category"),
@@ -120,6 +121,18 @@ export function GalleryPage() {
                   </Reveal>
                 ))}
               </div>
+              <div className="mt-12 flex justify-center md:mt-16">
+                <a
+                  href={instagramUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-cursor="follow"
+                  className=" inline-flex items-center rounded-full border border-foreground bg-cream px-10 py-5 text-xs font-medium tracking-[0.25em] text-foreground"
+                >
+                  <span>Follow on Instagram</span>
+                  <span className="relative z-[2]">→</span>
+                </a>
+              </div>
             </div>
           </section>
         )}
@@ -130,7 +143,7 @@ export function GalleryPage() {
           <div className="relative mx-auto max-w-[1400px] px-6 text-center md:px-10">
             <Reveal>
               <h2 className={`mx-auto max-w-4xl ${sectionHeadingLight}`}>
-                Ready to Start Your Project?
+                Start Your Project
               </h2>
               <p className={`mx-auto mt-8 max-w-[750px] text-lg ${bodyCopyLight}`}>
                 Whether you&apos;re building a custom home, remodeling an existing space, or managing

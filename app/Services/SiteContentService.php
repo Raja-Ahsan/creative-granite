@@ -439,7 +439,7 @@ natasha “Natasha”'],
             ],
             'gallery-featured' => [
                 'eyebrow' => $settings['gallery_featured_eyebrow'] ?? 'Featured Projects',
-                'heading' => $settings['gallery_featured_heading'] ?? 'A grid of our best projects.',
+                'heading' => $settings['gallery_featured_heading'] ?? 'A Collection of Our Work.',
                 'subheading' => '',
                 'body' => '',
                 'highlightText' => '',
