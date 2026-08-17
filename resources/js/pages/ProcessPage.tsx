@@ -36,7 +36,7 @@ export function ProcessPage() {
                 <p className={`text-center ${bodyCopyLight}`}>Process steps are being updated. Please check back soon.</p>
               </Reveal>
             ) : (
-              <div className="grid grid-cols-1 gap-px overflow-hidden rounded-sm bg-foreground/15 sm:grid-cols-2 lg:grid-cols-4">
+              <div className="grid grid-cols-1 gap-px overflow-hidden rounded-sm bg-foreground/15 sm:grid-cols-2 lg:grid-cols-3">
                 {processSteps.map((step, i) => (
                   <Reveal key={step.n} delay={i * 80}>
                     <div className="group flex h-full flex-col bg-cream p-8 md:p-10">

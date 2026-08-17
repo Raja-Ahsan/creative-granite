@@ -57,6 +57,9 @@ class SiteContentSeeder extends Seeder
             ['key' => 'gallery_body', 'value' => 'Discover a curated collection of kitchens, bathrooms, fireplaces, commercial spaces, and custom stone applications that showcase our craftsmanship and attention to detail.', 'type' => 'string', 'group' => 'gallery'],
             ['key' => 'gallery_featured_eyebrow', 'value' => 'Featured Projects', 'type' => 'string', 'group' => 'gallery'],
             ['key' => 'gallery_featured_heading', 'value' => 'A grid of our best projects.', 'type' => 'string', 'group' => 'gallery'],
+            ['key' => 'process_eyebrow', 'value' => 'Project timeline', 'type' => 'string', 'group' => 'process'],
+            ['key' => 'process_heading', 'value' => 'Four steps, no surprises.', 'type' => 'string', 'group' => 'process'],
+            ['key' => 'process_subheading', 'value' => '', 'type' => 'string', 'group' => 'process'],
         ];
 
         foreach ($settings as $setting) {

@@ -31,6 +31,7 @@ Route::middleware(['web', 'auth', 'admin'])->prefix('admin')->name('admin.')->gr
     Route::resource('gallery-albums', GalleryAlbumController::class)->except(['show']);
     Route::resource('materials', MaterialController::class)->except(['show']);
     Route::resource('products', ProductController::class)->except(['show']);
+    Route::put('process-steps/section', [ProcessStepController::class, 'updateSection'])->name('process-steps.section.update');
     Route::resource('process-steps', ProcessStepController::class)->except(['show']);
     Route::resource('portfolio-items', PortfolioItemController::class)->except(['show']);
     Route::resource('services', ServiceController::class)->except(['show']);
