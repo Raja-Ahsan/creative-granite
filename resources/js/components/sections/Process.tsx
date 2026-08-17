@@ -19,7 +19,7 @@ export function Process() {
           <h2 className={`mt-6 max-w-3xl ${sectionHeadingLight}`}>{section.heading}</h2>
         </Reveal>
 
-        <div className="mt-20 grid grid-cols-1 gap-px overflow-hidden bg-foreground/15 md:grid-cols-4">
+        <div className="mt-20 grid grid-cols-1 gap-px overflow-hidden bg-foreground/15 sm:grid-cols-2 lg:grid-cols-3">
           {processSteps.map((p, i) => (
             <Reveal key={p.n} delay={i * 100} className="bg-cream">
               <div className="group h-full p-8 md:p-10">

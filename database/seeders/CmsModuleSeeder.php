@@ -14,8 +14,9 @@ class CmsModuleSeeder extends Seeder
         $home = $this->upsertRoot('home-module', 'Home Page', 'fa-solid fa-house-chimney', 2);
         $gallery = $this->upsertRoot('gallery-module', 'Gallery Page', 'fa-solid fa-images', 3);
         $servicesPage = $this->upsertRoot('services-module', 'Services Page', 'fa-solid fa-briefcase', 4);
-        $contact = $this->upsertRoot('contact-module', 'Contact & Leads', 'fa-solid fa-address-book', 5);
-        $settings = $this->upsertRoot('settings-module', 'Settings', 'fa-solid fa-gear', 6);
+        $processPage = $this->upsertRoot('process-module', 'Process Page', 'fa-solid fa-list-ol', 5);
+        $contact = $this->upsertRoot('contact-module', 'Contact & Leads', 'fa-solid fa-address-book', 6);
+        $settings = $this->upsertRoot('settings-module', 'Settings', 'fa-solid fa-gear', 7);
 
         $groups = [
             $home->id => [
@@ -23,10 +24,9 @@ class CmsModuleSeeder extends Seeder
                 ['who-we-are.edit', 'Who We Are', 'fa-solid fa-people-group', 2],
                 ['materials.index', 'Materials', 'fa-solid fa-gem', 3],
                 ['products.index', 'Products', 'fa-solid fa-box', 4],
-                ['process-steps.index', 'Process', 'fa-solid fa-list-ol', 5],
-                ['portfolio-items.index', 'Our Work Collage', 'fa-solid fa-camera', 6],
-                ['instagram-posts.index', 'Instagram Feed', 'fa-brands fa-instagram', 7],
-                ['services.index', 'Homepage Services', 'fa-solid fa-list', 8],
+                ['portfolio-items.index', 'Our Work Collage', 'fa-solid fa-camera', 5],
+                ['instagram-posts.index', 'Instagram Feed', 'fa-brands fa-instagram', 6],
+                ['services.index', 'Homepage Services', 'fa-solid fa-list', 7],
             ],
             $gallery->id => [
                 ['gallery-albums.index', 'Gallery Albums', 'fa-solid fa-table-cells-large', 1],
@@ -34,6 +34,9 @@ class CmsModuleSeeder extends Seeder
             $servicesPage->id => [
                 ['services-page.edit', 'Page Settings', 'fa-solid fa-sliders', 1],
                 ['service-page-sections.index', 'Page Sections', 'fa-solid fa-layer-group', 2],
+            ],
+            $processPage->id => [
+                ['process-steps.index', 'Process Steps', 'fa-solid fa-list-check', 1],
             ],
             $contact->id => [
                 ['contact-page.edit', 'Contact Page', 'fa-solid fa-address-card', 1],
@@ -71,6 +74,7 @@ class CmsModuleSeeder extends Seeder
                 'home-module',
                 'gallery-module',
                 'services-module',
+                'process-module',
                 'contact-module',
                 'settings-module',
             ],

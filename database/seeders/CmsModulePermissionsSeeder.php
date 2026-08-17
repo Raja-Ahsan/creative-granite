@@ -17,6 +17,7 @@ class CmsModulePermissionsSeeder extends Seeder
             'home-module',
             'gallery-module',
             'services-module',
+            'process-module',
             'contact-module',
             'settings-module',
             'hero-slides.index',
