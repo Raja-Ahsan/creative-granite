@@ -90,4 +90,5 @@ export type SectionContent = {
   body?: string | null;
   highlightText?: string | null;
   image?: string | null;
+  secondaryImage?: string | null;
 };

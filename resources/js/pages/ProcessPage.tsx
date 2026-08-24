@@ -1,4 +1,5 @@
 import { CTA, Footer, Header } from "@/components/sections";
+import { ProcessBanner } from "@/components/site/ProcessBanner";
 import { Reveal } from "@/components/site/Reveal";
 import { useSection, useSiteContent } from "@/contexts/SiteContentContext";
 import { bodyCopyLight, bodyCopySmall, sectionHeadingLight } from "@/utils/typography";
@@ -31,6 +32,14 @@ export function ProcessPage() {
 
         <section id="process" className="relative bg-bone py-20 md:py-28">
           <div className="mx-auto max-w-[1400px] px-6 md:px-10">
+            {section.image && (
+              <ProcessBanner
+                src={section.image}
+                alt="Creative Granite process"
+                className="mb-8 md:mb-10"
+              />
+            )}
+
             {processSteps.length === 0 ? (
               <Reveal>
                 <p className={`text-center ${bodyCopyLight}`}>Process steps are being updated. Please check back soon.</p>
@@ -52,6 +61,14 @@ export function ProcessPage() {
                   </Reveal>
                 ))}
               </div>
+            )}
+
+            {section.secondaryImage && (
+              <ProcessBanner
+                src={section.secondaryImage}
+                alt="Creative Granite craftsmanship"
+                className="mt-8 md:mt-10"
+              />
             )}
           </div>
         </section>

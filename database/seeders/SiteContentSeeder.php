@@ -60,6 +60,8 @@ class SiteContentSeeder extends Seeder
             ['key' => 'process_eyebrow', 'value' => 'Project timeline', 'type' => 'string', 'group' => 'process'],
             ['key' => 'process_heading', 'value' => 'Four steps, no surprises.', 'type' => 'string', 'group' => 'process'],
             ['key' => 'process_subheading', 'value' => '', 'type' => 'string', 'group' => 'process'],
+            ['key' => 'process_top_banner_path', 'value' => '', 'type' => 'image', 'group' => 'process'],
+            ['key' => 'process_bottom_banner_path', 'value' => '', 'type' => 'image', 'group' => 'process'],
         ];
 
         foreach ($settings as $setting) {
