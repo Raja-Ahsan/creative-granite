@@ -18,7 +18,7 @@
             <p class="mt-1 text-sm text-gray-500">Controls the eyebrow and main heading on the homepage and process page.</p>
         </div>
         <div class="p-6">
-            <form method="POST" action="{{ route('admin.process-steps.section.update') }}">
+            <form method="POST" action="{{ route('admin.process-steps.section.update') }}" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 
@@ -44,8 +44,57 @@
                     :rows="2"
                 />
 
+                <div class="mt-8 border-t border-gray-200 pt-8">
+                    <h3 class="text-sm font-semibold uppercase tracking-[0.14em] text-gray-700">Process Page Banners</h3>
+                    <p class="mt-1 text-sm text-gray-500">Wide banner images shown above and below the step cards on the /process page.</p>
+
+                    <div class="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-2">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Top Banner</label>
+                            @if ($sectionValues['process_top_banner_path'])
+                                <img
+                                    src="{{ $sectionValues['process_top_banner_path'] }}"
+                                    alt="Process top banner preview"
+                                    class="mt-2 mb-3 h-32 w-full rounded border object-cover"
+                                />
+                                <label class="mb-3 flex items-center gap-2 text-sm text-gray-600">
+                                    <input type="checkbox" name="remove_process_top_banner" value="1" class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                                    Remove current top banner
+                                </label>
+                            @endif
+                            <input
+                                type="file"
+                                name="process_top_banner"
+                                accept="image/*"
+                                class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:rounded-md file:border-0 file:bg-gray-100 file:px-4 file:py-2 file:text-sm file:font-medium file:text-gray-700 hover:file:bg-gray-200"
+                            />
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Bottom Banner</label>
+                            @if ($sectionValues['process_bottom_banner_path'])
+                                <img
+                                    src="{{ $sectionValues['process_bottom_banner_path'] }}"
+                                    alt="Process bottom banner preview"
+                                    class="mt-2 mb-3 h-32 w-full rounded border object-cover"
+                                />
+                                <label class="mb-3 flex items-center gap-2 text-sm text-gray-600">
+                                    <input type="checkbox" name="remove_process_bottom_banner" value="1" class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                                    Remove current bottom banner
+                                </label>
+                            @endif
+                            <input
+                                type="file"
+                                name="process_bottom_banner"
+                                accept="image/*"
+                                class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:rounded-md file:border-0 file:bg-gray-100 file:px-4 file:py-2 file:text-sm file:font-medium file:text-gray-700 hover:file:bg-gray-200"
+                            />
+                        </div>
+                    </div>
+                </div>
+
                 <div class="mt-4">
-                    <x-primary-button>Save Headings</x-primary-button>
+                    <x-primary-button>Save Process Section</x-primary-button>
                 </div>
             </form>
         </div>

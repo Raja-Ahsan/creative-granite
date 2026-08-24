@@ -7,6 +7,7 @@ use App\Models\ProcessStep;
 use App\Models\SiteSetting;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class ProcessStepController extends Controller
@@ -15,6 +16,8 @@ class ProcessStepController extends Controller
         'process_eyebrow',
         'process_heading',
         'process_subheading',
+        'process_top_banner_path',
+        'process_bottom_banner_path',
     ];
 
     public function index(): View
@@ -63,13 +66,30 @@ class ProcessStepController extends Controller
             'process_eyebrow' => ['nullable', 'string', 'max:120'],
             'process_heading' => ['nullable', 'string', 'max:255'],
             'process_subheading' => ['nullable', 'string', 'max:500'],
+            'process_top_banner' => ['nullable', 'image', 'max:10240'],
+            'process_bottom_banner' => ['nullable', 'image', 'max:10240'],
+            'remove_process_top_banner' => ['sometimes', 'boolean'],
+            'remove_process_bottom_banner' => ['sometimes', 'boolean'],
         ]);
 
-        foreach (self::SECTION_KEYS as $key) {
-            SiteSetting::updateOrCreate(
-                ['key' => $key],
-                ['value' => $data[$key] ?? '', 'type' => 'string', 'group' => 'process']
-            );
+        foreach (['process_eyebrow', 'process_heading', 'process_subheading'] as $key) {
+            $this->saveSetting($key, $data[$key] ?? '', 'string');
+        }
+
+        if ($request->boolean('remove_process_top_banner')) {
+            $this->deleteStoredImage(SiteSetting::query()->where('key', 'process_top_banner_path')->value('value'));
+            $this->saveSetting('process_top_banner_path', '', 'image');
+        } elseif ($path = $this->storeUploadedFile($request, 'process_top_banner')) {
+            $this->deleteStoredImage(SiteSetting::query()->where('key', 'process_top_banner_path')->value('value'));
+            $this->saveSetting('process_top_banner_path', $path, 'image');
+        }
+
+        if ($request->boolean('remove_process_bottom_banner')) {
+            $this->deleteStoredImage(SiteSetting::query()->where('key', 'process_bottom_banner_path')->value('value'));
+            $this->saveSetting('process_bottom_banner_path', '', 'image');
+        } elseif ($path = $this->storeUploadedFile($request, 'process_bottom_banner')) {
+            $this->deleteStoredImage(SiteSetting::query()->where('key', 'process_bottom_banner_path')->value('value'));
+            $this->saveSetting('process_bottom_banner_path', $path, 'image');
         }
 
         return redirect()
@@ -83,6 +103,8 @@ class ProcessStepController extends Controller
             'process_eyebrow' => 'Project timeline',
             'process_heading' => 'Four steps, no surprises.',
             'process_subheading' => '',
+            'process_top_banner_path' => '',
+            'process_bottom_banner_path' => '',
         ];
 
         $stored = SiteSetting::query()
@@ -91,6 +113,34 @@ class ProcessStepController extends Controller
             ->all();
 
         return array_merge($defaults, $stored);
+    }
+
+    private function saveSetting(string $key, string $value, string $type): void
+    {
+        SiteSetting::updateOrCreate(
+            ['key' => $key],
+            ['value' => $value, 'type' => $type, 'group' => 'process']
+        );
+    }
+
+    private function storeUploadedFile(Request $request, string $input): ?string
+    {
+        if (! $request->hasFile($input)) {
+            return null;
+        }
+
+        $path = $request->file($input)->store('process', 'public');
+
+        return '/storage/'.$path;
+    }
+
+    private function deleteStoredImage(?string $path): void
+    {
+        if (! $path || ! str_starts_with($path, '/storage/')) {
+            return;
+        }
+
+        Storage::disk('public')->delete(substr($path, strlen('/storage/')));
     }
 
     private function validated(Request $request, ?ProcessStep $processStep = null): array
