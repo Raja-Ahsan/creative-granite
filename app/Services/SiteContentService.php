@@ -129,9 +129,10 @@ class SiteContentService
                 ->values()
                 ->all(),
             'products' => Product::query()
-                ->with(['images' => fn ($query) => $query->orderBy('sort_order')])
-                ->where('is_active', true)
+                ->with(['images' => fn ($query) => $query->orderBy('sort_order')->orderBy('id')])
+                ->active()
                 ->orderBy('sort_order')
+                ->orderBy('id')
                 ->get()
                 ->map(function (Product $product) {
                     $images = $product->images
@@ -437,9 +438,9 @@ natasha “Natasha”'],
                 'image' => '',
             ],
             'products' => [
-                'eyebrow' => 'Products',
-                'heading' => 'ESI Sink Collection',
-                'subheading' => 'Explore stainless steel, porcelain, fireclay, and quartz composite sinks with full specifications for every model.',
+                'eyebrow' => $settings['products_page_eyebrow'] ?? 'Products',
+                'heading' => $settings['products_page_heading'] ?? 'CGD ESI Sink Collection',
+                'subheading' => $settings['products_page_subheading'] ?? 'Explore stainless steel, porcelain, fireclay, and quartz composite sinks with full specifications for every model.',
                 'body' => '',
                 'highlightText' => '',
                 'image' => '',

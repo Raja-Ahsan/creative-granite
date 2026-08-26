@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\MaterialController;
 use App\Http\Controllers\Admin\PortfolioItemController;
 use App\Http\Controllers\Admin\ProcessStepController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\ProductsPageController;
 use App\Http\Controllers\Admin\ProjectTypeController;
 use App\Http\Controllers\Admin\ServicePageSectionController;
 use App\Http\Controllers\Admin\ServicesPageController;
@@ -31,6 +32,8 @@ Route::middleware(['web', 'auth', 'admin'])->prefix('admin')->name('admin.')->gr
     Route::resource('gallery-albums', GalleryAlbumController::class)->except(['show']);
     Route::resource('materials', MaterialController::class)->except(['show']);
     Route::resource('products', ProductController::class)->except(['show']);
+    Route::get('products-page', [ProductsPageController::class, 'edit'])->name('products-page.edit');
+    Route::put('products-page', [ProductsPageController::class, 'update'])->name('products-page.update');
     Route::put('process-steps/section', [ProcessStepController::class, 'updateSection'])->name('process-steps.section.update');
     Route::resource('process-steps', ProcessStepController::class)->except(['show']);
     Route::resource('portfolio-items', PortfolioItemController::class)->except(['show']);

@@ -105,7 +105,7 @@ class ProductController extends Controller
     {
         $data = $this->validated($request);
         $data = $this->mergeImagePath($request, $data, 'image_path', 'public', 'products');
-        $data['excerpt'] = $data['excerpt'] ?: ($data['bowl_description'] ?? null);
+        $data['excerpt'] = ($data['excerpt'] ?? null) ?: ($data['bowl_description'] ?? null);
 
         if (empty($data['name']) && ! empty($data['model'])) {
             $data['name'] = $data['model'];
@@ -136,7 +136,7 @@ class ProductController extends Controller
     {
         $data = $this->validated($request, $product);
         $data = $this->mergeImagePath($request, $data, 'image_path', 'public', 'products');
-        $data['excerpt'] = $data['excerpt'] ?: ($data['bowl_description'] ?? null);
+        $data['excerpt'] = ($data['excerpt'] ?? null) ?: ($data['bowl_description'] ?? null);
 
         if (empty($data['name']) && ! empty($data['model'])) {
             $data['name'] = $data['model'];
@@ -198,6 +198,7 @@ class ProductController extends Controller
 
         $data['is_active'] = $request->boolean('is_active');
         $data['sort_order'] = (int) ($data['sort_order'] ?? 0);
+        $data['image_path'] = filled($data['image_path'] ?? null) ? $data['image_path'] : null;
 
         unset(
             $data['existing_variants'],
@@ -295,9 +296,9 @@ class ProductController extends Controller
 
     private function syncPrimaryImage(Product $product): void
     {
-        $product->load('images');
+        $product->refresh()->load('images');
 
-        $first = $product->images->sortBy(['sort_order', 'id'])->first();
+        $first = $product->images->first();
 
         if ($first) {
             if ($product->image_path !== $first->image_path) {
@@ -307,13 +308,8 @@ class ProductController extends Controller
             return;
         }
 
-        if ($product->image_path) {
-            ProductImage::create([
-                'product_id' => $product->id,
-                'image_path' => $product->image_path,
-                'alt_text' => $this->labelFromPath($product->image_path),
-                'sort_order' => 1,
-            ]);
+        if ($product->image_path !== null) {
+            $product->update(['image_path' => null]);
         }
     }
 

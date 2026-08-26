@@ -13,7 +13,7 @@ class CmsModuleSeeder extends Seeder
 
         $home = $this->upsertRoot('home-module', 'Home Page', 'fa-solid fa-house-chimney', 2);
         $gallery = $this->upsertRoot('gallery-module', 'Gallery Page', 'fa-solid fa-images', 3);
-        $this->upsertRoot('products.index', 'Products', 'fa-solid fa-box', 4);
+        $productsPage = $this->upsertRoot('products-module', 'Products', 'fa-solid fa-box', 4);
         $servicesPage = $this->upsertRoot('services-module', 'Services Page', 'fa-solid fa-briefcase', 5);
         $processPage = $this->upsertRoot('process-module', 'Process Page', 'fa-solid fa-list-ol', 6);
         $contact = $this->upsertRoot('contact-module', 'Contact & Leads', 'fa-solid fa-address-book', 7);
@@ -30,6 +30,10 @@ class CmsModuleSeeder extends Seeder
             ],
             $gallery->id => [
                 ['gallery-albums.index', 'Gallery Albums', 'fa-solid fa-table-cells-large', 1],
+            ],
+            $productsPage->id => [
+                ['products.index', 'All Products', 'fa-solid fa-list', 1],
+                ['products-page.edit', 'Page Settings', 'fa-solid fa-sliders', 2],
             ],
             $servicesPage->id => [
                 ['services-page.edit', 'Page Settings', 'fa-solid fa-sliders', 1],
@@ -73,7 +77,7 @@ class CmsModuleSeeder extends Seeder
                 'admin.dashboard',
                 'home-module',
                 'gallery-module',
-                'products.index',
+                'products-module',
                 'services-module',
                 'process-module',
                 'contact-module',
