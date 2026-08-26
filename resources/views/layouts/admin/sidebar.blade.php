@@ -4,8 +4,9 @@
     $placeholderModules = [
             'site-content-module',
             'home-module',
-            'gallery-module',
-            'services-module',
+        'gallery-module',
+        'products-module',
+        'services-module',
             'process-module',
             'contact-module',
             'settings-module',

@@ -2,29 +2,61 @@ import { useMemo, useState } from "react";
 import { CTA, Footer, Header } from "@/components/sections";
 import { Reveal } from "@/components/site/Reveal";
 import { useSection, useSiteContent } from "@/contexts/SiteContentContext";
-import type { Product } from "@/types/content";
+import type { Product, ProductImage } from "@/types/content";
 import { bodyCopyLight, sectionHeadingLight } from "@/utils/typography";
 import { SiteLayout } from "@/layouts/SiteLayout";
 
 const MATERIAL_ORDER = ["Stainless Steel", "Porcelain", "Fireclay", "Quartz Composite"];
 
-function colorCount(product: Product): number {
-  return product.images.length > 0 ? product.images.length : product.image ? 1 : 0;
+function productVariants(product: Product): ProductImage[] {
+  if (product.images.length > 0) {
+    return product.images;
+  }
+
+  if (product.image) {
+    return [{ src: product.image, alt: product.name, label: "Standard" }];
+  }
+
+  return [];
 }
 
 function ProductCard({ product, index }: { product: Product; index: number }) {
-  const variants = product.images.length > 0 ? product.images : product.image ? [{ src: product.image, alt: product.name, label: "Standard" }] : [];
-  const preview = variants.slice(0, 4);
-  const extraColors = variants.length - preview.length;
+  const variants = productVariants(product);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [swatchHover, setSwatchHover] = useState(false);
+  const activeVariant = variants[activeIndex] ?? variants[0];
+
+  const handleCardEnter = () => {
+    if (!swatchHover && variants.length > 1) {
+      setActiveIndex(1);
+    }
+  };
+
+  const handleCardLeave = () => {
+    setSwatchHover(false);
+    setActiveIndex(0);
+  };
+
+  const handleSwatchEnter = (variantIndex: number) => {
+    setSwatchHover(true);
+    setActiveIndex(variantIndex);
+  };
+
+  const handleSwatchLeave = () => {
+    setSwatchHover(false);
+    setActiveIndex(variants.length > 1 ? 1 : 0);
+  };
 
   return (
     <Reveal delay={index * 50}>
-      <a
-        href={`/products/${product.slug}`}
+      <div
         className="group flex h-full flex-col overflow-hidden rounded-sm border border-foreground/10 bg-cream transition-all duration-500 hover:-translate-y-1 hover:border-foreground/25 hover:shadow-[0_24px_60px_-30px_rgba(2,30,68,0.35)]"
-        data-cursor="view"
+        onMouseLeave={handleCardLeave}
       >
-        <div className="relative bg-[linear-gradient(180deg,#f7f4ef_0%,#ece7de_100%)] p-6 md:p-8">
+        <div
+          className="relative bg-[linear-gradient(180deg,#f7f4ef_0%,#ece7de_100%)] p-6 md:p-8"
+          onMouseEnter={handleCardEnter}
+        >
           <span className="absolute left-5 top-5 z-[2] rounded-full border border-foreground/15 bg-cream/90 px-3 py-1 font-mono text-[10px] tracking-[0.18em] text-foreground/70 backdrop-blur-sm">
             {product.model ?? product.name}
           </span>
@@ -34,41 +66,64 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
             </span>
           )}
 
-          {variants[0] ? (
-            <div className="img-zoom mx-auto aspect-[4/3] max-w-[320px] overflow-hidden">
+          {activeVariant ? (
+            <a
+              href={`/products/${product.slug}`}
+              className="img-zoom mx-auto block aspect-[4/3] max-w-[320px] overflow-hidden"
+              data-cursor="view"
+            >
               <img
-                src={variants[0].src}
-                alt={product.name}
+                key={activeVariant.src}
+                src={activeVariant.src}
+                alt={`${product.name}${activeVariant.label ? ` — ${activeVariant.label}` : ""}`}
                 loading="lazy"
                 decoding="async"
-                className="h-full w-full object-contain transition-transform duration-700 group-hover:scale-[1.03]"
+                className="h-full w-full object-contain transition-all duration-500 group-hover:scale-[1.03]"
               />
-            </div>
+            </a>
           ) : (
             <div className="mx-auto flex aspect-[4/3] max-w-[320px] items-center justify-center rounded-sm border border-dashed border-foreground/15">
               <span className="font-mono text-[10px] tracking-[0.2em] text-foreground/40">Image coming soon</span>
             </div>
           )}
 
-          {preview.length > 1 && (
-            <div className="mt-5 flex items-center justify-center gap-2">
-              {preview.map((variant) => (
+          {activeVariant?.label && variants.length > 1 && (
+            <p className="mt-3 text-center text-[10px] font-medium uppercase tracking-[0.18em] text-foreground/50">
+              {activeVariant.label}
+            </p>
+          )}
+
+          {variants.length > 1 && (
+            <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
+              {variants.map((variant, variantIndex) => (
                 <div
-                  key={variant.src}
-                  className="h-10 w-10 overflow-hidden rounded-full border border-foreground/15 bg-cream p-1 shadow-sm"
+                  key={`${variant.src}-${variantIndex}`}
+                  role="presentation"
+                  onMouseEnter={() => handleSwatchEnter(variantIndex)}
+                  onMouseLeave={handleSwatchLeave}
+                  className={`h-10 w-10 cursor-pointer overflow-hidden rounded-full border bg-cream p-1 shadow-sm transition-all duration-300 ${
+                    activeIndex === variantIndex
+                      ? "scale-110 border-foreground ring-2 ring-foreground/15"
+                      : "border-foreground/15 hover:border-foreground/40"
+                  }`}
                   title={variant.label}
                 >
-                  <img src={variant.src} alt={variant.label ?? product.name} className="h-full w-full object-contain" />
+                  <img
+                    src={variant.src}
+                    alt={variant.label ?? product.name}
+                    className="pointer-events-none h-full w-full object-contain"
+                  />
                 </div>
               ))}
-              {extraColors > 0 && (
-                <span className="ml-1 font-mono text-[10px] tracking-[0.16em] text-foreground/50">+{extraColors}</span>
-              )}
             </div>
           )}
         </div>
 
-        <div className="flex flex-1 flex-col px-6 pb-7 pt-5 md:px-8 md:pb-8">
+        <a
+          href={`/products/${product.slug}`}
+          className="flex flex-1 flex-col px-6 pb-7 pt-5 md:px-8 md:pb-8"
+          data-cursor="view"
+        >
           <h2 className="font-display text-2xl uppercase leading-[0.98] tracking-[-0.02em] text-[#021E44] md:text-[1.65rem]">
             {product.bowlDescription ?? product.name}
           </h2>
@@ -89,8 +144,8 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
               →
             </span>
           </div>
-        </div>
-      </a>
+        </a>
+      </div>
     </Reveal>
   );
 }
@@ -121,11 +176,6 @@ export function ProductsPage() {
     })).filter((group) => group.items.length > 0);
   }, [products, filtered, activeMaterial]);
 
-  const totalColors = useMemo(
-    () => products.reduce((sum, product) => sum + Math.max(colorCount(product), 0), 0),
-    [products],
-  );
-
   return (
     <SiteLayout>
       <main>
@@ -139,27 +189,11 @@ export function ProductsPage() {
                 <span className="h-px w-12 bg-foreground/40" />
                 <span className="eyebrow">{section.eyebrow}</span>
               </div>
-              <div className="mt-6 grid gap-10 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-end">
-                <div>
-                  <h1 className={`max-w-4xl ${sectionHeadingLight}`}>{section.heading}</h1>
-                  {section.subheading && (
-                    <p className={`mt-8 max-w-2xl ${bodyCopyLight}`}>{section.subheading}</p>
-                  )}
-                </div>
-                <div className="grid grid-cols-3 gap-3 border border-foreground/10 bg-bone/60 p-4 backdrop-blur-sm md:gap-4 md:p-5">
-                  <div className="text-center">
-                    <p className="font-display text-3xl text-[#021E44] md:text-4xl">{products.length}</p>
-                    <p className="mt-1 text-[10px] uppercase tracking-[0.18em] text-foreground/50">Models</p>
-                  </div>
-                  <div className="border-x border-foreground/10 text-center">
-                    <p className="font-display text-3xl text-[#021E44] md:text-4xl">{materials.length - 1}</p>
-                    <p className="mt-1 text-[10px] uppercase tracking-[0.18em] text-foreground/50">Materials</p>
-                  </div>
-                  <div className="text-center">
-                    <p className="font-display text-3xl text-[#021E44] md:text-4xl">{totalColors}</p>
-                    <p className="mt-1 text-[10px] uppercase tracking-[0.18em] text-foreground/50">Finishes</p>
-                  </div>
-                </div>
+              <div className="mt-6">
+                <h1 className={`max-w-4xl ${sectionHeadingLight}`}>{section.heading}</h1>
+                {section.subheading && (
+                  <p className={`mt-8 max-w-2xl ${bodyCopyLight}`}>{section.subheading}</p>
+                )}
               </div>
             </Reveal>
           </div>
