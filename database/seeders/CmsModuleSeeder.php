@@ -13,20 +13,20 @@ class CmsModuleSeeder extends Seeder
 
         $home = $this->upsertRoot('home-module', 'Home Page', 'fa-solid fa-house-chimney', 2);
         $gallery = $this->upsertRoot('gallery-module', 'Gallery Page', 'fa-solid fa-images', 3);
-        $servicesPage = $this->upsertRoot('services-module', 'Services Page', 'fa-solid fa-briefcase', 4);
-        $processPage = $this->upsertRoot('process-module', 'Process Page', 'fa-solid fa-list-ol', 5);
-        $contact = $this->upsertRoot('contact-module', 'Contact & Leads', 'fa-solid fa-address-book', 6);
-        $settings = $this->upsertRoot('settings-module', 'Settings', 'fa-solid fa-gear', 7);
+        $this->upsertRoot('products.index', 'Products', 'fa-solid fa-box', 4);
+        $servicesPage = $this->upsertRoot('services-module', 'Services Page', 'fa-solid fa-briefcase', 5);
+        $processPage = $this->upsertRoot('process-module', 'Process Page', 'fa-solid fa-list-ol', 6);
+        $contact = $this->upsertRoot('contact-module', 'Contact & Leads', 'fa-solid fa-address-book', 7);
+        $settings = $this->upsertRoot('settings-module', 'Settings', 'fa-solid fa-gear', 8);
 
         $groups = [
             $home->id => [
                 ['hero-slides.index', 'Hero Banner', 'fa-solid fa-panorama', 1],
                 ['who-we-are.edit', 'Who We Are', 'fa-solid fa-people-group', 2],
                 ['materials.index', 'Materials', 'fa-solid fa-gem', 3],
-                ['products.index', 'Products', 'fa-solid fa-box', 4],
-                ['portfolio-items.index', 'Our Work Collage', 'fa-solid fa-camera', 5],
-                ['instagram-posts.index', 'Instagram Feed', 'fa-brands fa-instagram', 6],
-                ['services.index', 'Homepage Services', 'fa-solid fa-list', 7],
+                ['portfolio-items.index', 'Our Work Collage', 'fa-solid fa-camera', 4],
+                ['instagram-posts.index', 'Instagram Feed', 'fa-brands fa-instagram', 5],
+                ['services.index', 'Homepage Services', 'fa-solid fa-list', 6],
             ],
             $gallery->id => [
                 ['gallery-albums.index', 'Gallery Albums', 'fa-solid fa-table-cells-large', 1],
@@ -73,6 +73,7 @@ class CmsModuleSeeder extends Seeder
                 'admin.dashboard',
                 'home-module',
                 'gallery-module',
+                'products.index',
                 'services-module',
                 'process-module',
                 'contact-module',
