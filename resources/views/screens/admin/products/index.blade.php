@@ -14,7 +14,8 @@
                     <tr>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Preview</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Model</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Material</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Active</th>
                         <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                     </tr>
@@ -24,7 +25,8 @@
                         <tr class="hover:bg-gray-50">
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $item->sort_order }}</td>
                             <td class="px-6 py-4 whitespace-nowrap"><img src="{{ $item->image_path }}" alt="" class="h-12 w-auto rounded"></td>
-                            <td class="px-6 py-4 text-sm text-gray-900">{{ $item->name }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">{{ $item->model ?? $item->name }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-500">{{ $item->material }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $item->is_active ? 'Yes' : 'No' }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm">
                                 <x-admin.row-actions
@@ -35,7 +37,7 @@
                             </td>
                         </tr>
                     @empty
-                        <tr><td colspan="5" class="px-6 py-8 text-center text-sm text-gray-500">No products yet.</td></tr>
+                        <tr><td colspan="6" class="px-6 py-8 text-center text-sm text-gray-500">No products yet.</td></tr>
                     @endforelse
                 </tbody>
             </table>

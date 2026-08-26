@@ -133,20 +133,43 @@ class SiteContentService
                 ->where('is_active', true)
                 ->orderBy('sort_order')
                 ->get()
-                ->map(fn (Product $product) => [
-                    'name' => $product->name,
-                    'slug' => $product->slug,
-                    'desc' => $product->excerpt ?: \Illuminate\Support\Str::limit(strip_tags($product->description), 160),
-                    'description' => $product->description,
-                    'image' => $product->image_path,
-                    'relatedImages' => $product->images
+                ->map(function (Product $product) {
+                    $images = $product->images
                         ->map(fn (ProductImage $image) => [
                             'src' => $image->image_path,
                             'alt' => $image->alt_text ?: $product->name,
+                            'label' => $image->alt_text ?: 'Standard',
                         ])
                         ->values()
-                        ->all(),
-                ])
+                        ->all();
+
+                    if ($images === [] && $product->image_path) {
+                        $images = [[
+                            'src' => $product->image_path,
+                            'alt' => $product->name,
+                            'label' => 'Standard',
+                        ]];
+                    }
+
+                    return [
+                        'name' => $product->name,
+                        'slug' => $product->slug,
+                        'model' => $product->model,
+                        'material' => $product->material,
+                        'bowlDescription' => $product->bowl_description,
+                        'mount' => $product->mount,
+                        'gauge' => $product->gauge,
+                        'construction' => $product->construction,
+                        'dimensions' => $product->dimensions,
+                        'colorsFinish' => $product->colors_finish,
+                        'optionalAccessories' => $product->optional_accessories,
+                        'excerpt' => $product->excerpt ?: $product->bowl_description,
+                        'body' => $product->description,
+                        'image' => $images[0]['src'] ?? $product->image_path,
+                        'images' => $images,
+                        'relatedImages' => array_slice($images, 1),
+                    ];
+                })
                 ->values()
                 ->all(),
             'services' => Service::query()
@@ -346,7 +369,7 @@ natasha “Natasha”'],
     {
         return [
             ['Work', '/gallery'],
-            ['Products', '#'],
+            ['Products', '/products'],
             ['Services', '/services'],
         ];
     }
@@ -363,7 +386,7 @@ natasha “Natasha”'],
     {
         return [
             ['Work', '/gallery'],
-            ['Products', '#'],
+            ['Products', '/products'],
             ['Services', '/services'],
             ['Process', '/process'],
             ['Connect us', '/contact'],
@@ -415,8 +438,8 @@ natasha “Natasha”'],
             ],
             'products' => [
                 'eyebrow' => 'Products',
-                'heading' => 'Stone surfaces for every space.',
-                'subheading' => 'From kitchen countertops to bathroom vanities and fireplace surrounds — explore our full range of custom stone products.',
+                'heading' => 'ESI Sink Collection',
+                'subheading' => 'Explore stainless steel, porcelain, fireclay, and quartz composite sinks with full specifications for every model.',
                 'body' => '',
                 'highlightText' => '',
                 'image' => '',

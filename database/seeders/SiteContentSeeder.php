@@ -104,19 +104,7 @@ class SiteContentSeeder extends Seeder
 
     private function seedProducts(): void
     {
-        $items = [
-            ['Kitchen Countertops', 'Custom-fabricated kitchen countertops in granite, quartz, marble, and quartzite. Precision templating and professional installation for new builds and remodels.', '/portfolio/portfolio_2.jpg'],
-            ['Bathroom Vanities', 'Elegant bathroom vanity tops and surrounds crafted to complement your design vision. Single and double vanity configurations available.', '/portfolio/024.jpg'],
-            ['Fireplace Surrounds', 'Statement fireplace surrounds and hearths in natural and engineered stone. Custom shapes, edge profiles, and finishes.', '/portfolio/067.jpg'],
-            ['Outdoor Kitchens', 'Weather-resistant stone surfaces for outdoor kitchens and BBQ islands. Durable materials selected for Utah climate.', '/portfolio/DSC_4182_1.jpg'],
-        ];
-
-        foreach ($items as $index => [$name, $desc, $image]) {
-            Product::updateOrCreate(
-                ['name' => $name],
-                ['description' => $desc, 'excerpt' => \Illuminate\Support\Str::limit($desc, 120), 'image_path' => $image, 'sort_order' => $index + 1, 'is_active' => true]
-            );
-        }
+        $this->call(EsiSinkProductsSeeder::class);
     }
 
     private function seedProcessSteps(): void
