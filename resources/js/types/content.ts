@@ -10,13 +10,23 @@ export type GalleryAlbum = {
 };
 export type InstagramPost = { src: string; alt: string; url?: string };
 export type Material = { name: string; desc: string; image: string; sortOrder?: number; featured?: boolean };
-export type ProductImage = { src: string; alt: string };
+export type ProductImage = { src: string; alt: string; label?: string };
 export type Product = {
   name: string;
   slug: string;
-  desc: string;
-  description: string;
-  image: string;
+  model?: string | null;
+  material?: string | null;
+  bowlDescription?: string | null;
+  mount?: string | null;
+  gauge?: string | null;
+  construction?: string | null;
+  dimensions?: string | null;
+  colorsFinish?: string | null;
+  optionalAccessories?: string | null;
+  excerpt: string;
+  body?: string | null;
+  image?: string | null;
+  images: ProductImage[];
   relatedImages: ProductImage[];
 };
 export type Service = {
