@@ -24,6 +24,7 @@ class CmsModulePermissionsSeeder extends Seeder
             'hero-slides.index',
             'who-we-are.edit',
             'materials.index',
+            'materials-page.edit',
             'products.index',
             'products-page.edit',
             'product-categories.index',

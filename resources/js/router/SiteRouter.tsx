@@ -10,6 +10,7 @@ import {
 import { ContactPage } from "@/pages/ContactPage";
 import { GalleryPage } from "@/pages/GalleryPage";
 import { HomePage } from "@/pages/HomePage";
+import { MaterialDetailPage } from "@/pages/MaterialDetailPage";
 import { ProcessPage } from "@/pages/ProcessPage";
 import { ProductDetailPage } from "@/pages/ProductDetailPage";
 import { ProductsPage } from "@/pages/ProductsPage";
@@ -43,6 +44,7 @@ function resolvePage(pathname: string) {
   if (path === "/process") return ProcessPage;
   if (path === "/services") return ServicesPage;
   if (path === "/contact") return ContactPage;
+  if (path.startsWith("/materials/")) return MaterialDetailPage;
   if (path.startsWith("/products/")) return ProductDetailPage;
   if (path.startsWith("/services/")) return ServiceDetailPage;
 
@@ -207,6 +209,16 @@ export function useWorkGallerySlug(): string | undefined {
   const { pathname } = useSiteRouter();
   const match = pathname.match(/^\/gallery\/([^/]+)$/);
   return match?.[1] ? decodeURIComponent(match[1]) : undefined;
+}
+
+export function useMaterialSlug(): string | undefined {
+  const { pathname } = useSiteRouter();
+  const match = pathname.match(/^\/materials\/([^/]+)$/);
+  return match?.[1];
+}
+
+export function materialDetailHref(slug: string): string {
+  return `/materials/${slug}`;
 }
 
 export function useProductSlug(): string | undefined {

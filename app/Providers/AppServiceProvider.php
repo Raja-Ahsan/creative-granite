@@ -9,6 +9,7 @@ use App\Models\GalleryAlbumImage;
 use App\Models\HeroSlide;
 use App\Models\InstagramPost;
 use App\Models\Material;
+use App\Models\MaterialImage;
 use App\Models\PortfolioItem;
 use App\Models\ProcessStep;
 use App\Models\Product;
@@ -42,7 +43,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $clearSiteContentCache = static fn () => SiteContentService::clearCache();
 
-        foreach ([GalleryAlbum::class, GalleryAlbumImage::class, HeroSlide::class, InstagramPost::class, Material::class, Product::class, ProductCategory::class, ProductImage::class, ProcessStep::class, ProjectType::class, PortfolioItem::class, Service::class, ServicePageSection::class, ServicePageSectionImage::class, SiteSetting::class] as $model) {
+        foreach ([GalleryAlbum::class, GalleryAlbumImage::class, HeroSlide::class, InstagramPost::class, Material::class, MaterialImage::class, Product::class, ProductCategory::class, ProductImage::class, ProcessStep::class, ProjectType::class, PortfolioItem::class, Service::class, ServicePageSection::class, ServicePageSectionImage::class, SiteSetting::class] as $model) {
             $model::saved($clearSiteContentCache);
             $model::deleted($clearSiteContentCache);
         }

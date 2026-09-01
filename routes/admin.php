@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\GalleryAlbumController;
 use App\Http\Controllers\Admin\HeroSlideController;
 use App\Http\Controllers\Admin\InstagramPostController;
 use App\Http\Controllers\Admin\MaterialController;
+use App\Http\Controllers\Admin\MaterialsPageController;
 use App\Http\Controllers\Admin\PortfolioItemController;
 use App\Http\Controllers\Admin\ProcessStepController;
 use App\Http\Controllers\Admin\ProductCategoryController;
@@ -32,6 +33,8 @@ Route::middleware(['web', 'auth', 'admin'])->prefix('admin')->name('admin.')->gr
     Route::resource('instagram-posts', InstagramPostController::class)->except(['show']);
     Route::resource('gallery-albums', GalleryAlbumController::class)->except(['show']);
     Route::resource('materials', MaterialController::class)->except(['show']);
+    Route::get('materials-page', [MaterialsPageController::class, 'edit'])->name('materials-page.edit');
+    Route::put('materials-page', [MaterialsPageController::class, 'update'])->name('materials-page.update');
     Route::resource('product-categories', ProductCategoryController::class)->except(['show']);
     Route::resource('products', ProductController::class)->except(['show']);
     Route::get('products-page', [ProductsPageController::class, 'edit'])->name('products-page.edit');

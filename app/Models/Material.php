@@ -17,6 +17,22 @@ class Material extends Model
         'name',
         'slug',
         'description',
+        'tagline',
+        'intro',
+        'why_choose',
+        'what_to_know',
+        'best_for',
+        'care_guide_url',
+        'care_guide_label',
+        'meta_title',
+        'meta_description',
+        'why_choose_heading',
+        'cta_eyebrow',
+        'cta_heading',
+        'cta_body',
+        'cta_primary_label',
+        'cta_secondary_label',
+        'cta_secondary_url',
         'image_path',
         'sort_order',
         'is_featured',
@@ -29,6 +45,7 @@ class Material extends Model
             'is_active' => 'boolean',
             'is_featured' => 'boolean',
             'sort_order' => 'integer',
+            'why_choose' => 'array',
         ];
     }
 
@@ -43,5 +60,10 @@ class Material extends Model
     public function portfolioItems(): HasMany
     {
         return $this->hasMany(PortfolioItem::class);
+    }
+
+    public function images(): HasMany
+    {
+        return $this->hasMany(MaterialImage::class)->orderBy('sort_order')->orderBy('id');
     }
 }

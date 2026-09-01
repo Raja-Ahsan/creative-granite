@@ -24,9 +24,10 @@ class CmsModuleSeeder extends Seeder
                 ['hero-slides.index', 'Hero Banner', 'fa-solid fa-panorama', 1],
                 ['who-we-are.edit', 'Who We Are', 'fa-solid fa-people-group', 2],
                 ['materials.index', 'Materials', 'fa-solid fa-gem', 3],
-                ['portfolio-items.index', 'Our Work Collage', 'fa-solid fa-camera', 4],
-                ['instagram-posts.index', 'Instagram Feed', 'fa-brands fa-instagram', 5],
-                ['services.index', 'Homepage Services', 'fa-solid fa-list', 6],
+                ['materials-page.edit', 'Materials Section', 'fa-solid fa-sliders', 4],
+                ['portfolio-items.index', 'Our Work Collage', 'fa-solid fa-camera', 5],
+                ['instagram-posts.index', 'Instagram Feed', 'fa-brands fa-instagram', 6],
+                ['services.index', 'Homepage Services', 'fa-solid fa-list', 7],
             ],
             $gallery->id => [
                 ['gallery-albums.index', 'Gallery Albums', 'fa-solid fa-table-cells-large', 1],
