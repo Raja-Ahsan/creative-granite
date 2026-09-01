@@ -1,10 +1,10 @@
-<nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-bone shadow-sm">
+<nav class="sticky top-0 z-50 bg-ink border-b border-cream/10 shadow-lg">
     <div class="px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex items-center gap-3">
                 <button
                     type="button"
-                    class="sm:hidden inline-flex items-center justify-center p-2 rounded-md text-ink-soft hover:text-ink hover:bg-bone/60 transition"
+                    class="sm:hidden inline-flex items-center justify-center p-2 rounded-md text-cream/80 hover:text-cream hover:bg-white/10 transition"
                     @click="sidebarOpen = !sidebarOpen"
                     aria-label="Toggle sidebar"
                 >
@@ -13,16 +13,12 @@
                     </svg>
                 </button>
 
-                <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3">
+                <a href="{{ route('admin.dashboard') }}" class="inline-flex items-center py-1">
                     <img
                         src="{{ asset('images/site/update-logo.png') }}"
                         alt="{{ config('app.name') }}"
-                        class="h-9 w-auto"
+                        class="h-12 w-auto max-w-[260px] object-contain sm:h-[3.25rem]"
                     >
-                    <div class="hidden sm:block leading-tight">
-                        <span class="block text-sm font-semibold text-ink">Creative Granite</span>
-                        <span class="block text-[11px] text-ink-soft/70 tracking-wide">Content Admin</span>
-                    </div>
                 </a>
             </div>
 
@@ -30,7 +26,7 @@
                 <div class="relative" x-data="{ notificationsOpen: false }">
                     <button
                         type="button"
-                        class="relative inline-flex h-10 w-10 items-center justify-center rounded-lg border border-bone bg-white text-ink-soft transition hover:bg-bone/40 hover:text-ink"
+                        class="relative inline-flex h-10 w-10 items-center justify-center rounded-lg border border-cream/15 bg-white/5 text-cream/80 transition hover:bg-white/10 hover:text-cream"
                         @click="notificationsOpen = !notificationsOpen"
                         aria-label="Notifications"
                     >
@@ -95,7 +91,7 @@
                 <a
                     href="{{ route('home') }}"
                     target="_blank"
-                    class="hidden sm:inline-flex items-center gap-2 px-3 py-1.5 text-sm text-ink-soft hover:text-ink border border-bone rounded-md hover:bg-bone/40 transition"
+                    class="hidden sm:inline-flex items-center gap-2 px-3 py-1.5 text-sm text-cream/80 hover:text-cream border border-cream/15 rounded-md bg-white/5 hover:bg-white/10 transition"
                 >
                     <i class="fa-solid fa-arrow-up-right-from-square text-xs text-accent"></i>
                     View Site
@@ -103,12 +99,12 @@
 
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
-                        <button class="inline-flex items-center gap-2 px-2 sm:px-3 py-1.5 rounded-lg border border-bone bg-white hover:bg-bone/30 transition focus:outline-none focus:ring-2 focus:ring-accent/30">
-                            <span class="flex h-8 w-8 items-center justify-center rounded-full bg-ink text-cream text-xs font-semibold">
+                        <button class="inline-flex items-center gap-2 px-2 sm:px-3 py-1.5 rounded-lg border border-cream/15 bg-white/5 hover:bg-white/10 transition focus:outline-none focus:ring-2 focus:ring-accent/40">
+                            <span class="flex h-8 w-8 items-center justify-center rounded-full bg-accent text-ink text-xs font-semibold">
                                 {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
                             </span>
-                            <span class="hidden sm:block text-sm font-medium text-ink">{{ Auth::user()->name }}</span>
-                            <svg class="hidden sm:block h-4 w-4 text-ink-soft" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <span class="hidden sm:block text-sm font-medium text-cream">{{ Auth::user()->name }}</span>
+                            <svg class="hidden sm:block h-4 w-4 text-cream/60" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                             </svg>
                         </button>

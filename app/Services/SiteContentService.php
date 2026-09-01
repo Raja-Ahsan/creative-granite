@@ -10,6 +10,7 @@ use App\Models\Material;
 use App\Models\PortfolioItem;
 use App\Models\ProcessStep;
 use App\Models\Product;
+use App\Models\ProductCategory;
 use App\Models\ProductImage;
 use App\Models\ProjectType;
 use App\Models\Service;
@@ -128,8 +129,26 @@ class SiteContentService
                 ])
                 ->values()
                 ->all(),
+            'productCategories' => ProductCategory::query()
+                ->where('is_active', true)
+                ->orderBy('sort_order')
+                ->orderBy('id')
+                ->get()
+                ->map(fn (ProductCategory $category) => [
+                    'id' => $category->id,
+                    'name' => $category->name,
+                    'shortName' => $category->short_name,
+                    'slug' => $category->slug,
+                    'filterLabel' => $category->filterLabel(),
+                    'sortOrder' => (int) $category->sort_order,
+                ])
+                ->values()
+                ->all(),
             'products' => Product::query()
-                ->with(['images' => fn ($query) => $query->orderBy('sort_order')->orderBy('id')])
+                ->with([
+                    'category',
+                    'images' => fn ($query) => $query->orderBy('sort_order')->orderBy('id'),
+                ])
                 ->active()
                 ->orderBy('sort_order')
                 ->orderBy('id')
@@ -156,7 +175,9 @@ class SiteContentService
                         'name' => $product->name,
                         'slug' => $product->slug,
                         'model' => $product->model,
-                        'material' => $product->material,
+                        'material' => $product->category?->name ?? $product->material,
+                        'categoryId' => $product->product_category_id,
+                        'categorySlug' => $product->category?->slug,
                         'bowlDescription' => $product->bowl_description,
                         'mount' => $product->mount,
                         'gauge' => $product->gauge,

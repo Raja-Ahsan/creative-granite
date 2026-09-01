@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\InstagramPostController;
 use App\Http\Controllers\Admin\MaterialController;
 use App\Http\Controllers\Admin\PortfolioItemController;
 use App\Http\Controllers\Admin\ProcessStepController;
+use App\Http\Controllers\Admin\ProductCategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductsPageController;
 use App\Http\Controllers\Admin\ProjectTypeController;
@@ -31,6 +32,7 @@ Route::middleware(['web', 'auth', 'admin'])->prefix('admin')->name('admin.')->gr
     Route::resource('instagram-posts', InstagramPostController::class)->except(['show']);
     Route::resource('gallery-albums', GalleryAlbumController::class)->except(['show']);
     Route::resource('materials', MaterialController::class)->except(['show']);
+    Route::resource('product-categories', ProductCategoryController::class)->except(['show']);
     Route::resource('products', ProductController::class)->except(['show']);
     Route::get('products-page', [ProductsPageController::class, 'edit'])->name('products-page.edit');
     Route::put('products-page', [ProductsPageController::class, 'update'])->name('products-page.update');

@@ -11,11 +11,21 @@ export type GalleryAlbum = {
 export type InstagramPost = { src: string; alt: string; url?: string };
 export type Material = { name: string; desc: string; image: string; sortOrder?: number; featured?: boolean };
 export type ProductImage = { src: string; alt: string; label?: string };
+export type ProductCategory = {
+  id: number;
+  name: string;
+  shortName?: string | null;
+  slug: string;
+  filterLabel: string;
+  sortOrder: number;
+};
 export type Product = {
   name: string;
   slug: string;
   model?: string | null;
   material?: string | null;
+  categoryId?: number | null;
+  categorySlug?: string | null;
   bowlDescription?: string | null;
   mount?: string | null;
   gauge?: string | null;

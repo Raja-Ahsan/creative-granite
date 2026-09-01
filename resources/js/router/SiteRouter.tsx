@@ -19,11 +19,13 @@ import { WorkGalleryPage } from "@/pages/WorkGalleryPage";
 
 type SiteRouterContextValue = {
   pathname: string;
+  search: string;
   navigate: (to: string) => void;
 };
 
 const SiteRouterContext = createContext<SiteRouterContextValue>({
   pathname: "/",
+  search: "",
   navigate: () => undefined,
 });
 
@@ -62,6 +64,7 @@ function scrollToHash(hash: string | null, behavior: ScrollBehavior = "smooth") 
 
 export function SiteRouterProvider({ children }: { children?: ReactNode }) {
   const [pathname, setPathname] = useState(() => normalizePath(window.location.pathname));
+  const [search, setSearch] = useState(() => window.location.search);
   const [pendingHash, setPendingHash] = useState<string | null>(() => {
     const hash = window.location.hash.slice(1);
     return hash || null;
@@ -86,6 +89,7 @@ export function SiteRouterProvider({ children }: { children?: ReactNode }) {
 
     window.history.pushState({}, "", nextPath);
     setPathname(normalizePath(url.pathname));
+    setSearch(url.search);
 
     if (hash) {
       const scrolled = scrollToHash(hash);
@@ -128,6 +132,7 @@ export function SiteRouterProvider({ children }: { children?: ReactNode }) {
     const onPopState = () => {
       const hash = window.location.hash.slice(1) || null;
       setPathname(normalizePath(window.location.pathname));
+      setSearch(window.location.search);
       if (hash) {
         if (!scrollToHash(hash)) {
           setPendingHash(hash);
@@ -177,7 +182,7 @@ export function SiteRouterProvider({ children }: { children?: ReactNode }) {
     return () => document.removeEventListener("click", onClick);
   }, [navigate]);
 
-  const value = useMemo(() => ({ pathname, navigate }), [pathname, navigate]);
+  const value = useMemo(() => ({ pathname, search, navigate }), [pathname, search, navigate]);
   const Page = resolvePage(pathname);
 
   return (
@@ -208,4 +213,25 @@ export function useProductSlug(): string | undefined {
   const { pathname } = useSiteRouter();
   const match = pathname.match(/^\/products\/([^/]+)$/);
   return match?.[1];
+}
+
+export function useCategorySlugFromUrl(): string | null {
+  const { search } = useSiteRouter();
+  return new URLSearchParams(search).get("category");
+}
+
+export function productDetailHref(slug: string, categorySlug?: string | null): string {
+  if (!categorySlug) {
+    return `/products/${slug}`;
+  }
+
+  return `/products/${slug}?category=${encodeURIComponent(categorySlug)}`;
+}
+
+export function productsListHref(categorySlug?: string | null): string {
+  if (!categorySlug) {
+    return "/products";
+  }
+
+  return `/products?category=${encodeURIComponent(categorySlug)}`;
 }

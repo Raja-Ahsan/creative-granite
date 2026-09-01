@@ -15,18 +15,29 @@
                         <x-admin.input label="Model / Name" name="name" :value="old('name', $item->name)" required />
                         <x-admin.input label="Model Code" name="model" :value="old('model', $item->model)" placeholder="ESI-QS1000" />
                         <div>
-                            <label class="block text-sm font-medium text-gray-700">Material</label>
-                            <input
-                                list="material-options"
-                                name="material"
-                                value="{{ old('material', $item->material) }}"
+                            <label class="block text-sm font-medium text-gray-700">Category</label>
+                            <select
+                                name="product_category_id"
+                                required
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                             >
-                            <datalist id="material-options">
-                                @foreach ($materialOptions as $option)
-                                    <option value="{{ $option }}"></option>
+                                <option value="" disabled @selected(! old('product_category_id', $item->product_category_id))>Select a category</option>
+                                @foreach ($categories as $category)
+                                    <option
+                                        value="{{ $category->id }}"
+                                        @selected((string) old('product_category_id', $item->product_category_id) === (string) $category->id)
+                                    >
+                                        {{ $category->name }}
+                                    </option>
                                 @endforeach
-                            </datalist>
+                            </select>
+                            @if ($categories->isEmpty())
+                                <p class="mt-2 text-xs text-amber-700">
+                                    No categories yet.
+                                    <a href="{{ route('admin.product-categories.create') }}" class="underline">Add a category</a>
+                                    before creating products.
+                                </p>
+                            @endif
                         </div>
                         <x-admin.input label="Mount" name="mount" :value="old('mount', $item->mount)" />
                         <x-admin.input label="Gauge" name="gauge" :value="old('gauge', $item->gauge)" />
@@ -52,60 +63,37 @@
 
                 <div>
                     <h3 class="text-sm font-semibold uppercase tracking-wider text-gray-500">Primary Image</h3>
-                    <p class="mt-1 text-xs text-gray-500">Used on the products page. If you add color variants below, the first variant becomes the primary image automatically.</p>
-                    <div class="mt-4 grid gap-4 md:grid-cols-2">
-                        <div>
-                            @if ($item->image_path)
-                                <img src="{{ $item->image_path }}" alt="" class="mb-3 h-36 w-auto rounded border border-gray-200 bg-gray-50 object-contain p-2">
-                            @endif
-                            <input type="file" name="image" accept="image/*" class="block w-full text-sm text-gray-500 file:mr-4 file:rounded-md file:border-0 file:bg-gray-100 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-gray-700">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700">Or image path</label>
-                            <input
-                                type="text"
-                                name="image_path"
-                                value="{{ old('image_path', $item->image_path) }}"
-                                list="available-product-images"
-                                placeholder="/images/products/1000 White.png"
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                            >
-                            <datalist id="available-product-images">
-                                @foreach ($availableImages as $imagePath)
-                                    <option value="{{ $imagePath }}"></option>
-                                @endforeach
-                            </datalist>
-                        </div>
+                    <p class="mt-1 text-xs text-gray-500">Main image shown on the products page. Upload a new file to replace the current image.</p>
+                    <div class="mt-4 max-w-md">
+                        @if ($item->image_path)
+                            <img src="{{ $item->image_path }}" alt="" class="mb-3 h-36 w-auto rounded border border-gray-200 bg-gray-50 object-contain p-2">
+                        @endif
+                        <input type="file" name="image" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" class="block w-full text-sm text-gray-500 file:mr-4 file:rounded-md file:border-0 file:bg-gray-100 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-gray-700">
                     </div>
                 </div>
 
                 <div>
                     <h3 class="text-sm font-semibold uppercase tracking-wider text-gray-500">Color Variation Images</h3>
-                    <p class="mt-1 text-xs text-gray-500">Add multiple finishes for the same model. These appear as color swatches on the product page.</p>
+                    <p class="mt-1 text-xs text-gray-500">Add one finish at a time. Accepted formats: JPG, JPEG, PNG, WEBP.</p>
 
                     @if ($item->exists && $item->images->isNotEmpty())
                         <div class="mt-4 space-y-3">
+                            <p class="text-xs font-medium uppercase tracking-wider text-gray-500">Current variations</p>
                             @foreach ($item->images as $image)
-                                <div class="grid gap-3 rounded-lg border border-gray-200 p-4 md:grid-cols-[80px_1fr_120px_auto] md:items-center">
-                                    <img src="{{ $image->image_path }}" alt="" class="h-16 w-16 rounded bg-gray-50 object-contain p-1">
+                                <div class="grid gap-3 rounded-lg border border-gray-200 bg-gray-50/60 p-4 md:grid-cols-[72px_1fr_auto] md:items-center">
+                                    <img src="{{ $image->image_path }}" alt="" class="h-16 w-16 rounded border border-gray-200 bg-white object-contain p-1">
                                     <div class="min-w-0">
-                                        <p class="truncate text-xs text-gray-500">{{ $image->image_path }}</p>
+                                        <label class="block text-xs font-medium text-gray-600">Finish label</label>
                                         <input
                                             type="text"
                                             name="existing_variants[{{ $image->id }}][label]"
                                             value="{{ old('existing_variants.'.$image->id.'.label', $image->alt_text) }}"
-                                            placeholder="Finish label (White, Black...)"
-                                            class="mt-2 block w-full rounded-md border-gray-300 text-sm shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                            placeholder="White, Black, Beige..."
+                                            class="mt-1 block w-full rounded-md border-gray-300 text-sm shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                                         >
+                                        <input type="hidden" name="existing_variants[{{ $image->id }}][sort_order]" value="{{ old('existing_variants.'.$image->id.'.sort_order', $image->sort_order) }}">
                                     </div>
-                                    <input
-                                        type="number"
-                                        name="existing_variants[{{ $image->id }}][sort_order]"
-                                        value="{{ old('existing_variants.'.$image->id.'.sort_order', $image->sort_order) }}"
-                                        min="0"
-                                        class="block w-full rounded-md border-gray-300 text-sm shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                                    >
-                                    <label class="inline-flex items-center gap-2 text-xs text-red-600">
+                                    <label class="inline-flex items-center gap-2 self-start text-xs font-medium text-red-600 md:self-center">
                                         <input type="checkbox" name="remove_variants[]" value="{{ $image->id }}" class="rounded border-gray-300 text-red-600 focus:ring-red-500">
                                         Remove
                                     </label>
@@ -114,40 +102,19 @@
                         </div>
                     @endif
 
-                    <div class="mt-6 rounded-lg border border-dashed border-gray-300 p-4">
-                        <p class="text-xs font-medium uppercase tracking-wider text-gray-500">Add by image path</p>
-                        @for ($i = 0; $i < 3; $i++)
-                            <div class="mt-3 grid gap-3 md:grid-cols-[1fr_180px]">
-                                <input
-                                    type="text"
-                                    name="variant_paths[]"
-                                    value="{{ old('variant_paths.'.$i) }}"
-                                    list="available-product-images"
-                                    placeholder="/images/products/1000 Black.png"
-                                    class="block w-full rounded-md border-gray-300 text-sm shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                                >
-                                <input
-                                    type="text"
-                                    name="variant_labels[]"
-                                    value="{{ old('variant_labels.'.$i) }}"
-                                    placeholder="Finish label"
-                                    class="block w-full rounded-md border-gray-300 text-sm shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                                >
-                            </div>
-                        @endfor
-                    </div>
+                    <div class="mt-6">
+                        <div class="flex items-center justify-between gap-4">
+                            <p class="text-xs font-medium uppercase tracking-wider text-gray-500">Add new variations</p>
+                            <button
+                                type="button"
+                                id="add-variant-row"
+                                class="inline-flex items-center gap-2 rounded-md border border-gray-300 bg-white px-3 py-2 text-xs font-semibold uppercase tracking-wider text-gray-700 hover:bg-gray-50"
+                            >
+                                + Add variation
+                            </button>
+                        </div>
 
-                    <div class="mt-4 rounded-lg border border-dashed border-gray-300 p-4">
-                        <p class="text-xs font-medium uppercase tracking-wider text-gray-500">Upload new variation images</p>
-                        <input type="file" name="variant_files[]" accept="image/*" multiple class="mt-3 block w-full text-sm text-gray-500 file:mr-4 file:rounded-md file:border-0 file:bg-gray-100 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-gray-700">
-                        <p class="mt-2 text-xs text-gray-500">Optional labels in order, comma-separated (e.g. White, Black, Beige)</p>
-                        <input
-                            type="text"
-                            name="variant_file_labels_csv"
-                            value="{{ old('variant_file_labels_csv') }}"
-                            placeholder="White, Black, Beige"
-                            class="mt-2 block w-full rounded-md border-gray-300 text-sm shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                        >
+                        <div id="new-variant-rows" class="mt-3 space-y-3"></div>
                     </div>
                 </div>
 
@@ -160,28 +127,51 @@
 @push('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const fileInput = document.querySelector('input[name="variant_files[]"]');
-            const csvInput = document.querySelector('input[name="variant_file_labels_csv"]');
-            const form = fileInput?.closest('form');
+            const container = document.getElementById('new-variant-rows');
+            const addButton = document.getElementById('add-variant-row');
 
-            if (!form || !fileInput || !csvInput) return;
+            if (!container || !addButton) return;
 
-            form.addEventListener('submit', () => {
-                document.querySelectorAll('input[name^="variant_file_labels["]').forEach((node) => node.remove());
+            let variantIndex = 0;
 
-                const labels = csvInput.value
-                    .split(',')
-                    .map((label) => label.trim())
-                    .filter(Boolean);
+            const createRow = () => {
+                const index = variantIndex++;
+                const row = document.createElement('div');
+                row.className = 'variant-row rounded-lg border border-dashed border-gray-300 bg-gray-50/40 p-4';
+                row.innerHTML = `
+                    <div class="flex items-start justify-between gap-3">
+                        <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">New variation</p>
+                        <button type="button" class="remove-variant-row text-xs font-medium text-red-600 hover:text-red-700">Remove</button>
+                    </div>
+                    <div class="mt-3 grid gap-3 md:grid-cols-2">
+                        <div>
+                            <label class="block text-xs font-medium text-gray-600">Upload image</label>
+                            <input
+                                type="file"
+                                name="new_variants[${index}][file]"
+                                accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
+                                class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:rounded-md file:border-0 file:bg-gray-100 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-gray-700"
+                            >
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-600">Finish label</label>
+                            <input
+                                type="text"
+                                name="new_variants[${index}][label]"
+                                placeholder="White, Black, Beige..."
+                                class="mt-1 block w-full rounded-md border-gray-300 text-sm shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                            >
+                        </div>
+                    </div>
+                `;
 
-                labels.forEach((label, index) => {
-                    const hidden = document.createElement('input');
-                    hidden.type = 'hidden';
-                    hidden.name = `variant_file_labels[${index}]`;
-                    hidden.value = label;
-                    form.appendChild(hidden);
-                });
-            });
+                row.querySelector('.remove-variant-row')?.addEventListener('click', () => row.remove());
+
+                container.appendChild(row);
+            };
+
+            addButton.addEventListener('click', createRow);
+            createRow();
         });
     </script>
 @endpush
