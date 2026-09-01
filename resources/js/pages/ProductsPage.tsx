@@ -1,12 +1,21 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { CTA, Footer, Header } from "@/components/sections";
 import { Reveal } from "@/components/site/Reveal";
 import { useSection, useSiteContent } from "@/contexts/SiteContentContext";
-import type { Product, ProductImage } from "@/types/content";
+import { productDetailHref, useSiteRouter } from "@/router/SiteRouter";
+import type { Product, ProductCategory, ProductImage } from "@/types/content";
 import { bodyCopyLight, sectionHeadingLight } from "@/utils/typography";
 import { SiteLayout } from "@/layouts/SiteLayout";
 
-const MATERIAL_ORDER = ["Stainless Steel", "Porcelain", "Fireclay", "Quartz Composite"];
+const ALL_FILTER = "All";
+
+function matchesCategory(product: Product, category: ProductCategory): boolean {
+  if (product.categoryId != null) {
+    return product.categoryId === category.id;
+  }
+
+  return product.material === category.name;
+}
 
 function productVariants(product: Product): ProductImage[] {
   if (product.images.length > 0) {
@@ -20,7 +29,16 @@ function productVariants(product: Product): ProductImage[] {
   return [];
 }
 
-function ProductCard({ product, index }: { product: Product; index: number }) {
+function ProductCard({
+  product,
+  index,
+  categorySlug,
+}: {
+  product: Product;
+  index: number;
+  categorySlug?: string | null;
+}) {
+  const detailHref = productDetailHref(product.slug, categorySlug ?? product.categorySlug);
   const variants = productVariants(product);
   const [activeIndex, setActiveIndex] = useState(0);
   const [swatchHover, setSwatchHover] = useState(false);
@@ -68,7 +86,7 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
 
           {activeVariant ? (
             <a
-              href={`/products/${product.slug}`}
+              href={detailHref}
               className="img-zoom mx-auto block aspect-[4/3] max-w-[320px] overflow-hidden"
               data-cursor="view"
             >
@@ -120,7 +138,7 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
         </div>
 
         <a
-          href={`/products/${product.slug}`}
+          href={detailHref}
           className="flex flex-1 flex-col px-6 pb-7 pt-5 md:px-8 md:pb-8"
           data-cursor="view"
         >
@@ -152,29 +170,79 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
 
 export function ProductsPage() {
   const section = useSection("products");
-  const { products } = useSiteContent();
-  const [activeMaterial, setActiveMaterial] = useState<string>("All");
+  const { products, productCategories } = useSiteContent();
+  const { pathname, search, navigate } = useSiteRouter();
+  const [activeFilter, setActiveFilter] = useState<string>(ALL_FILTER);
 
-  const materials = useMemo(() => {
-    const found = Array.from(new Set(products.map((p) => p.material).filter(Boolean))) as string[];
-    return ["All", ...MATERIAL_ORDER.filter((m) => found.includes(m)), ...found.filter((m) => !MATERIAL_ORDER.includes(m))];
-  }, [products]);
-
-  const filtered = useMemo(
-    () => (activeMaterial === "All" ? products : products.filter((p) => p.material === activeMaterial)),
-    [products, activeMaterial],
-  );
-
-  const grouped = useMemo(() => {
-    if (activeMaterial !== "All") {
-      return [{ material: activeMaterial, items: filtered }];
+  useEffect(() => {
+    if (pathname !== "/products") {
+      return;
     }
 
-    return MATERIAL_ORDER.map((material) => ({
-      material,
-      items: products.filter((p) => p.material === material),
-    })).filter((group) => group.items.length > 0);
-  }, [products, filtered, activeMaterial]);
+    const slug = new URLSearchParams(search).get("category");
+    if (!slug) {
+      setActiveFilter(ALL_FILTER);
+      return;
+    }
+
+    const category = productCategories.find((item) => item.slug === slug);
+    setActiveFilter(category ? String(category.id) : ALL_FILTER);
+  }, [pathname, search, productCategories]);
+
+  const handleFilterChange = (key: string) => {
+    setActiveFilter(key);
+
+    if (key === ALL_FILTER) {
+      navigate("/products");
+      return;
+    }
+
+    const category = productCategories.find((item) => String(item.id) === key);
+    if (category) {
+      navigate(`/products?category=${encodeURIComponent(category.slug)}`);
+    }
+  };
+
+  const filters = useMemo(
+    () => [
+      { key: ALL_FILTER, label: ALL_FILTER },
+      ...productCategories.map((category) => ({
+        key: String(category.id),
+        label: category.filterLabel,
+      })),
+    ],
+    [productCategories],
+  );
+
+  const activeCategory = useMemo(
+    () => productCategories.find((category) => String(category.id) === activeFilter) ?? null,
+    [productCategories, activeFilter],
+  );
+
+  const filtered = useMemo(() => {
+    if (activeFilter === ALL_FILTER) {
+      return products;
+    }
+
+    if (!activeCategory) {
+      return products;
+    }
+
+    return products.filter((product) => matchesCategory(product, activeCategory));
+  }, [products, activeFilter, activeCategory]);
+
+  const grouped = useMemo(() => {
+    if (activeCategory) {
+      return [{ category: activeCategory, items: filtered }];
+    }
+
+    return productCategories
+      .map((category) => ({
+        category,
+        items: products.filter((product) => matchesCategory(product, category)),
+      }))
+      .filter((group) => group.items.length > 0);
+  }, [products, filtered, activeCategory, productCategories]);
 
   return (
     <SiteLayout>
@@ -201,18 +269,18 @@ export function ProductsPage() {
 
         <section className="sticky top-[4.25rem] z-20 border-y border-foreground/10 bg-cream/95 backdrop-blur-md md:top-[6.5rem]">
           <div className="mx-auto flex max-w-[1400px] gap-2 overflow-x-auto px-6 py-4 md:px-10">
-            {materials.map((material) => (
+            {filters.map((filter) => (
               <button
-                key={material}
+                key={filter.key}
                 type="button"
-                onClick={() => setActiveMaterial(material)}
+                onClick={() => handleFilterChange(filter.key)}
                 className={`shrink-0 rounded-full border px-5 py-2.5 text-[10px] font-medium uppercase tracking-[0.2em] transition-colors duration-300 ${
-                  activeMaterial === material
+                  activeFilter === filter.key
                     ? "border-foreground bg-foreground text-cream"
                     : "border-foreground/15 bg-transparent text-foreground/65 hover:border-foreground/35 hover:text-foreground"
                 }`}
               >
-                {material}
+                {filter.label}
               </button>
             ))}
           </div>
@@ -227,14 +295,14 @@ export function ProductsPage() {
             ) : (
               <div className="space-y-20 md:space-y-28">
                 {grouped.map((group, groupIndex) => (
-                  <div key={group.material}>
-                    {activeMaterial === "All" && (
+                  <div key={group.category.id}>
+                    {activeFilter === ALL_FILTER && (
                       <Reveal delay={groupIndex * 40}>
                         <div className="mb-10 flex items-end justify-between gap-6 border-b border-foreground/10 pb-6">
                           <div>
                             <p className="eyebrow text-foreground/50">{String(groupIndex + 1).padStart(2, "0")}</p>
                             <h2 className="mt-3 font-display text-3xl uppercase tracking-[-0.02em] text-[#021E44] md:text-4xl">
-                              {group.material}
+                              {group.category.name}
                             </h2>
                           </div>
                           <span className="font-mono text-xs tracking-[0.16em] text-foreground/45">
@@ -246,7 +314,12 @@ export function ProductsPage() {
 
                     <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
                       {group.items.map((product, i) => (
-                        <ProductCard key={product.slug} product={product} index={i} />
+                        <ProductCard
+                          key={product.slug}
+                          product={product}
+                          index={i}
+                          categorySlug={activeCategory?.slug ?? product.categorySlug}
+                        />
                       ))}
                     </div>
                   </div>

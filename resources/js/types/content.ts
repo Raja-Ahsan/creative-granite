@@ -9,13 +9,45 @@ export type GalleryAlbum = {
   images: string[];
 };
 export type InstagramPost = { src: string; alt: string; url?: string };
-export type Material = { name: string; desc: string; image: string; sortOrder?: number; featured?: boolean };
+export type Material = {
+  name: string;
+  slug: string;
+  desc: string;
+  image: string;
+  tagline?: string | null;
+  intro?: string | null;
+  whyChoose?: string[];
+  whyChooseHeading?: string | null;
+  whatToKnow?: string | null;
+  bestFor?: string | null;
+  careGuideUrl?: string | null;
+  careGuideLabel?: string | null;
+  ctaEyebrow?: string | null;
+  ctaHeading?: string | null;
+  ctaBody?: string | null;
+  ctaPrimaryLabel?: string | null;
+  ctaSecondaryLabel?: string | null;
+  ctaSecondaryUrl?: string | null;
+  images?: { src: string; alt: string }[];
+  sortOrder?: number;
+  featured?: boolean;
+};
 export type ProductImage = { src: string; alt: string; label?: string };
+export type ProductCategory = {
+  id: number;
+  name: string;
+  shortName?: string | null;
+  slug: string;
+  filterLabel: string;
+  sortOrder: number;
+};
 export type Product = {
   name: string;
   slug: string;
   model?: string | null;
   material?: string | null;
+  categoryId?: number | null;
+  categorySlug?: string | null;
   bowlDescription?: string | null;
   mount?: string | null;
   gauge?: string | null;

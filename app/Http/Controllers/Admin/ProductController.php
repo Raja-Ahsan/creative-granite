@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Admin\Concerns\HandlesImageUpload;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\ProductCategory;
 use App\Models\ProductImage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -15,17 +16,11 @@ class ProductController extends Controller
 {
     use HandlesImageUpload;
 
-    private const MATERIALS = [
-        'Stainless Steel',
-        'Porcelain',
-        'Fireclay',
-        'Quartz Composite',
-    ];
-
     public function index(Request $request): View
     {
         $search = trim($request->string('search')->toString());
         $material = trim($request->string('material')->toString());
+        $categoryId = $request->integer('category');
         $active = $request->string('active')->toString();
         $sort = $request->string('sort')->toString() ?: 'sort_order';
         $direction = strtolower($request->string('direction')->toString()) === 'desc' ? 'desc' : 'asc';
@@ -35,7 +30,7 @@ class ProductController extends Controller
             $sort = 'sort_order';
         }
 
-        $query = Product::query()->withCount('images');
+        $query = Product::query()->with('category')->withCount('images');
 
         if ($search !== '') {
             $query->where(function ($builder) use ($search) {
@@ -47,7 +42,9 @@ class ProductController extends Controller
             });
         }
 
-        if ($material !== '') {
+        if ($categoryId > 0) {
+            $query->where('product_category_id', $categoryId);
+        } elseif ($material !== '') {
             $query->where('material', $material);
         }
 
@@ -63,13 +60,10 @@ class ProductController extends Controller
             $query->orderBy($sort, $direction)->orderBy('sort_order')->orderBy('id');
         }
 
-        $materials = Product::query()
-            ->whereNotNull('material')
-            ->where('material', '!=', '')
-            ->distinct()
-            ->orderBy('material')
-            ->pluck('material')
-            ->all();
+        $categories = ProductCategory::query()
+            ->orderBy('sort_order')
+            ->orderBy('name')
+            ->get();
 
         return view('screens.admin.products.index', [
             'items' => $query->paginate(12)->withQueryString(),
@@ -77,11 +71,12 @@ class ProductController extends Controller
             'filters' => [
                 'search' => $search,
                 'material' => $material,
+                'category' => $categoryId > 0 ? (string) $categoryId : '',
                 'active' => $active,
                 'sort' => $sort,
                 'direction' => $direction,
             ],
-            'materialOptions' => array_values(array_unique(array_merge(self::MATERIALS, $materials))),
+            'categories' => $categories,
         ]);
     }
 
@@ -96,7 +91,7 @@ class ProductController extends Controller
         return view('screens.admin.products.form', [
             'item' => $item,
             'title' => 'Add Product',
-            'materialOptions' => self::MATERIALS,
+            'categories' => $this->categoryOptions(),
             'availableImages' => $this->availableProductImages(),
         ]);
     }
@@ -105,6 +100,7 @@ class ProductController extends Controller
     {
         $data = $this->validated($request);
         $data = $this->mergeImagePath($request, $data, 'image_path', 'public', 'products');
+        $data['image_path'] = $data['image_path'] ?? null;
         $data['excerpt'] = ($data['excerpt'] ?? null) ?: ($data['bowl_description'] ?? null);
 
         if (empty($data['name']) && ! empty($data['model'])) {
@@ -114,7 +110,7 @@ class ProductController extends Controller
         $product = Product::create($data);
 
         $this->syncVariantImages($request, $product);
-        $this->syncPrimaryImage($product);
+        $this->syncPrimaryImage($product, $this->primaryImageExplicitlyChanged($request));
 
         return redirect()->route('admin.products.index')->with('success', 'Product created.');
     }
@@ -122,12 +118,9 @@ class ProductController extends Controller
     public function edit(Product $product): View
     {
         return view('screens.admin.products.form', [
-            'item' => $product->load('images'),
+            'item' => $product->load(['images', 'category']),
             'title' => 'Edit Product',
-            'materialOptions' => array_values(array_unique(array_merge(
-                self::MATERIALS,
-                Product::query()->whereNotNull('material')->distinct()->pluck('material')->all()
-            ))),
+            'categories' => $this->categoryOptions($product),
             'availableImages' => $this->availableProductImages(),
         ]);
     }
@@ -136,16 +129,23 @@ class ProductController extends Controller
     {
         $data = $this->validated($request, $product);
         $data = $this->mergeImagePath($request, $data, 'image_path', 'public', 'products');
+
+        if (! $request->hasFile('image')) {
+            $data['image_path'] = $product->image_path;
+        }
+
         $data['excerpt'] = ($data['excerpt'] ?? null) ?: ($data['bowl_description'] ?? null);
 
         if (empty($data['name']) && ! empty($data['model'])) {
             $data['name'] = $data['model'];
         }
 
+        $primaryExplicitlyChanged = $this->primaryImageExplicitlyChanged($request);
+
         $product->update($data);
 
         $this->syncVariantImages($request, $product);
-        $this->syncPrimaryImage($product);
+        $this->syncPrimaryImage($product, $primaryExplicitlyChanged);
 
         return redirect()->route('admin.products.index')->with('success', 'Product updated.');
     }
@@ -164,10 +164,12 @@ class ProductController extends Controller
 
     private function validated(Request $request, ?Product $product = null): array
     {
+        $imageRules = ['nullable', 'file', 'mimes:jpg,jpeg,png,webp', 'max:12288'];
+
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'model' => ['nullable', 'string', 'max:255'],
-            'material' => ['nullable', 'string', 'max:255'],
+            'product_category_id' => ['required', 'exists:product_categories,id'],
             'bowl_description' => ['nullable', 'string', 'max:500'],
             'mount' => ['nullable', 'string', 'max:120'],
             'gauge' => ['nullable', 'string', 'max:20'],
@@ -177,39 +179,79 @@ class ProductController extends Controller
             'optional_accessories' => ['nullable', 'string', 'max:5000'],
             'description' => ['nullable', 'string'],
             'excerpt' => ['nullable', 'string', 'max:500'],
-            'image_path' => ['nullable', 'string', 'max:500'],
-            'image' => ['nullable', 'image', 'max:12288'],
+            'image' => $imageRules,
             'existing_variants' => ['nullable', 'array'],
             'existing_variants.*.label' => ['nullable', 'string', 'max:120'],
             'existing_variants.*.sort_order' => ['nullable', 'integer', 'min:0'],
             'remove_variants' => ['nullable', 'array'],
             'remove_variants.*' => ['integer', 'exists:product_images,id'],
-            'variant_paths' => ['nullable', 'array'],
-            'variant_paths.*' => ['nullable', 'string', 'max:500'],
-            'variant_labels' => ['nullable', 'array'],
-            'variant_labels.*' => ['nullable', 'string', 'max:120'],
-            'variant_files' => ['nullable', 'array'],
-            'variant_files.*' => ['image', 'max:12288'],
-            'variant_file_labels' => ['nullable', 'array'],
-            'variant_file_labels.*' => ['nullable', 'string', 'max:120'],
+            'new_variants' => ['nullable', 'array'],
+            'new_variants.*.path' => ['nullable', 'string', 'max:500'],
+            'new_variants.*.label' => ['nullable', 'string', 'max:120'],
             'sort_order' => ['nullable', 'integer', 'min:0'],
             'is_active' => ['nullable', 'boolean'],
+        ], [
+            'image.mimes' => 'Primary image must be JPG, JPEG, PNG, or WEBP.',
         ]);
+
+        $this->validateVariantFiles($request);
 
         $data['is_active'] = $request->boolean('is_active');
         $data['sort_order'] = (int) ($data['sort_order'] ?? 0);
-        $data['image_path'] = filled($data['image_path'] ?? null) ? $data['image_path'] : null;
+        $data['material'] = ProductCategory::query()
+            ->whereKey($data['product_category_id'])
+            ->value('name');
 
         unset(
             $data['existing_variants'],
             $data['remove_variants'],
-            $data['variant_paths'],
-            $data['variant_labels'],
-            $data['variant_files'],
-            $data['variant_file_labels'],
+            $data['new_variants'],
         );
 
         return $data;
+    }
+
+    private function validateVariantFiles(Request $request): void
+    {
+        $variants = $request->input('new_variants', []);
+        if (! is_array($variants)) {
+            return;
+        }
+
+        foreach ($variants as $index => $variant) {
+            if (! $request->hasFile("new_variants.{$index}.file")) {
+                continue;
+            }
+
+            $file = $request->file("new_variants.{$index}.file");
+            if (! $file instanceof UploadedFile || ! $file->isValid()) {
+                continue;
+            }
+
+            $request->validate([
+                "new_variants.{$index}.file" => ['file', 'mimes:jpg,jpeg,png,webp', 'max:12288'],
+            ], [
+                "new_variants.{$index}.file.mimes" => 'Variation image must be JPG, JPEG, PNG, or WEBP.',
+            ]);
+        }
+    }
+
+    /** @return \Illuminate\Database\Eloquent\Collection<int, ProductCategory> */
+    private function categoryOptions(?Product $product = null)
+    {
+        $currentCategoryId = $product?->product_category_id;
+
+        return ProductCategory::query()
+            ->where(function ($builder) use ($currentCategoryId) {
+                $builder->where('is_active', true);
+
+                if ($currentCategoryId) {
+                    $builder->orWhere('id', $currentCategoryId);
+                }
+            })
+            ->orderBy('sort_order')
+            ->orderBy('name')
+            ->get();
     }
 
     private function syncVariantImages(Request $request, Product $product): void
@@ -247,11 +289,30 @@ class ProductController extends Controller
 
         $startOrder = (int) $product->images()->max('sort_order');
 
-        $paths = $request->input('variant_paths', []);
-        $labels = $request->input('variant_labels', []);
-        if (is_array($paths)) {
-            foreach ($paths as $index => $path) {
-                $path = trim((string) $path);
+        $newVariants = $request->input('new_variants', []);
+        if (is_array($newVariants)) {
+            foreach ($newVariants as $index => $variant) {
+                if (! is_array($variant)) {
+                    continue;
+                }
+
+                $label = trim((string) ($variant['label'] ?? ''));
+                $path = trim((string) ($variant['path'] ?? ''));
+                $file = $request->file("new_variants.{$index}.file");
+
+                if ($file instanceof UploadedFile && $file->isValid()) {
+                    $storedPath = $file->store('products/variants', 'public');
+
+                    ProductImage::create([
+                        'product_id' => $product->id,
+                        'image_path' => '/storage/'.$storedPath,
+                        'alt_text' => $label !== '' ? $label : $this->labelFromPath($file->getClientOriginalName()),
+                        'sort_order' => ++$startOrder,
+                    ]);
+
+                    continue;
+                }
+
                 if ($path === '') {
                     continue;
                 }
@@ -259,27 +320,8 @@ class ProductController extends Controller
                 ProductImage::create([
                     'product_id' => $product->id,
                     'image_path' => $path,
-                    'alt_text' => trim((string) ($labels[$index] ?? '')) ?: $this->labelFromPath($path),
-                    'sort_order' => $startOrder + $index + 1,
-                ]);
-            }
-            $startOrder += count(array_filter($paths, fn ($path) => trim((string) $path) !== ''));
-        }
-
-        if ($request->hasFile('variant_files')) {
-            foreach ($request->file('variant_files') as $index => $file) {
-                if (! $file instanceof UploadedFile || ! $file->isValid()) {
-                    continue;
-                }
-
-                $path = $file->store('products/variants', 'public');
-                $label = trim((string) $request->input("variant_file_labels.{$index}", ''));
-
-                ProductImage::create([
-                    'product_id' => $product->id,
-                    'image_path' => '/storage/'.$path,
-                    'alt_text' => $label !== '' ? $label : $this->labelFromPath($file->getClientOriginalName()),
-                    'sort_order' => $startOrder + $index + 1,
+                    'alt_text' => $label !== '' ? $label : $this->labelFromPath($path),
+                    'sort_order' => ++$startOrder,
                 ]);
             }
         }
@@ -294,11 +336,22 @@ class ProductController extends Controller
         }
     }
 
-    private function syncPrimaryImage(Product $product): void
+    private function primaryImageExplicitlyChanged(Request $request): bool
+    {
+        return $request->hasFile('image');
+    }
+
+    private function syncPrimaryImage(Product $product, bool $primaryExplicitlyChanged = false): void
     {
         $product->refresh()->load('images');
 
-        $first = $product->images->first();
+        if ($primaryExplicitlyChanged && filled($product->image_path)) {
+            $this->promotePrimaryPathToFirstVariant($product);
+
+            return;
+        }
+
+        $first = $product->images->sortBy('sort_order')->first();
 
         if ($first) {
             if ($product->image_path !== $first->image_path) {
@@ -311,6 +364,34 @@ class ProductController extends Controller
         if ($product->image_path !== null) {
             $product->update(['image_path' => null]);
         }
+    }
+
+    private function promotePrimaryPathToFirstVariant(Product $product): void
+    {
+        $primaryPath = (string) $product->image_path;
+        $images = $product->images->sortBy('sort_order')->values();
+
+        $matching = $images->firstWhere('image_path', $primaryPath);
+        if ($matching) {
+            if ((int) $matching->sort_order !== (int) $images->min('sort_order')) {
+                $matching->update(['sort_order' => ((int) $images->min('sort_order')) - 1]);
+            }
+
+            return;
+        }
+
+        if ($images->isNotEmpty()) {
+            foreach ($images as $image) {
+                $image->update(['sort_order' => ((int) $image->sort_order) + 1]);
+            }
+        }
+
+        ProductImage::create([
+            'product_id' => $product->id,
+            'image_path' => $primaryPath,
+            'alt_text' => $this->labelFromPath($primaryPath),
+            'sort_order' => 1,
+        ]);
     }
 
     private function labelFromPath(string $path): string

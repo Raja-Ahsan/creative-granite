@@ -7,6 +7,7 @@ import type {
   PortfolioItem,
   ProcessStep,
   Product,
+  ProductCategory,
   ProjectTypeOption,
   SectionContent,
   Service,
@@ -24,6 +25,7 @@ export type SiteContentPayload = {
   galleryAlbums: GalleryAlbum[];
   instagramPosts: InstagramPost[];
   materials: Material[];
+  productCategories: ProductCategory[];
   products: Product[];
   services: Service[];
   servicesPage: ServicesPageContent;
@@ -63,6 +65,7 @@ export const defaultSiteContent: SiteContentPayload = {
   galleryAlbums: [],
   instagramPosts: [],
   materials: [],
+  productCategories: [],
   products: [],
   services: [],
   servicesPage: {

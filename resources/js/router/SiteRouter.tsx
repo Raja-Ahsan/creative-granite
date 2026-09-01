@@ -10,6 +10,7 @@ import {
 import { ContactPage } from "@/pages/ContactPage";
 import { GalleryPage } from "@/pages/GalleryPage";
 import { HomePage } from "@/pages/HomePage";
+import { MaterialDetailPage } from "@/pages/MaterialDetailPage";
 import { ProcessPage } from "@/pages/ProcessPage";
 import { ProductDetailPage } from "@/pages/ProductDetailPage";
 import { ProductsPage } from "@/pages/ProductsPage";
@@ -19,11 +20,13 @@ import { WorkGalleryPage } from "@/pages/WorkGalleryPage";
 
 type SiteRouterContextValue = {
   pathname: string;
+  search: string;
   navigate: (to: string) => void;
 };
 
 const SiteRouterContext = createContext<SiteRouterContextValue>({
   pathname: "/",
+  search: "",
   navigate: () => undefined,
 });
 
@@ -41,6 +44,7 @@ function resolvePage(pathname: string) {
   if (path === "/process") return ProcessPage;
   if (path === "/services") return ServicesPage;
   if (path === "/contact") return ContactPage;
+  if (path.startsWith("/materials/")) return MaterialDetailPage;
   if (path.startsWith("/products/")) return ProductDetailPage;
   if (path.startsWith("/services/")) return ServiceDetailPage;
 
@@ -62,6 +66,7 @@ function scrollToHash(hash: string | null, behavior: ScrollBehavior = "smooth") 
 
 export function SiteRouterProvider({ children }: { children?: ReactNode }) {
   const [pathname, setPathname] = useState(() => normalizePath(window.location.pathname));
+  const [search, setSearch] = useState(() => window.location.search);
   const [pendingHash, setPendingHash] = useState<string | null>(() => {
     const hash = window.location.hash.slice(1);
     return hash || null;
@@ -86,6 +91,7 @@ export function SiteRouterProvider({ children }: { children?: ReactNode }) {
 
     window.history.pushState({}, "", nextPath);
     setPathname(normalizePath(url.pathname));
+    setSearch(url.search);
 
     if (hash) {
       const scrolled = scrollToHash(hash);
@@ -128,6 +134,7 @@ export function SiteRouterProvider({ children }: { children?: ReactNode }) {
     const onPopState = () => {
       const hash = window.location.hash.slice(1) || null;
       setPathname(normalizePath(window.location.pathname));
+      setSearch(window.location.search);
       if (hash) {
         if (!scrollToHash(hash)) {
           setPendingHash(hash);
@@ -177,7 +184,7 @@ export function SiteRouterProvider({ children }: { children?: ReactNode }) {
     return () => document.removeEventListener("click", onClick);
   }, [navigate]);
 
-  const value = useMemo(() => ({ pathname, navigate }), [pathname, navigate]);
+  const value = useMemo(() => ({ pathname, search, navigate }), [pathname, search, navigate]);
   const Page = resolvePage(pathname);
 
   return (
@@ -204,8 +211,39 @@ export function useWorkGallerySlug(): string | undefined {
   return match?.[1] ? decodeURIComponent(match[1]) : undefined;
 }
 
+export function useMaterialSlug(): string | undefined {
+  const { pathname } = useSiteRouter();
+  const match = pathname.match(/^\/materials\/([^/]+)$/);
+  return match?.[1];
+}
+
+export function materialDetailHref(slug: string): string {
+  return `/materials/${slug}`;
+}
+
 export function useProductSlug(): string | undefined {
   const { pathname } = useSiteRouter();
   const match = pathname.match(/^\/products\/([^/]+)$/);
   return match?.[1];
+}
+
+export function useCategorySlugFromUrl(): string | null {
+  const { search } = useSiteRouter();
+  return new URLSearchParams(search).get("category");
+}
+
+export function productDetailHref(slug: string, categorySlug?: string | null): string {
+  if (!categorySlug) {
+    return `/products/${slug}`;
+  }
+
+  return `/products/${slug}?category=${encodeURIComponent(categorySlug)}`;
+}
+
+export function productsListHref(categorySlug?: string | null): string {
+  if (!categorySlug) {
+    return "/products";
+  }
+
+  return `/products?category=${encodeURIComponent(categorySlug)}`;
 }

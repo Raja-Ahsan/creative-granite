@@ -2,7 +2,11 @@ import { useEffect, useMemo, useState } from "react";
 import { CTA, Footer, Header } from "@/components/sections";
 import { Reveal } from "@/components/site/Reveal";
 import { useSiteContent } from "@/contexts/SiteContentContext";
-import { useProductSlug } from "@/router/SiteRouter";
+import {
+  productsListHref,
+  useCategorySlugFromUrl,
+  useProductSlug,
+} from "@/router/SiteRouter";
 import type { Product, ProductImage } from "@/types/content";
 import { bodyCopyLight, sectionHeadingLight } from "@/utils/typography";
 import { SiteLayout } from "@/layouts/SiteLayout";
@@ -40,8 +44,19 @@ function productGallery(product: Product): ProductImage[] {
 
 export function ProductDetailPage() {
   const slug = useProductSlug();
-  const { products } = useSiteContent();
+  const categorySlugFromUrl = useCategorySlugFromUrl();
+  const { products, productCategories } = useSiteContent();
   const product = products.find((item) => item.slug === slug);
+  const backCategory = useMemo(() => {
+    const slug = categorySlugFromUrl ?? product?.categorySlug ?? null;
+    if (!slug) {
+      return null;
+    }
+
+    return productCategories.find((category) => category.slug === slug) ?? null;
+  }, [categorySlugFromUrl, product?.categorySlug, productCategories]);
+  const backHref = productsListHref(backCategory?.slug ?? categorySlugFromUrl ?? product?.categorySlug);
+  const backLabel = backCategory?.name ?? "All products";
   const specs = product ? productSpecs(product) : [];
   const gallery = product ? productGallery(product) : [];
   const [activeIndex, setActiveIndex] = useState(0);
@@ -87,8 +102,8 @@ export function ProductDetailPage() {
           <div className="pointer-events-none absolute inset-0 noise-overlay opacity-50" />
           <div className="relative mx-auto max-w-[1400px] px-6 pb-10 md:px-10 md:pb-14">
             <Reveal>
-              <a href="/products" className="link-underline text-xs tracking-[0.22em] text-foreground/60">
-                ← All products
+              <a href={backHref} className="link-underline text-xs tracking-[0.22em] text-foreground/60">
+                ← {backLabel}
               </a>
               <div className="mt-8 flex flex-wrap items-center gap-3">
                 <span className="rounded-full border border-foreground/15 px-3 py-1 font-mono text-[10px] tracking-[0.18em] text-foreground/65">

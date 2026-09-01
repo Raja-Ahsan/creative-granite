@@ -7,9 +7,11 @@ use App\Models\GalleryAlbumImage;
 use App\Models\HeroSlide;
 use App\Models\InstagramPost;
 use App\Models\Material;
+use App\Models\MaterialImage;
 use App\Models\PortfolioItem;
 use App\Models\ProcessStep;
 use App\Models\Product;
+use App\Models\ProductCategory;
 use App\Models\ProductImage;
 use App\Models\ProjectType;
 use App\Models\Service;
@@ -115,21 +117,66 @@ class SiteContentService
                 ->all(),
             'instagramPosts' => $this->resolveInstagramPosts(),
             'materials' => Material::query()
+                ->with(['images' => fn ($query) => $query->orderBy('sort_order')->orderBy('id')])
                 ->where('is_active', true)
                 ->orderBy('sort_order')
                 ->orderBy('id')
                 ->get()
-                ->map(fn (Material $material) => [
-                    'name' => $material->name,
-                    'desc' => $material->description,
-                    'image' => $material->image_path,
-                    'sortOrder' => (int) $material->sort_order,
-                    'featured' => (bool) $material->is_featured,
+                ->map(function (Material $material) {
+                    $gallery = $material->images
+                        ->map(fn (MaterialImage $image) => [
+                            'src' => $image->image_path,
+                            'alt' => $image->alt_text ?: $material->name,
+                        ])
+                        ->values()
+                        ->all();
+
+                    return [
+                        'name' => $material->name,
+                        'slug' => $material->slug,
+                        'desc' => $material->description,
+                        'image' => $material->image_path,
+                        'tagline' => $material->tagline,
+                        'intro' => $material->intro,
+                        'whyChoose' => $material->why_choose ?? [],
+                        'whyChooseHeading' => $material->why_choose_heading,
+                        'whatToKnow' => $material->what_to_know,
+                        'bestFor' => $material->best_for,
+                        'careGuideUrl' => $material->care_guide_url,
+                        'careGuideLabel' => $material->care_guide_label,
+                        'ctaEyebrow' => $material->cta_eyebrow,
+                        'ctaHeading' => $material->cta_heading,
+                        'ctaBody' => $material->cta_body,
+                        'ctaPrimaryLabel' => $material->cta_primary_label,
+                        'ctaSecondaryLabel' => $material->cta_secondary_label,
+                        'ctaSecondaryUrl' => $material->cta_secondary_url,
+                        'images' => $gallery,
+                        'sortOrder' => (int) $material->sort_order,
+                        'featured' => (bool) $material->is_featured,
+                    ];
+                })
+                ->values()
+                ->all(),
+            'productCategories' => ProductCategory::query()
+                ->where('is_active', true)
+                ->orderBy('sort_order')
+                ->orderBy('id')
+                ->get()
+                ->map(fn (ProductCategory $category) => [
+                    'id' => $category->id,
+                    'name' => $category->name,
+                    'shortName' => $category->short_name,
+                    'slug' => $category->slug,
+                    'filterLabel' => $category->filterLabel(),
+                    'sortOrder' => (int) $category->sort_order,
                 ])
                 ->values()
                 ->all(),
             'products' => Product::query()
-                ->with(['images' => fn ($query) => $query->orderBy('sort_order')->orderBy('id')])
+                ->with([
+                    'category',
+                    'images' => fn ($query) => $query->orderBy('sort_order')->orderBy('id'),
+                ])
                 ->active()
                 ->orderBy('sort_order')
                 ->orderBy('id')
@@ -156,7 +203,9 @@ class SiteContentService
                         'name' => $product->name,
                         'slug' => $product->slug,
                         'model' => $product->model,
-                        'material' => $product->material,
+                        'material' => $product->category?->name ?? $product->material,
+                        'categoryId' => $product->product_category_id,
+                        'categorySlug' => $product->category?->slug,
                         'bowlDescription' => $product->bowl_description,
                         'mount' => $product->mount,
                         'gauge' => $product->gauge,
@@ -430,9 +479,9 @@ natasha “Natasha”'],
                 'image' => $settings['about_image_path'] ?? '/images/site/LakeLine-20.jpg',
             ],
             'materials' => [
-                'eyebrow' => 'Materials',
-                'heading' => 'The slab decides everything.',
-                'subheading' => 'Explore our most requested natural and engineered surfaces. Each offers its own balance of character, durability, and performance. Additional materials are available upon request.',
+                'eyebrow' => $settings['materials_section_eyebrow'] ?? 'Materials',
+                'heading' => $settings['materials_section_heading'] ?? 'The slab decides everything.',
+                'subheading' => $settings['materials_section_subheading'] ?? 'Explore our most requested natural and engineered surfaces. Each offers its own balance of character, durability, and performance. Additional materials are available upon request.',
                 'body' => '',
                 'highlightText' => '',
                 'image' => '',

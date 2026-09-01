@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { Reveal } from "@/components/site/Reveal";
 import { useSection, useSiteContent } from "@/contexts/SiteContentContext";
+import { materialDetailHref } from "@/router/SiteRouter";
 import { bodyCopyLight } from "@/utils/typography";
 
 export function Materials() {
@@ -44,10 +45,11 @@ export function Materials() {
             const indexLabel = String(material.sortOrder || i + 1).padStart(2, "0");
 
             return (
-              <div
-                key={`${material.name}-${material.sortOrder ?? i}`}
+              <a
+                key={`${material.slug}-${material.sortOrder ?? i}`}
+                href={materialDetailHref(material.slug)}
                 onMouseEnter={() => setActive(i)}
-                data-cursor="select"
+                data-cursor="view"
                 className={`group relative flex cursor-pointer flex-col overflow-hidden bg-cream p-8 transition-colors duration-700 md:p-12 ${
                   active === i ? "bg-foreground text-cream" : ""
                 }`}
@@ -83,7 +85,7 @@ export function Materials() {
                     <span className="text-xl transition-transform duration-500 group-hover:translate-x-2">→</span>
                   </div>
                 </div>
-              </div>
+              </a>
             );
           })}
         </div>
