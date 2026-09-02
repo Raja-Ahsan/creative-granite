@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { CTA, Footer, Header } from "@/components/sections";
+import { CTA, Footer, Header, Materials } from "@/components/sections";
 import { Reveal } from "@/components/site/Reveal";
 import { useSection, useSiteContent } from "@/contexts/SiteContentContext";
 import { productDetailHref, useSiteRouter } from "@/router/SiteRouter";
@@ -249,7 +249,12 @@ export function ProductsPage() {
       <main>
         <Header />
 
-        <section className="relative overflow-hidden bg-cream pb-10 pt-[calc(4.25rem+5rem)] md:pb-14 md:pt-[calc(6.5rem+7rem)]">
+        <Materials
+          columns={4}
+          className="pt-[calc(4.25rem+7rem)] md:pt-[calc(6.5rem+10rem)]"
+        />
+
+        <section className="relative overflow-hidden bg-cream pb-10 pt-16 md:pb-14 md:pt-20">
           <div className="pointer-events-none absolute inset-0 noise-overlay opacity-60" />
           <div className="relative mx-auto max-w-[1400px] px-6 md:px-10">
             <Reveal>
