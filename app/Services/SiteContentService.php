@@ -153,6 +153,7 @@ class SiteContentService
                         'images' => $gallery,
                         'sortOrder' => (int) $material->sort_order,
                         'featured' => (bool) $material->is_featured,
+                        'isCallout' => (bool) $material->is_callout,
                     ];
                 })
                 ->values()

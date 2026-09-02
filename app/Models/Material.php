@@ -36,6 +36,7 @@ class Material extends Model
         'image_path',
         'sort_order',
         'is_featured',
+        'is_callout',
         'is_active',
     ];
 
@@ -44,6 +45,7 @@ class Material extends Model
         return [
             'is_active' => 'boolean',
             'is_featured' => 'boolean',
+            'is_callout' => 'boolean',
             'sort_order' => 'integer',
             'why_choose' => 'array',
         ];

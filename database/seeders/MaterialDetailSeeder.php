@@ -26,7 +26,7 @@ class MaterialDetailSeeder extends Seeder
             [
                 'name' => 'Marble',
                 'slug' => 'marble',
-                'sort_order' => 3,
+                'sort_order' => 1,
                 'description' => 'A natural stone known for soft movement and timeless appeal, often used in bathrooms and feature areas.',
                 'image_path' => '/materials/marble.webp',
                 'tagline' => 'Natural beauty with centuries of history',
@@ -48,7 +48,7 @@ class MaterialDetailSeeder extends Seeder
             [
                 'name' => 'Quartzite',
                 'slug' => 'quartzite',
-                'sort_order' => 4,
+                'sort_order' => 2,
                 'description' => 'A natural stone valued for durability and distinctive movement, ideal for kitchens and high-traffic spaces.',
                 'image_path' => '/materials/quartzite.webp',
                 'tagline' => 'Natural stone with beauty and strength',
@@ -70,7 +70,7 @@ class MaterialDetailSeeder extends Seeder
             [
                 'name' => 'Granite',
                 'slug' => 'granite',
-                'sort_order' => 1,
+                'sort_order' => 3,
                 'description' => 'A durable natural stone known for its strength and variation. A reliable choice for kitchens and high-use surfaces.',
                 'image_path' => '/materials/granite.webp',
                 'tagline' => 'Proven performance. Naturally unique.',
@@ -93,7 +93,7 @@ class MaterialDetailSeeder extends Seeder
             [
                 'name' => 'Quartz',
                 'slug' => 'quartz',
-                'sort_order' => 2,
+                'sort_order' => 4,
                 'description' => 'An engineered surface designed for consistency and low maintenance, offering a wide range of colors and styles.',
                 'image_path' => '/materials/quartz.webp',
                 'tagline' => 'Consistent design with everyday ease',
@@ -116,8 +116,9 @@ class MaterialDetailSeeder extends Seeder
             [
                 'name' => 'Additional Materials',
                 'slug' => 'additional-materials',
-                'sort_order' => 5,
-                'description' => 'Porcelain and other specialty surfaces available by request for projects that need something beyond the core collection.',
+                'sort_order' => 99,
+                'is_callout' => true,
+                'description' => 'We also work with porcelain and can special order additional surface materials based on the needs of the project. If you are looking for a specific material or application, our team can help explore available options.',
                 'image_path' => '/materials/granite.webp',
                 'tagline' => 'Beyond the Core Collection',
                 'intro' => 'Creative Granite + Design also works with porcelain and can special order additional surface materials based on the needs of the project. If a client is looking for a specific material or application, our team can help explore available options.',
@@ -137,11 +138,14 @@ class MaterialDetailSeeder extends Seeder
         ];
 
         foreach ($materials as $data) {
+            $isCallout = (bool) ($data['is_callout'] ?? false);
+
             Material::updateOrCreate(
                 ['slug' => $data['slug']],
                 $data + $this->defaultCta() + [
                     'is_active' => true,
-                    'is_featured' => $data['sort_order'] <= 2,
+                    'is_callout' => $isCallout,
+                    'is_featured' => ! $isCallout,
                 ]
             );
         }

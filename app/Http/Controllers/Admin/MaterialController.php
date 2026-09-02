@@ -69,6 +69,7 @@ class MaterialController extends Controller
         $item = new Material([
             'sort_order' => ((int) Material::query()->max('sort_order')) + 1,
             'is_featured' => false,
+            'is_callout' => false,
             'is_active' => true,
         ]);
         $item->setRelation('images', collect());
@@ -169,11 +170,13 @@ class MaterialController extends Controller
             'gallery_new.*.alt_text' => ['nullable', 'string', 'max:255'],
             'sort_order' => ['nullable', 'integer', 'min:0'],
             'is_featured' => ['nullable', 'boolean'],
+            'is_callout' => ['nullable', 'boolean'],
             'is_active' => ['nullable', 'boolean'],
         ]) + [
             'why_choose' => $whyChoose,
             'slug' => $this->resolveSlug($request->input('slug'), $request->input('name'), $material),
             'is_featured' => $request->boolean('is_featured'),
+            'is_callout' => $request->boolean('is_callout'),
             'is_active' => $request->boolean('is_active'),
             'sort_order' => (int) $request->input('sort_order', 0),
         ];

@@ -31,6 +31,7 @@ export type Material = {
   images?: { src: string; alt: string }[];
   sortOrder?: number;
   featured?: boolean;
+  isCallout?: boolean;
 };
 export type ProductImage = { src: string; alt: string; label?: string };
 export type ProductCategory = {

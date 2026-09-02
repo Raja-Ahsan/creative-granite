@@ -139,6 +139,11 @@
                     <h3 class="text-sm font-semibold uppercase tracking-wider text-gray-500">Visibility</h3>
                     <x-admin.input label="Sort Order" name="sort_order" type="number" :value="old('sort_order', $item->sort_order ?? 0)" />
                     <x-admin.checkbox label="Mark as featured" name="is_featured" :checked="old('is_featured', $item->is_featured ?? false)" />
+                    <x-admin.checkbox
+                        label="Show as informational callout (not a primary material card / page link)"
+                        name="is_callout"
+                        :checked="old('is_callout', $item->is_callout ?? false)"
+                    />
                     <x-admin.checkbox label="Active" name="is_active" :checked="old('is_active', $item->is_active ?? true)" />
                 </div>
 

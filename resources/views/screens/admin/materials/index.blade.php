@@ -75,7 +75,12 @@
                             <td class="whitespace-nowrap px-6 py-4">
                                 <img src="{{ $item->image_path }}" alt="" class="h-12 w-auto rounded">
                             </td>
-                            <td class="px-6 py-4 text-sm text-gray-900">{{ $item->name }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">
+                                <div>{{ $item->name }}</div>
+                                @if ($item->is_callout)
+                                    <span class="mt-1 inline-flex rounded-full bg-slate-100 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-slate-700">Callout</span>
+                                @endif
+                            </td>
                             <td class="whitespace-nowrap px-6 py-4 text-sm">
                                 @if ($item->is_featured)
                                     <span class="inline-flex rounded-full bg-amber-100 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-amber-800">Featured</span>
