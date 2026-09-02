@@ -2,7 +2,7 @@ import { Reveal } from "@/components/site/Reveal";
 import { useSection, useSiteContent } from "@/contexts/SiteContentContext";
 import { bodyCopyCta, sectionHeadingLight } from "@/utils/typography";
 
-export function CTA() {
+export function CTA({ showEstimate = true }: { showEstimate?: boolean }) {
   const { settings } = useSiteContent();
   const section = useSection("cta");
 
@@ -15,14 +15,16 @@ export function CTA() {
           <h2 className={`mx-auto mt-8 max-w-4xl ${sectionHeadingLight}`}>{section.heading}</h2>
           {section.body && <p className={`mx-auto mt-10 max-w-[750px] ${bodyCopyCta}`}>{section.body}</p>}
           <div className="mt-12 flex flex-col items-center gap-5">
-            <a
-              href="#estimate"
-              data-cursor="estimate"
-              className="btn-magnetic inline-flex items-center gap-3 rounded-full border border-foreground bg-foreground px-10 py-5 text-xs font-medium tracking-[0.25em] text-cream"
-            >
-              <span>Get an Estimate</span>
-              <span className="relative z-[2]">→</span>
-            </a>
+            {showEstimate && (
+              <a
+                href="#estimate"
+                data-cursor="estimate"
+                className="btn-magnetic inline-flex items-center gap-3 rounded-full border border-foreground bg-foreground px-10 py-5 text-xs font-medium tracking-[0.25em] text-cream"
+              >
+                <span>Get an Estimate</span>
+                <span className="relative z-[2]">→</span>
+              </a>
+            )}
 
             {settings.showroomMapsUrl && (
               <a

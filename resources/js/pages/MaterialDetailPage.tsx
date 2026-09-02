@@ -1,7 +1,6 @@
 import { useEffect, useMemo } from "react";
 import { CTA, Footer, Header } from "@/components/sections";
 import { Reveal } from "@/components/site/Reveal";
-import { useEstimateModal } from "@/contexts/EstimateModalContext";
 import { useSiteContent } from "@/contexts/SiteContentContext";
 import { SiteLayout } from "@/layouts/SiteLayout";
 import { useMaterialSlug } from "@/router/SiteRouter";
@@ -24,7 +23,6 @@ const defaultCta = {
   eyebrow: "Need help choosing?",
   heading: "Not sure which material is right for your project?",
   body: "The right surface depends on more than appearance. How the space will be used, maintenance expectations, application, design direction, and the characteristics of the individual material all matter. Our team can help you explore your options, understand the differences, and select a surface that works beautifully for your project.",
-  primaryLabel: "Get an Estimate",
   secondaryLabel: "Contact Us",
   secondaryUrl: "/contact",
 };
@@ -38,7 +36,6 @@ function useMaterial() {
 
 export function MaterialDetailPage() {
   const material = useMaterial();
-  const { openEstimateModal } = useEstimateModal();
   const gallery = material ? materialGallery(material) : [];
   const whyChooseHeading =
     material?.whyChooseHeading?.trim() ||
@@ -46,7 +43,6 @@ export function MaterialDetailPage() {
   const ctaEyebrow = material?.ctaEyebrow?.trim() || defaultCta.eyebrow;
   const ctaHeading = material?.ctaHeading?.trim() || defaultCta.heading;
   const ctaBody = material?.ctaBody?.trim() || defaultCta.body;
-  const ctaPrimaryLabel = material?.ctaPrimaryLabel?.trim() || defaultCta.primaryLabel;
   const ctaSecondaryLabel = material?.ctaSecondaryLabel?.trim() || defaultCta.secondaryLabel;
   const ctaSecondaryUrl = material?.ctaSecondaryUrl?.trim() || defaultCta.secondaryUrl;
 
@@ -192,15 +188,6 @@ export function MaterialDetailPage() {
                 </h2>
                 <p className={`mt-6 max-w-3xl ${bodyCopyLight}`}>{ctaBody}</p>
                 <div className="mt-8 flex flex-wrap gap-4">
-                  <button
-                    type="button"
-                    onClick={openEstimateModal}
-                    data-cursor="estimate"
-                    className="btn-magnetic inline-flex items-center gap-3 rounded-full border border-foreground bg-foreground px-8 py-4 text-xs font-medium tracking-[0.22em] text-cream"
-                  >
-                    <span>{ctaPrimaryLabel}</span>
-                    <span className="relative z-[2]">→</span>
-                  </button>
                   <a
                     href={ctaSecondaryUrl}
                     className="inline-flex items-center gap-3 rounded-full border border-foreground/20 px-8 py-4 text-xs font-medium tracking-[0.22em] text-foreground transition hover:border-foreground/40"
@@ -213,7 +200,7 @@ export function MaterialDetailPage() {
           </div>
         </section>
 
-        <CTA />
+        <CTA showEstimate={false} />
         <Footer />
       </main>
     </SiteLayout>
