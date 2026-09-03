@@ -84,6 +84,7 @@ class MaterialController extends Controller
     {
         $data = $this->validated($request);
         $data = $this->mergeImagePath($request, $data, 'image_path', 'public', 'materials');
+        $data = $this->mergeCareGuide($request, $data);
 
         $material = Material::create($data);
         $this->syncGalleryImages($request, $material);
@@ -103,6 +104,7 @@ class MaterialController extends Controller
     {
         $data = $this->validated($request, $material);
         $data = $this->mergeImagePath($request, $data, 'image_path', 'public', 'materials');
+        $data = $this->mergeCareGuide($request, $data, $material);
 
         if (! $request->hasFile('image')) {
             $data['image_path'] = $material->image_path;
@@ -121,6 +123,7 @@ class MaterialController extends Controller
         }
 
         $this->deleteStoredImage($material->image_path);
+        $this->deleteStoredImage($material->care_guide_url);
         $material->delete();
 
         return redirect()->route('admin.materials.index')->with('success', 'Material deleted.');
@@ -149,7 +152,8 @@ class MaterialController extends Controller
             'why_choose_heading' => ['nullable', 'string', 'max:255'],
             'what_to_know' => ['nullable', 'string'],
             'best_for' => ['nullable', 'string'],
-            'care_guide_url' => ['nullable', 'string', 'max:500'],
+            'care_guide' => ['nullable', 'file', 'mimes:pdf', 'max:20480'],
+            'remove_care_guide' => ['nullable', 'boolean'],
             'care_guide_label' => ['nullable', 'string', 'max:255'],
             'meta_title' => ['nullable', 'string', 'max:255'],
             'meta_description' => ['nullable', 'string', 'max:500'],
@@ -201,6 +205,32 @@ class MaterialController extends Controller
         }
 
         return $candidate;
+    }
+
+    private function mergeCareGuide(Request $request, array $data, ?Material $material = null): array
+    {
+        unset($data['care_guide'], $data['remove_care_guide']);
+
+        $current = $material?->care_guide_url;
+
+        if ($request->boolean('remove_care_guide') && ! $request->hasFile('care_guide')) {
+            $this->deleteStoredImage($current);
+            $data['care_guide_url'] = null;
+
+            return $data;
+        }
+
+        if ($request->hasFile('care_guide')) {
+            $this->deleteStoredImage($current);
+            $path = $request->file('care_guide')->store('materials/care-guides', 'public');
+            $data['care_guide_url'] = '/storage/'.$path;
+
+            return $data;
+        }
+
+        $data['care_guide_url'] = $current;
+
+        return $data;
     }
 
     private function syncGalleryImages(Request $request, Material $material): void

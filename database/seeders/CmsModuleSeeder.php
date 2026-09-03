@@ -36,6 +36,7 @@ class CmsModuleSeeder extends Seeder
                 ['products.index', 'All Products', 'fa-solid fa-list', 1],
                 ['products-page.edit', 'Page Settings', 'fa-solid fa-sliders', 2],
                 ['product-categories.index', 'Categories', 'fa-solid fa-tags', 3],
+                ['edge-profiles.index', 'Edge Profiles', 'fa-solid fa-vector-square', 4],
             ],
             $servicesPage->id => [
                 ['services-page.edit', 'Page Settings', 'fa-solid fa-sliders', 1],

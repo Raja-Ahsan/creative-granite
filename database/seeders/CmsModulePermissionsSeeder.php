@@ -28,6 +28,7 @@ class CmsModulePermissionsSeeder extends Seeder
             'products.index',
             'products-page.edit',
             'product-categories.index',
+            'edge-profiles.index',
             'process-steps.index',
             'portfolio-items.index',
             'instagram-posts.index',

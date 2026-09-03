@@ -56,7 +56,7 @@ class ProductsPageController extends Controller
     {
         return [
             'products_page_eyebrow' => 'Products',
-            'products_page_heading' => 'CGD ESI Sink Collection',
+            'products_page_heading' => 'Sink Selections',
             'products_page_subheading' => 'Explore stainless steel, porcelain, fireclay, and quartz composite sinks with full specifications for every model.',
         ];
     }

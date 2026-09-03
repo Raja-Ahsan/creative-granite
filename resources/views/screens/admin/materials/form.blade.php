@@ -44,7 +44,30 @@
                     <x-admin.textarea label="Best For" name="best_for" :value="$item->best_for" :rows="3" />
                     <div class="grid gap-4 md:grid-cols-2">
                         <x-admin.input label="Care Guide Label" name="care_guide_label" :value="$item->care_guide_label" placeholder="Natural Stone Care + Cleaning Guide" />
-                        <x-admin.input label="Care Guide URL" name="care_guide_url" :value="$item->care_guide_url" placeholder="/downloads/natural-stone-care-guide.pdf" />
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Care Guide File</label>
+                            <p class="mt-1 text-xs text-gray-500">Upload a PDF. This replaces the previous file.</p>
+                            @if ($item->care_guide_url)
+                                <div class="mt-2 mb-2 flex flex-wrap items-center gap-3 text-sm">
+                                    <a href="{{ $item->care_guide_url }}" target="_blank" rel="noopener noreferrer" class="text-indigo-600 underline">
+                                        View current file
+                                    </a>
+                                    <label class="inline-flex items-center gap-2 text-xs font-medium text-red-600">
+                                        <input type="checkbox" name="remove_care_guide" value="1" class="rounded border-gray-300 text-red-600 focus:ring-red-500">
+                                        Remove
+                                    </label>
+                                </div>
+                            @endif
+                            <input
+                                type="file"
+                                name="care_guide"
+                                accept=".pdf,application/pdf"
+                                class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:rounded-md file:border-0 file:bg-gray-100 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-gray-700 hover:file:bg-gray-200"
+                            >
+                            @error('care_guide')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
                     </div>
                 </div>
 

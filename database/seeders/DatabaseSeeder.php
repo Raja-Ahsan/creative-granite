@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             EmailTemplateSeeder::class,
             CmsModuleSeeder::class,
             CmsModulePermissionsSeeder::class,
+            EdgeProfileSeeder::class,
         ]);
     }
 }

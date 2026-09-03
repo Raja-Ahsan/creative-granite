@@ -14,6 +14,9 @@ class MaterialsPageController extends Controller
         'materials_section_eyebrow',
         'materials_section_heading',
         'materials_section_subheading',
+        'materials_products_eyebrow',
+        'materials_products_heading',
+        'materials_products_subheading',
     ];
 
     public function edit(): View
@@ -30,6 +33,9 @@ class MaterialsPageController extends Controller
             'materials_section_eyebrow' => ['nullable', 'string', 'max:120'],
             'materials_section_heading' => ['nullable', 'string', 'max:255'],
             'materials_section_subheading' => ['nullable', 'string', 'max:5000'],
+            'materials_products_eyebrow' => ['nullable', 'string', 'max:120'],
+            'materials_products_heading' => ['nullable', 'string', 'max:255'],
+            'materials_products_subheading' => ['nullable', 'string', 'max:5000'],
         ]);
 
         foreach (self::KEYS as $key) {
@@ -58,6 +64,9 @@ class MaterialsPageController extends Controller
             'materials_section_eyebrow' => 'Materials',
             'materials_section_heading' => 'The slab decides everything.',
             'materials_section_subheading' => 'Explore our most requested natural and engineered surfaces. Each offers its own balance of character, durability, and performance. Additional materials are available upon request.',
+            'materials_products_eyebrow' => 'Materials',
+            'materials_products_heading' => 'Explore Our Materials',
+            'materials_products_subheading' => 'Explore our most requested natural and engineered surfaces. Each offers its own balance of character, durability, and performance.',
         ];
     }
 

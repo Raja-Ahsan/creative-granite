@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\EdgeProfile;
 use App\Models\ContactInquiry;
 use App\Models\EstimateRequest;
 use App\Models\GalleryAlbum;
@@ -43,7 +44,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $clearSiteContentCache = static fn () => SiteContentService::clearCache();
 
-        foreach ([GalleryAlbum::class, GalleryAlbumImage::class, HeroSlide::class, InstagramPost::class, Material::class, MaterialImage::class, Product::class, ProductCategory::class, ProductImage::class, ProcessStep::class, ProjectType::class, PortfolioItem::class, Service::class, ServicePageSection::class, ServicePageSectionImage::class, SiteSetting::class] as $model) {
+        foreach ([GalleryAlbum::class, GalleryAlbumImage::class, HeroSlide::class, InstagramPost::class, Material::class, MaterialImage::class, Product::class, ProductCategory::class, ProductImage::class, ProcessStep::class, ProjectType::class, PortfolioItem::class, Service::class, ServicePageSection::class, ServicePageSectionImage::class, SiteSetting::class, EdgeProfile::class] as $model) {
             $model::saved($clearSiteContentCache);
             $model::deleted($clearSiteContentCache);
         }

@@ -33,6 +33,14 @@ export type Material = {
   featured?: boolean;
   isCallout?: boolean;
 };
+export type EdgeProfile = {
+  name: string;
+  slug: string;
+  description?: string | null;
+  image?: string | null;
+  diagram?: string | null;
+  sortOrder?: number;
+};
 export type ProductImage = { src: string; alt: string; label?: string };
 export type ProductCategory = {
   id: number;

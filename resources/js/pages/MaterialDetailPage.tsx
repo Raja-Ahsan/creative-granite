@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { CTA, Footer, Header } from "@/components/sections";
+import { Footer, Header } from "@/components/sections";
 import { Reveal } from "@/components/site/Reveal";
 import { useSiteContent } from "@/contexts/SiteContentContext";
 import { SiteLayout } from "@/layouts/SiteLayout";
@@ -194,7 +194,7 @@ export function MaterialDetailPage() {
           <Header />
           <section className="mx-auto max-w-[1400px] px-6 py-32 md:px-10">
             <h1 className={sectionHeadingLight}>Material not found</h1>
-            <a href="/#materials" className="link-underline mt-6 inline-block text-sm tracking-[0.2em]">
+            <a href="/products#materials" className="link-underline mt-6 inline-block text-sm tracking-[0.2em]">
               Back to materials
             </a>
           </section>
@@ -215,7 +215,7 @@ export function MaterialDetailPage() {
           <div className="relative mx-auto max-w-[1400px] px-6 pb-14 md:px-10 md:pb-20">
             <Reveal>
               <div className="flex flex-wrap items-start justify-between gap-6">
-                <a href="/#materials" className="link-underline text-xs tracking-[0.22em] text-foreground/60">
+                <a href="/products#materials" className="link-underline text-xs tracking-[0.22em] text-foreground/60">
                   ← All materials
                 </a>
                 <div className="text-right">
@@ -464,7 +464,7 @@ export function MaterialDetailPage() {
                       Other primary materials
                     </h2>
                   </div>
-                  <a href="/#materials" className="link-underline text-xs tracking-[0.2em] text-foreground/60">
+                  <a href="/products#materials" className="link-underline text-xs tracking-[0.2em] text-foreground/60">
                     View all materials
                   </a>
                 </div>
@@ -507,7 +507,32 @@ export function MaterialDetailPage() {
           </section>
         )}
 
-        <CTA showEstimate={false} />
+        <section className="relative overflow-hidden border-t border-foreground/10 bg-cream py-20 md:py-28">
+          <div className="pointer-events-none absolute inset-0 noise-overlay opacity-45" />
+          <div className="relative mx-auto max-w-[1400px] px-6 text-center md:px-10">
+            <Reveal>
+              <p className="eyebrow text-foreground/50">Ready when you are</p>
+              <h2 className="mt-5 font-display text-3xl uppercase tracking-[-0.02em] text-[#021E44] md:text-5xl">
+                Start Your Project
+              </h2>
+              <p className={`mx-auto mt-7 max-w-2xl ${bodyCopyLight}`}>
+                Share a few details about your space and our team will help you choose the right material, edge, and
+                finish for the way you live.
+              </p>
+              <a
+                href="#estimate"
+                data-cursor="estimate"
+                className="btn-magnetic mt-10 inline-flex items-center gap-3 rounded-full border border-foreground bg-foreground px-8 py-4 text-xs font-medium tracking-[0.22em] text-cream"
+              >
+                Start Your Project
+                <span className="relative z-[2]" aria-hidden="true">
+                  →
+                </span>
+              </a>
+            </Reveal>
+          </div>
+        </section>
+
         <Footer />
 
         {lightboxOpen && gallery.length > 0 && (

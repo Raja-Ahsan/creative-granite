@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { CTA, Footer, Header, Materials } from "@/components/sections";
+import { CTA, EdgeProfiles, Footer, Header, Materials } from "@/components/sections";
 import { Reveal } from "@/components/site/Reveal";
 import { useSection, useSiteContent } from "@/contexts/SiteContentContext";
 import { productDetailHref, useSiteRouter } from "@/router/SiteRouter";
@@ -250,10 +250,12 @@ export function ProductsPage() {
         <Header />
 
         <Materials
-          columns={4}
+          previewOnly
           showHelpCta
           className="pt-[calc(4.25rem+7rem)] md:pt-[calc(6.5rem+10rem)]"
         />
+
+        <EdgeProfiles />
 
         <section className="relative overflow-hidden bg-cream pb-10 pt-16 md:pb-14 md:pt-20">
           <div className="pointer-events-none absolute inset-0 noise-overlay opacity-60" />
@@ -264,7 +266,7 @@ export function ProductsPage() {
                 <span className="eyebrow">{section.eyebrow}</span>
               </div>
               <div className="mt-6">
-                <h1 className={`max-w-4xl ${sectionHeadingLight}`}>{section.heading}</h1>
+                <h2 className={`max-w-4xl ${sectionHeadingLight}`}>{section.heading}</h2>
                 {section.subheading && (
                   <p className={`mt-8 max-w-2xl ${bodyCopyLight}`}>{section.subheading}</p>
                 )}

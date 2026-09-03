@@ -3,21 +3,32 @@ import { Reveal } from "@/components/site/Reveal";
 import { useSection, useSiteContent } from "@/contexts/SiteContentContext";
 import { materialDetailHref } from "@/router/SiteRouter";
 import { cn } from "@/utils/cn";
-import { bodyCopyLight } from "@/utils/typography";
+import { bodyCopyLight, sectionHeadingLight } from "@/utils/typography";
 
 export function Materials({
   className,
-  columns = 2,
+  previewOnly = false,
   showHelpCta = false,
 }: {
   className?: string;
-  columns?: 2 | 4;
+  previewOnly?: boolean;
   showHelpCta?: boolean;
 }) {
   const { materials, settings } = useSiteContent();
-  const section = useSection("materials");
+  const homeSection = useSection("materials");
+  const productsSection = useSection("materials-products");
   const [active, setActive] = useState(0);
-  const compact = columns === 4;
+
+  const section = previewOnly
+    ? {
+        eyebrow: productsSection.eyebrow || "Materials",
+        heading: productsSection.heading || "Explore Our Materials",
+        subheading:
+          productsSection.subheading ||
+          homeSection.subheading ||
+          "Explore our most requested natural and engineered surfaces.",
+      }
+    : homeSection;
 
   const { primaryMaterials, callout } = useMemo(() => {
     const ordered = [...materials].sort((a, b) => {
@@ -33,28 +44,36 @@ export function Materials({
     };
   }, [materials]);
 
-  if (!primaryMaterials.length && !callout) return null;
+  if (!primaryMaterials.length && (previewOnly || !callout) && !showHelpCta) return null;
 
   return (
-    <section id="materials" className={cn("relative bg-bone py-28 md:py-40", className)}>
+    <section
+      id="materials"
+      className={cn(
+        "relative bg-bone pt-28 md:pt-40",
+        showHelpCta ? "pb-0" : "pb-28 md:pb-40",
+        className,
+      )}
+    >
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
         <Reveal>
           <div className="flex items-center gap-3 text-foreground/60">
             <span className="h-px w-12 bg-foreground/40" />
             <span className="eyebrow">{section.eyebrow}</span>
           </div>
+          {section.heading &&
+            (previewOnly ? (
+              <h1 className={`mt-6 max-w-4xl ${sectionHeadingLight}`}>{section.heading}</h1>
+            ) : (
+              <h2 className={`mt-6 max-w-4xl ${sectionHeadingLight}`}>{section.heading}</h2>
+            ))}
           {section.subheading && (
             <p className={`mt-8 max-w-2xl ${bodyCopyLight}`}>{section.subheading}</p>
           )}
         </Reveal>
 
         {primaryMaterials.length > 0 && (
-          <div
-            className={cn(
-              "mt-16 grid grid-cols-1 gap-px overflow-hidden rounded-sm bg-foreground/15",
-              compact ? "sm:grid-cols-2 xl:grid-cols-4" : "md:grid-cols-2",
-            )}
-          >
+          <div className="mt-16 grid grid-cols-1 gap-px overflow-hidden rounded-sm bg-foreground/15 md:grid-cols-2">
             {primaryMaterials.map((material, i) => {
               const indexLabel = String(i + 1).padStart(2, "0");
 
@@ -65,17 +84,11 @@ export function Materials({
                   onMouseEnter={() => setActive(i)}
                   data-cursor="view"
                   className={cn(
-                    "group relative flex cursor-pointer flex-col overflow-hidden bg-cream transition-colors duration-700",
-                    compact ? "p-6 md:p-7" : "p-8 md:p-12",
+                    "group relative flex cursor-pointer flex-col overflow-hidden bg-cream p-8 transition-colors duration-700 md:p-12",
                     active === i && "bg-foreground text-cream",
                   )}
                 >
-                  <div
-                    className={cn(
-                      "img-zoom relative w-full overflow-hidden rounded-sm",
-                      compact ? "mb-5 aspect-[4/3]" : "mb-8 aspect-[4/3]",
-                    )}
-                  >
+                  <div className="img-zoom relative mb-8 aspect-[4/3] w-full overflow-hidden rounded-sm">
                     <img
                       src={material.image}
                       alt={`${material.name} surface`}
@@ -93,33 +106,20 @@ export function Materials({
                         }`}
                       />
                     </div>
-                    <h3
-                      className={cn(
-                        "mt-4 font-display",
-                        compact ? "text-3xl md:text-4xl" : "mt-6 text-5xl md:text-6xl",
-                      )}
-                    >
-                      {material.name}
-                    </h3>
-                    <p
-                      className={cn(
-                        "mt-4 transition-opacity",
-                        compact ? "text-sm leading-relaxed" : "mt-6 max-w-md",
-                        active === i ? "text-cream/90" : "text-foreground/70",
-                      )}
-                    >
-                      {material.desc}
-                    </p>
-                    <div
-                      className={cn(
-                        "mt-auto flex items-center justify-between border-t border-current/20 opacity-70",
-                        compact ? "mt-8 pt-5" : "mt-10 pt-6",
-                      )}
-                    >
+                    <h3 className="mt-6 font-display text-5xl md:text-6xl">{material.name}</h3>
+                    {material.desc && (
+                      <p
+                        className={cn(
+                          "mt-6 max-w-md transition-opacity",
+                          active === i ? "text-cream/90" : "text-foreground/70",
+                        )}
+                      >
+                        {material.desc}
+                      </p>
+                    )}
+                    <div className="mt-10 flex items-center justify-between border-t border-current/20 pt-6 opacity-70">
                       <span className="eyebrow">Explore</span>
-                      <span className="text-xl transition-transform duration-500 group-hover:translate-x-2">
-                        →
-                      </span>
+                      <span className="text-xl transition-transform duration-500 group-hover:translate-x-2">→</span>
                     </div>
                   </div>
                 </a>
@@ -196,6 +196,7 @@ export function Materials({
             </div>
           </Reveal>
         ) : (
+          !previewOnly &&
           callout && (
             <Reveal delay={120} className="mt-10 md:mt-14">
               <div className="rounded-sm border border-foreground/10 bg-cream px-8 py-10 md:px-12 md:py-12">
@@ -208,9 +209,7 @@ export function Materials({
                     <h3 className="mt-5 font-display text-3xl uppercase tracking-[-0.02em] text-[#021E44] md:text-4xl">
                       {callout.tagline || "Beyond the Core Collection"}
                     </h3>
-                    <p className={`mt-5 ${bodyCopyLight}`}>
-                      {callout.intro || callout.desc}
-                    </p>
+                    <p className={`mt-5 ${bodyCopyLight}`}>{callout.intro || callout.desc}</p>
                   </div>
                   <a
                     href="/contact"

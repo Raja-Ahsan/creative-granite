@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\EdgeProfileController;
 use App\Http\Controllers\Admin\EstimateRequestController;
 use App\Http\Controllers\Admin\ContactPageController;
 use App\Http\Controllers\Admin\ContactInquiryController;
@@ -39,6 +40,8 @@ Route::middleware(['web', 'auth', 'admin'])->prefix('admin')->name('admin.')->gr
     Route::resource('products', ProductController::class)->except(['show']);
     Route::get('products-page', [ProductsPageController::class, 'edit'])->name('products-page.edit');
     Route::put('products-page', [ProductsPageController::class, 'update'])->name('products-page.update');
+    Route::put('edge-profiles/section', [EdgeProfileController::class, 'updateSection'])->name('edge-profiles.section.update');
+    Route::resource('edge-profiles', EdgeProfileController::class)->except(['show']);
     Route::put('process-steps/section', [ProcessStepController::class, 'updateSection'])->name('process-steps.section.update');
     Route::resource('process-steps', ProcessStepController::class)->except(['show']);
     Route::resource('portfolio-items', PortfolioItemController::class)->except(['show']);

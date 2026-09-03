@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\EdgeProfile;
 use App\Models\GalleryAlbum;
 use App\Models\GalleryAlbumImage;
 use App\Models\HeroSlide;
@@ -19,6 +20,7 @@ use App\Models\ServicePageSection;
 use App\Models\ServicePageSectionImage;
 use App\Models\SiteSetting;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Schema;
 
 class SiteContentService
 {
@@ -237,6 +239,23 @@ class SiteContentService
                 ->values()
                 ->all(),
             'servicesPage' => $this->resolveServicesPage($settings),
+            'edgeProfiles' => Schema::hasTable('edge_profiles')
+                ? EdgeProfile::query()
+                    ->where('is_active', true)
+                    ->orderBy('sort_order')
+                    ->orderBy('id')
+                    ->get()
+                    ->map(fn (EdgeProfile $profile) => [
+                        'name' => $profile->name,
+                        'slug' => $profile->slug,
+                        'description' => $profile->description,
+                        'image' => $profile->image_path,
+                        'diagram' => $profile->diagram_path,
+                        'sortOrder' => (int) $profile->sort_order,
+                    ])
+                    ->values()
+                    ->all()
+                : [],
             'processSteps' => ProcessStep::query()
                 ->where('is_active', true)
                 ->orderBy('sort_order')
@@ -487,9 +506,25 @@ natasha “Natasha”'],
                 'highlightText' => '',
                 'image' => '',
             ],
+            'materials-products' => [
+                'eyebrow' => $settings['materials_products_eyebrow'] ?? 'Materials',
+                'heading' => $settings['materials_products_heading'] ?? 'Explore Our Materials',
+                'subheading' => $settings['materials_products_subheading'] ?? 'Explore our most requested natural and engineered surfaces. Each offers its own balance of character, durability, and performance.',
+                'body' => '',
+                'highlightText' => '',
+                'image' => '',
+            ],
+            'edge-profiles' => [
+                'eyebrow' => $settings['edge_profiles_eyebrow'] ?? '',
+                'heading' => $settings['edge_profiles_heading'] ?? 'Edge Profiles',
+                'subheading' => '',
+                'body' => $settings['edge_profiles_body'] ?? 'The edge profile is a finishing detail that can subtly—or dramatically—change the look of a surface. Explore some of our most commonly requested profiles below. Our fabrication capabilities also allow us to create custom edge details tailored to the material, application, and design of your project.',
+                'highlightText' => '',
+                'image' => '',
+            ],
             'products' => [
                 'eyebrow' => $settings['products_page_eyebrow'] ?? 'Products',
-                'heading' => $settings['products_page_heading'] ?? 'CGD ESI Sink Collection',
+                'heading' => $settings['products_page_heading'] ?? 'Sink Selections',
                 'subheading' => $settings['products_page_subheading'] ?? 'Explore stainless steel, porcelain, fireclay, and quartz composite sinks with full specifications for every model.',
                 'body' => '',
                 'highlightText' => '',
