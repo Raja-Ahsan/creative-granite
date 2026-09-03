@@ -26,6 +26,14 @@ class EdgeProfileSeeder extends Seeder
                 'group' => 'edge_profiles',
             ]
         );
+        SiteSetting::updateOrCreate(
+            ['key' => 'edge_profiles_note'],
+            [
+                'value' => 'The edge profiles shown here represent some of our most commonly requested options and are intended as examples of what we can create. They are not a complete representation of our fabrication capabilities. We offer a variety of additional edge profiles and can work with you to create a custom profile to suit your specific design and project needs.',
+                'type' => 'string',
+                'group' => 'edge_profiles',
+            ]
+        );
 
         SiteSetting::updateOrCreate(
             ['key' => 'materials_products_heading'],

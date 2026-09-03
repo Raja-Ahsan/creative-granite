@@ -20,6 +20,7 @@ class EdgeProfileController extends Controller
         'edge_profiles_eyebrow',
         'edge_profiles_heading',
         'edge_profiles_body',
+        'edge_profiles_note',
     ];
 
     public function index(): View
@@ -79,6 +80,7 @@ class EdgeProfileController extends Controller
             'edge_profiles_eyebrow' => ['nullable', 'string', 'max:120'],
             'edge_profiles_heading' => ['nullable', 'string', 'max:255'],
             'edge_profiles_body' => ['nullable', 'string', 'max:5000'],
+            'edge_profiles_note' => ['nullable', 'string', 'max:5000'],
         ]);
 
         foreach (self::SECTION_KEYS as $key) {
@@ -163,6 +165,7 @@ class EdgeProfileController extends Controller
             'edge_profiles_eyebrow' => '',
             'edge_profiles_heading' => 'Edge Profiles',
             'edge_profiles_body' => 'The edge profile is a finishing detail that can subtly—or dramatically—change the look of a surface. Explore some of our most commonly requested profiles below. Our fabrication capabilities also allow us to create custom edge details tailored to the material, application, and design of your project.',
+            'edge_profiles_note' => 'The edge profiles shown here represent some of our most commonly requested options and are intended as examples of what we can create. They are not a complete representation of our fabrication capabilities. We offer a variety of additional edge profiles and can work with you to create a custom profile to suit your specific design and project needs.',
         ];
 
         $stored = SiteSetting::query()

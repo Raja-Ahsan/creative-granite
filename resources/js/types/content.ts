@@ -139,6 +139,7 @@ export type SectionContent = {
   heading?: string | null;
   subheading?: string | null;
   body?: string | null;
+  note?: string | null;
   highlightText?: string | null;
   image?: string | null;
   secondaryImage?: string | null;

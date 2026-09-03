@@ -80,6 +80,14 @@ export function EdgeProfiles() {
             );
           })}
         </div>
+
+        {section.note && (
+          <Reveal delay={80}>
+            <div className="mt-12 border-t border-foreground/10 pt-10 md:mt-14 md:pt-12">
+              <p className={`max-w-3xl ${bodyCopyLight}`}>{section.note}</p>
+            </div>
+          </Reveal>
+        )}
       </div>
     </section>
   );
