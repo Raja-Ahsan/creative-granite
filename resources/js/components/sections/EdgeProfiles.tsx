@@ -29,19 +29,19 @@ export function EdgeProfiles() {
           )}
         </Reveal>
 
-        <div className="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 md:gap-8">
+        <div className="mt-12 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 md:gap-4">
           {profiles.map((profile, index) => {
             const hasSeparateDiagram = Boolean(profile.diagram);
 
             return (
               <Reveal key={profile.slug} delay={index * 50}>
-                <article className="flex h-full flex-col overflow-hidden border border-foreground/10 bg-[#f7f4ef]">
-                  <div className="flex flex-1 items-center justify-center bg-[#f7f4ef] p-4 md:p-6">
+                <article className="flex h-full flex-col overflow-hidden border border-foreground/10 bg-cream">
+                  <div className="bg-[#f7f4ef]">
                     {profile.image ? (
                       <img
                         src={profile.image}
                         alt={`${profile.name} edge profile`}
-                        className="max-h-[520px] w-full object-contain"
+                        className="h-auto w-full object-contain"
                         loading="lazy"
                         decoding="async"
                       />
@@ -54,20 +54,17 @@ export function EdgeProfiles() {
                     )}
                   </div>
 
-                  <div className="border-t border-foreground/10 bg-cream px-6 py-7 md:px-8 md:py-8">
-                    <h3 className="font-display text-2xl uppercase tracking-[0.08em] text-[#021E44] md:text-3xl">
+                  <div className="border-t border-foreground/10 px-4 py-4 md:px-5 md:py-5">
+                    <h3 className="font-display text-xl uppercase tracking-[0.08em] text-[#021E44] md:text-2xl">
                       {profile.name}
                     </h3>
                     {profile.description && (
-                      <>
-                        <span className="mt-4 block h-px w-12 bg-foreground/20" />
-                        <p className="mt-4 text-sm font-light leading-relaxed text-foreground/70 md:text-[15px]">
-                          {profile.description}
-                        </p>
-                      </>
+                      <p className="mt-2 text-sm font-light leading-relaxed text-foreground/70">
+                        {profile.description}
+                      </p>
                     )}
                     {hasSeparateDiagram && (
-                      <div className="mt-6 max-w-[220px]">
+                      <div className="mt-4 max-w-[180px]">
                         <img
                           src={profile.diagram!}
                           alt={`${profile.name} diagram`}
