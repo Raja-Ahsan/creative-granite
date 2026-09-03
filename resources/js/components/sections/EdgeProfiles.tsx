@@ -29,7 +29,7 @@ export function EdgeProfiles() {
           )}
         </Reveal>
 
-        <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-10">
+        <div className="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 md:gap-8">
           {profiles.map((profile, index) => {
             const hasSeparateDiagram = Boolean(profile.diagram);
 
