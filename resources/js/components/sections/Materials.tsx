@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { Reveal } from "@/components/site/Reveal";
+import { RichHtml } from "@/components/site/RichHtml";
 import { useSection, useSiteContent } from "@/contexts/SiteContentContext";
 import { materialDetailHref } from "@/router/SiteRouter";
 import { cn } from "@/utils/cn";
@@ -89,7 +90,7 @@ export function Materials({
               <h2 className={`mt-6 max-w-4xl ${sectionHeadingLight}`}>{section.heading}</h2>
             ))}
           {section.subheading && (
-            <p className={`mt-8 max-w-2xl ${bodyCopyLight}`}>{section.subheading}</p>
+            <RichHtml html={section.subheading} className={`mt-8 max-w-2xl ${bodyCopyLight}`} />
           )}
         </Reveal>
 
@@ -164,9 +165,10 @@ export function Materials({
                       {calloutContent.heading}
                     </h3>
                     {calloutContent.body && (
-                      <p className="mt-6 text-sm font-light leading-relaxed text-cream/70 md:text-base">
-                        {calloutContent.body}
-                      </p>
+                      <RichHtml
+                        html={calloutContent.body}
+                        className="mt-6 text-sm font-light leading-relaxed text-cream/70 md:text-base"
+                      />
                     )}
                   </div>
                 )}
@@ -225,7 +227,7 @@ export function Materials({
                       {calloutContent.heading}
                     </h3>
                     {calloutContent.body && (
-                      <p className={`mt-5 ${bodyCopyLight}`}>{calloutContent.body}</p>
+                      <RichHtml html={calloutContent.body} className={`mt-5 ${bodyCopyLight}`} />
                     )}
                   </div>
                   {calloutContent.buttonLabel && (

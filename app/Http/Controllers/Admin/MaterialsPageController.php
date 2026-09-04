@@ -37,13 +37,13 @@ class MaterialsPageController extends Controller
         $data = $request->validate([
             'materials_section_eyebrow' => ['nullable', 'string', 'max:120'],
             'materials_section_heading' => ['nullable', 'string', 'max:255'],
-            'materials_section_subheading' => ['nullable', 'string', 'max:5000'],
+            'materials_section_subheading' => ['nullable', 'string', 'max:20000'],
             'materials_products_eyebrow' => ['nullable', 'string', 'max:120'],
             'materials_products_heading' => ['nullable', 'string', 'max:255'],
-            'materials_products_subheading' => ['nullable', 'string', 'max:5000'],
+            'materials_products_subheading' => ['nullable', 'string', 'max:20000'],
             'materials_callout_eyebrow' => ['nullable', 'string', 'max:120'],
             'materials_callout_heading' => ['nullable', 'string', 'max:255'],
-            'materials_callout_body' => ['nullable', 'string', 'max:5000'],
+            'materials_callout_body' => ['nullable', 'string', 'max:20000'],
             'materials_callout_button_label' => ['nullable', 'string', 'max:120'],
             'materials_callout_button_url' => ['nullable', 'string', 'max:500'],
         ]);

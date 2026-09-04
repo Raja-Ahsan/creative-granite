@@ -556,3 +556,43 @@
         radial-gradient(ellipse at 80% 80%, rgba(60, 40, 20, 0.45), transparent 50%),
         theme("colors.ink");
 }
+
+.materials-rich p {
+    margin: 0;
+}
+
+.materials-rich p + p,
+.materials-rich ul + p,
+.materials-rich p + ul,
+.materials-rich ol + p,
+.materials-rich p + ol {
+    margin-top: 0.75rem;
+}
+
+.materials-rich a {
+    text-decoration: underline;
+    text-underline-offset: 0.18em;
+}
+
+.materials-rich strong,
+.materials-rich b {
+    font-weight: 600;
+}
+
+.materials-rich ul,
+.materials-rich ol {
+    margin: 0.75rem 0 0;
+    padding-left: 1.25rem;
+}
+
+.materials-rich ul {
+    list-style: disc;
+}
+
+.materials-rich ol {
+    list-style: decimal;
+}
+
+.materials-rich li + li {
+    margin-top: 0.35rem;
+}
