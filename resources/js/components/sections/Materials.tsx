@@ -17,6 +17,7 @@ export function Materials({
   const { materials, settings } = useSiteContent();
   const homeSection = useSection("materials");
   const productsSection = useSection("materials-products");
+  const calloutSection = useSection("materials-callout");
   const [active, setActive] = useState(0);
 
   const section = previewOnly
@@ -30,7 +31,7 @@ export function Materials({
       }
     : homeSection;
 
-  const { primaryMaterials, callout } = useMemo(() => {
+  const { primaryMaterials, materialCallout } = useMemo(() => {
     const ordered = [...materials].sort((a, b) => {
       const orderA = a.sortOrder ?? Number.MAX_SAFE_INTEGER;
       const orderB = b.sortOrder ?? Number.MAX_SAFE_INTEGER;
@@ -40,11 +41,31 @@ export function Materials({
 
     return {
       primaryMaterials: ordered.filter((item) => !item.isCallout),
-      callout: ordered.find((item) => item.isCallout) ?? null,
+      materialCallout: ordered.find((item) => item.isCallout) ?? null,
     };
   }, [materials]);
 
-  if (!primaryMaterials.length && (previewOnly || !callout) && !showHelpCta) return null;
+  const calloutContent = useMemo(() => {
+    const eyebrow =
+      calloutSection.eyebrow || materialCallout?.name || "Additional Materials";
+    const heading =
+      calloutSection.heading ||
+      materialCallout?.tagline ||
+      "Beyond the Core Collection";
+    const body =
+      calloutSection.body ||
+      materialCallout?.intro ||
+      materialCallout?.desc ||
+      "";
+    const buttonLabel = calloutSection.buttonLabel || "Contact Us";
+    const buttonUrl = calloutSection.buttonUrl || "/contact";
+
+    if (!heading && !body) return null;
+
+    return { eyebrow, heading, body, buttonLabel, buttonUrl };
+  }, [calloutSection, materialCallout]);
+
+  if (!primaryMaterials.length && !calloutContent && !showHelpCta) return null;
 
   return (
     <section
@@ -133,22 +154,24 @@ export function Materials({
             <div className="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden bg-ink text-cream">
               <div className="pointer-events-none absolute inset-0 noise-overlay opacity-30" />
               <div className="relative mx-auto max-w-[1400px] px-6 py-16 md:px-10 md:py-24">
-                {callout && (
+                {calloutContent && (
                   <div className="border-b border-cream/15 pb-10 md:pb-12">
                     <div className="flex items-center gap-3 text-cream/55">
                       <span className="h-px w-12 bg-cream/40" />
-                      <span className="eyebrow text-cream/55">{callout.name}</span>
+                      <span className="eyebrow text-cream/55">{calloutContent.eyebrow}</span>
                     </div>
                     <h3 className="mt-5 font-display text-3xl uppercase tracking-[-0.02em] text-cream md:text-5xl">
-                      {callout.tagline || "Beyond the Core Collection"}
+                      {calloutContent.heading}
                     </h3>
-                    <p className="mt-6 text-sm font-light leading-relaxed text-cream/70 md:text-base">
-                      {callout.intro || callout.desc}
-                    </p>
+                    {calloutContent.body && (
+                      <p className="mt-6 text-sm font-light leading-relaxed text-cream/70 md:text-base">
+                        {calloutContent.body}
+                      </p>
+                    )}
                   </div>
                 )}
 
-                <div className={callout ? "pt-10 md:pt-12" : ""}>
+                <div className={calloutContent ? "pt-10 md:pt-12" : ""}>
                   <p className="eyebrow text-cream/50">Need help choosing?</p>
                   <h2 className="mt-5 font-display text-3xl uppercase tracking-[-0.02em] text-cream md:text-5xl">
                     Not sure which material is right for your project?
@@ -162,22 +185,14 @@ export function Materials({
 
                   <div className="mt-10 flex flex-wrap items-center justify-center gap-3 md:gap-4">
                     <a
-                      href="/contact"
+                      href="#estimate"
+                      data-cursor="estimate"
                       className="btn-magnetic btn-magnetic-inverse inline-flex items-center gap-3 rounded-full border border-cream bg-cream px-7 py-3.5 text-xs font-medium tracking-[0.2em] text-ink"
                     >
-                      Contact Us
+                      Start Your Project
                       <span className="relative z-[2]" aria-hidden="true">
                         →
                       </span>
-                    </a>
-
-                    <a
-                      href="#estimate"
-                      data-cursor="estimate"
-                      className="inline-flex items-center gap-3 rounded-full border border-cream/30 px-7 py-3.5 text-xs font-medium tracking-[0.2em] text-cream transition hover:border-cream/60"
-                    >
-                      Start Your Project
-                      <span aria-hidden="true">→</span>
                     </a>
 
                     <a
@@ -197,27 +212,31 @@ export function Materials({
           </Reveal>
         ) : (
           !previewOnly &&
-          callout && (
+          calloutContent && (
             <Reveal delay={120} className="mt-10 md:mt-14">
               <div className="rounded-sm border border-foreground/10 bg-cream px-8 py-10 md:px-12 md:py-12">
                 <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
                   <div className="max-w-3xl">
                     <div className="flex items-center gap-3 text-foreground/60">
                       <span className="h-px w-12 bg-foreground/40" />
-                      <span className="eyebrow">{callout.name}</span>
+                      <span className="eyebrow">{calloutContent.eyebrow}</span>
                     </div>
                     <h3 className="mt-5 font-display text-3xl uppercase tracking-[-0.02em] text-[#021E44] md:text-4xl">
-                      {callout.tagline || "Beyond the Core Collection"}
+                      {calloutContent.heading}
                     </h3>
-                    <p className={`mt-5 ${bodyCopyLight}`}>{callout.intro || callout.desc}</p>
+                    {calloutContent.body && (
+                      <p className={`mt-5 ${bodyCopyLight}`}>{calloutContent.body}</p>
+                    )}
                   </div>
-                  <a
-                    href="/contact"
-                    className="inline-flex shrink-0 items-center gap-3 rounded-full border border-foreground/20 px-8 py-4 text-xs font-medium tracking-[0.22em] text-foreground transition hover:border-foreground/40"
-                  >
-                    Contact Us
-                    <span aria-hidden="true">→</span>
-                  </a>
+                  {calloutContent.buttonLabel && (
+                    <a
+                      href={calloutContent.buttonUrl}
+                      className="inline-flex shrink-0 items-center gap-3 rounded-full border border-foreground/20 px-8 py-4 text-xs font-medium tracking-[0.22em] text-foreground transition hover:border-foreground/40"
+                    >
+                      {calloutContent.buttonLabel}
+                      <span aria-hidden="true">→</span>
+                    </a>
+                  )}
                 </div>
               </div>
             </Reveal>

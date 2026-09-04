@@ -33,6 +33,21 @@
                     <textarea name="materials_products_subheading" rows="4" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">{{ old('materials_products_subheading', $values['materials_products_subheading']) }}</textarea>
                 </div>
 
+                <div class="border-t border-gray-100 pt-6">
+                    <h3 class="text-sm font-semibold uppercase tracking-wider text-gray-500">Additional Materials Callout</h3>
+                    <p class="mt-1 text-sm text-gray-500">Shown under the material cards on the homepage, and as the Additional Materials block on the Products page.</p>
+                </div>
+                <x-admin.input label="Eyebrow" name="materials_callout_eyebrow" :value="old('materials_callout_eyebrow', $values['materials_callout_eyebrow'])" />
+                <x-admin.input label="Heading" name="materials_callout_heading" :value="old('materials_callout_heading', $values['materials_callout_heading'])" />
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Body</label>
+                    <textarea name="materials_callout_body" rows="4" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">{{ old('materials_callout_body', $values['materials_callout_body']) }}</textarea>
+                </div>
+                <div class="grid gap-4 md:grid-cols-2">
+                    <x-admin.input label="Button Label" name="materials_callout_button_label" :value="old('materials_callout_button_label', $values['materials_callout_button_label'])" />
+                    <x-admin.input label="Button URL" name="materials_callout_button_url" :value="old('materials_callout_button_url', $values['materials_callout_button_url'])" placeholder="/contact" />
+                </div>
+
                 <x-admin.form-actions :cancel-route="route('admin.materials.index')" />
             </form>
         </div>

@@ -143,4 +143,6 @@ export type SectionContent = {
   highlightText?: string | null;
   image?: string | null;
   secondaryImage?: string | null;
+  buttonLabel?: string | null;
+  buttonUrl?: string | null;
 };
