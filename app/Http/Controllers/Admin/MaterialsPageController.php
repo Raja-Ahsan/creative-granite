@@ -72,11 +72,11 @@ class MaterialsPageController extends Controller
     {
         return [
             'materials_section_eyebrow' => 'Materials',
-            'materials_section_heading' => 'The slab decides everything.',
-            'materials_section_subheading' => 'Explore our most requested natural and engineered surfaces. Each offers its own balance of character, durability, and performance. Additional materials are available upon request.',
+            'materials_section_heading' => 'Start with the right surface.',
+            'materials_section_subheading' => 'Explore our most requested natural and engineered surfaces. Each offers its own balance of character, durability, performance, and design possibilities. Select a material below to learn more about its characteristics, applications, and care. Looking for something different? Additional materials are available by special order.',
             'materials_products_eyebrow' => 'Materials',
             'materials_products_heading' => 'Explore Our Materials',
-            'materials_products_subheading' => 'Explore our most requested natural and engineered surfaces. Each offers its own balance of character, durability, and performance.',
+            'materials_products_subheading' => 'Explore our most requested natural and engineered surfaces. Each offers its own balance of character, durability, performance, and design possibilities. Select a material below to learn more about its characteristics, applications, and care. Looking for something different? Additional materials are available by special order.',
             'materials_callout_eyebrow' => 'Additional Materials',
             'materials_callout_heading' => 'Beyond the Core Collection',
             'materials_callout_body' => 'Creative Granite + Design also works with porcelain and can special order additional surface materials based on the needs of the project. If a client is looking for a specific material or application, our team can help explore available options.',

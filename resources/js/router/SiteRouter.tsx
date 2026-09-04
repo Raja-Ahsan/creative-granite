@@ -18,10 +18,14 @@ import { ServiceDetailPage } from "@/pages/ServiceDetailPage";
 import { ServicesPage } from "@/pages/ServicesPage";
 import { WorkGalleryPage } from "@/pages/WorkGalleryPage";
 
+type NavigateOptions = {
+  scroll?: boolean;
+};
+
 type SiteRouterContextValue = {
   pathname: string;
   search: string;
-  navigate: (to: string) => void;
+  navigate: (to: string, options?: NavigateOptions) => void;
 };
 
 const SiteRouterContext = createContext<SiteRouterContextValue>({
@@ -72,7 +76,8 @@ export function SiteRouterProvider({ children }: { children?: ReactNode }) {
     return hash || null;
   });
 
-  const navigate = useCallback((to: string) => {
+  const navigate = useCallback((to: string, options?: NavigateOptions) => {
+    const shouldScroll = options?.scroll !== false;
     const url = new URL(to, window.location.origin);
     const nextPath = `${url.pathname}${url.search}${url.hash}`;
     const hash = url.hash ? url.hash.slice(1) : null;
@@ -82,7 +87,7 @@ export function SiteRouterProvider({ children }: { children?: ReactNode }) {
         if (!scrollToHash(hash)) {
           setPendingHash(hash);
         }
-      } else {
+      } else if (shouldScroll) {
         setPendingHash(null);
         window.scrollTo(0, 0);
       }
@@ -100,7 +105,9 @@ export function SiteRouterProvider({ children }: { children?: ReactNode }) {
     }
 
     setPendingHash(null);
-    window.scrollTo(0, 0);
+    if (shouldScroll) {
+      window.scrollTo(0, 0);
+    }
   }, []);
 
   useEffect(() => {

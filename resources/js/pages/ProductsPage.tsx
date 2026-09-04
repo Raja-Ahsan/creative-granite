@@ -193,13 +193,13 @@ export function ProductsPage() {
     setActiveFilter(key);
 
     if (key === ALL_FILTER) {
-      navigate("/products");
+      navigate("/products", { scroll: false });
       return;
     }
 
     const category = productCategories.find((item) => String(item.id) === key);
     if (category) {
-      navigate(`/products?category=${encodeURIComponent(category.slug)}`);
+      navigate(`/products?category=${encodeURIComponent(category.slug)}`, { scroll: false });
     }
   };
 
