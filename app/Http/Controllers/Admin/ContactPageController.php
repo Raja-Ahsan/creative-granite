@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Admin\Concerns\HandlesImageUpload;
 use App\Http\Controllers\Controller;
 use App\Models\ProjectType;
 use App\Models\SiteSetting;
@@ -11,6 +12,8 @@ use Illuminate\View\View;
 
 class ContactPageController extends Controller
 {
+    use HandlesImageUpload;
+
     private const SETTING_KEYS = [
         'address_line_1',
         'address_line_2',
@@ -19,6 +22,8 @@ class ContactPageController extends Controller
         'email',
         'showroom_maps_url',
         'contact_form_intro',
+        'contact_banner_image',
+        'contact_directions_image',
     ];
 
     public function edit(): View
@@ -40,13 +45,77 @@ class ContactPageController extends Controller
             'email' => ['nullable', 'email', 'max:255'],
             'showroom_maps_url' => ['nullable', 'url', 'max:500'],
             'contact_form_intro' => ['nullable', 'string', 'max:500'],
+            'banner_image' => ['nullable', 'file', 'mimes:jpg,jpeg,png,webp', 'max:12288'],
+            'directions_image' => ['nullable', 'file', 'mimes:jpg,jpeg,png,webp', 'max:12288'],
+            'remove_banner_image' => ['nullable', 'boolean'],
+            'remove_directions_image' => ['nullable', 'boolean'],
         ]);
 
-        foreach ($data as $key => $value) {
-            $this->saveSetting($key, $value ?? '');
+        foreach ([
+            'address_line_1',
+            'address_line_2',
+            'hours',
+            'phone',
+            'email',
+            'showroom_maps_url',
+            'contact_form_intro',
+        ] as $key) {
+            if (array_key_exists($key, $data)) {
+                $this->saveSetting($key, (string) ($data[$key] ?? ''));
+            }
         }
 
+        $this->syncImageSetting(
+            $request,
+            'contact_banner_image',
+            'banner_image',
+            'remove_banner_image',
+            'contact'
+        );
+
+        $this->syncImageSetting(
+            $request,
+            'contact_directions_image',
+            'directions_image',
+            'remove_directions_image',
+            'contact'
+        );
+
         return redirect()->route('admin.contact-page.edit')->with('success', 'Contact page updated.');
+    }
+
+    private function syncImageSetting(
+        Request $request,
+        string $settingKey,
+        string $fileInput,
+        string $removeInput,
+        string $directory
+    ): void {
+        $current = SiteSetting::query()->where('key', $settingKey)->value('value');
+
+        if ($request->boolean($removeInput) && ! $request->hasFile($fileInput)) {
+            $this->deleteStoredImage($current);
+            $this->saveSetting($settingKey, '', 'image');
+
+            return;
+        }
+
+        if ($request->hasFile($fileInput)) {
+            $merged = $this->mergeImagePath(
+                $request,
+                [$settingKey => $current],
+                $settingKey,
+                'public',
+                $directory,
+                $fileInput
+            );
+
+            if ($current) {
+                $this->deleteStoredImage($current);
+            }
+
+            $this->saveSetting($settingKey, (string) ($merged[$settingKey] ?? ''), 'image');
+        }
     }
 
     private function settingValues(): array
@@ -59,6 +128,8 @@ class ContactPageController extends Controller
             'email' => '',
             'showroom_maps_url' => '',
             'contact_form_intro' => 'Tell us about your project — we will follow up with next steps, timing, and a path to estimate.',
+            'contact_banner_image' => '/images/contact/banner.jpg',
+            'contact_directions_image' => '/images/contact/directions.jpg',
         ];
 
         $stored = SiteSetting::query()
@@ -69,7 +140,7 @@ class ContactPageController extends Controller
         return array_merge($defaults, $stored);
     }
 
-    private function saveSetting(string $key, string $value): void
+    private function saveSetting(string $key, string $value, ?string $type = null): void
     {
         $groups = [
             'address_line_1' => 'contact',
@@ -79,19 +150,23 @@ class ContactPageController extends Controller
             'email' => 'contact',
             'showroom_maps_url' => 'contact',
             'contact_form_intro' => 'contact',
+            'contact_banner_image' => 'contact',
+            'contact_directions_image' => 'contact',
         ];
 
         $types = [
             'email' => 'email',
             'phone' => 'phone',
             'showroom_maps_url' => 'url',
+            'contact_banner_image' => 'image',
+            'contact_directions_image' => 'image',
         ];
 
         SiteSetting::updateOrCreate(
             ['key' => $key],
             [
                 'value' => $value,
-                'type' => $types[$key] ?? 'string',
+                'type' => $type ?? ($types[$key] ?? 'string'),
                 'group' => $groups[$key] ?? 'general',
             ]
         );

@@ -21,6 +21,7 @@ use App\Models\ServicePageSectionImage;
 use App\Models\SiteSetting;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 
 class SiteContentService
 {
@@ -57,6 +58,8 @@ class SiteContentService
                 'foundedYear' => $settings['founded_year'] ?? '1998',
                 'footerTagline' => $settings['footer_tagline'] ?? '',
                 'contactFormIntro' => $settings['contact_form_intro'] ?? 'Tell us about your project — we will follow up with next steps, timing, and a path to estimate.',
+                'contactBannerImage' => $settings['contact_banner_image'] ?? '/images/contact/banner.jpg',
+                'contactDirectionsImage' => $settings['contact_directions_image'] ?? '/images/contact/directions.jpg',
             ],
             'projectTypes' => ProjectType::query()
                 ->where('is_active', true)
@@ -286,6 +289,7 @@ class SiteContentService
             ->map(fn (ServicePageSection $section) => [
                 'number' => $section->number_label,
                 'title' => $section->title,
+                'slug' => Str::slug($section->title),
                 'body' => $section->body ?? '',
                 'hero' => $section->hero_path,
                 'supporting' => $section->images
@@ -529,9 +533,9 @@ natasha “Natasha”'],
                 'heading' => $settings['edge_profiles_heading'] ?? 'Edge Profiles',
                 'subheading' => '',
                 'body' => $settings['edge_profiles_body'] ?? 'The edge profile is a finishing detail that can subtly—or dramatically—change the look of a surface. Explore some of our most commonly requested profiles below. Our fabrication capabilities also allow us to create custom edge details tailored to the material, application, and design of your project.',
-                'note' => $settings['edge_profiles_note'] ?? 'The edge profiles shown here represent some of our most commonly requested options and are intended as examples of what we can create. They are not a complete representation of our fabrication capabilities. We offer a variety of additional edge profiles and can work with you to create a custom profile to suit your specific design and project needs.',
+                'note' => $settings['edge_profiles_note'] ?? 'Note: Additional and custom edge profiles are available. Our team can help create an edge detail tailored to your material, application, and design.',
                 'highlightText' => '',
-                'image' => '',
+                'image' => $settings['edge_profiles_note_image'] ?? '/images/edges/note-feature.jpg',
             ],
             'products' => [
                 'eyebrow' => $settings['products_page_eyebrow'] ?? 'Products',

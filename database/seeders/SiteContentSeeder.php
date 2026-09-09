@@ -46,6 +46,8 @@ class SiteContentSeeder extends Seeder
             ['key' => 'email', 'value' => 'info@creativegranite.com', 'type' => 'email', 'group' => 'contact'],
             ['key' => 'hours', 'value' => '8am – 5pm · Mon – Fri', 'type' => 'string', 'group' => 'contact'],
             ['key' => 'contact_form_intro', 'value' => 'Tell us about your project — we will follow up with next steps, timing, and a path to estimate.', 'type' => 'string', 'group' => 'contact'],
+            ['key' => 'contact_banner_image', 'value' => '/images/contact/banner.jpg', 'type' => 'image', 'group' => 'contact'],
+            ['key' => 'contact_directions_image', 'value' => '/images/contact/directions.jpg', 'type' => 'image', 'group' => 'contact'],
             ['key' => 'founded_year', 'value' => '1998', 'type' => 'string', 'group' => 'general'],
             ['key' => 'footer_tagline', 'value' => 'Built on craftsmanship. Serving Utah since 1998.', 'type' => 'string', 'group' => 'general'],
             ['key' => 'who_we_are_eyebrow', 'value' => 'Who we are', 'type' => 'string', 'group' => 'who_we_are'],

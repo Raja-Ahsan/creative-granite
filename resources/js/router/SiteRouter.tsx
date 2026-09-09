@@ -99,8 +99,8 @@ export function SiteRouterProvider({ children }: { children?: ReactNode }) {
     setSearch(url.search);
 
     if (hash) {
-      const scrolled = scrollToHash(hash);
-      setPendingHash(scrolled ? null : hash);
+      // Defer until the destination page has mounted so section anchors exist.
+      setPendingHash(hash);
       return;
     }
 
@@ -114,27 +114,34 @@ export function SiteRouterProvider({ children }: { children?: ReactNode }) {
     if (!pendingHash) return;
 
     let attempts = 0;
+    let timer: number | undefined;
+
     const tryScroll = () => {
-      if (scrollToHash(pendingHash)) {
+      if (scrollToHash(pendingHash, attempts === 0 ? "auto" : "smooth")) {
         setPendingHash(null);
         return true;
       }
       return false;
     };
 
-    if (tryScroll()) return;
+    const start = window.setTimeout(() => {
+      if (tryScroll()) return;
 
-    const timer = window.setInterval(() => {
-      attempts += 1;
-      if (tryScroll() || attempts >= 24) {
-        window.clearInterval(timer);
-        if (attempts >= 24) {
-          setPendingHash(null);
+      timer = window.setInterval(() => {
+        attempts += 1;
+        if (tryScroll() || attempts >= 40) {
+          if (timer) window.clearInterval(timer);
+          if (attempts >= 40) {
+            setPendingHash(null);
+          }
         }
-      }
-    }, 50);
+      }, 50);
+    }, 30);
 
-    return () => window.clearInterval(timer);
+    return () => {
+      window.clearTimeout(start);
+      if (timer) window.clearInterval(timer);
+    };
   }, [pendingHash, pathname]);
 
   useEffect(() => {

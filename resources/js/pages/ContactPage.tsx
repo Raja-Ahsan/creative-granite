@@ -8,18 +8,32 @@ import { sectionHeadingLight } from "@/utils/typography";
 export function ContactPage() {
   const section = useSection("cta");
   const { settings } = useSiteContent();
+  const bannerImage = settings.contactBannerImage?.trim() || "";
+  const directionsImage = settings.contactDirectionsImage?.trim() || "";
 
   return (
     <SiteLayout>
       <main className="overflow-x-hidden">
         <Header />
-        <section className="relative pb-28 pt-[calc(4.25rem+7rem)] md:pb-40 md:pt-[calc(6.5rem+10rem)]">
-          <div className="mx-auto max-w-[1400px] px-6 md:px-10">
+        <section className="relative overflow-hidden pb-28 pt-[calc(4.25rem+7rem)] md:pb-40 md:pt-[calc(6.5rem+10rem)]">
+          {bannerImage ? (
+            <>
+              <div className="absolute inset-0">
+                <img
+                  src={bannerImage}
+                  alt=""
+                  className="h-full w-full object-cover"
+                  fetchPriority="high"
+                  decoding="async"
+                />
+              </div>
+              <div className="absolute inset-0 bg-cream/80" />
+              <div className="pointer-events-none absolute inset-0 noise-overlay opacity-40" />
+            </>
+          ) : null}
+
+          <div className="relative mx-auto max-w-[1400px] px-6 md:px-10">
             <Reveal>
-              {/* <div className="flex items-center gap-3 text-foreground/60">
-                <span className="h-px w-12 bg-foreground/40" />
-                <span className="eyebrow">{section.eyebrow}</span>
-              </div> */}
               <h1 className={`mt-6 max-w-3xl ${sectionHeadingLight}`}>{section.heading}</h1>
               {section.body && <p className="mt-6 max-w-2xl text-[#2a262280]">{section.body}</p>}
             </Reveal>
@@ -72,6 +86,18 @@ export function ContactPage() {
                     Get directions
                   </a>
                 )}
+
+                {directionsImage ? (
+                  <div className="mt-8 overflow-hidden">
+                    <img
+                      src={directionsImage}
+                      alt="Creative Granite showroom and project detail"
+                      className="h-auto w-full object-cover"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                ) : null}
               </Reveal>
 
               <Reveal delay={150} className="min-w-0 w-full md:col-span-6 md:col-start-7">

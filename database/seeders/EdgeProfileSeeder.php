@@ -34,6 +34,14 @@ class EdgeProfileSeeder extends Seeder
                 'group' => 'edge_profiles',
             ]
         );
+        SiteSetting::updateOrCreate(
+            ['key' => 'edge_profiles_note_image'],
+            [
+                'value' => '/images/edges/note-feature.jpg',
+                'type' => 'image',
+                'group' => 'edge_profiles',
+            ]
+        );
 
         SiteSetting::updateOrCreate(
             ['key' => 'materials_products_heading'],

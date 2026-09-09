@@ -88,6 +88,22 @@ export function EdgeProfiles() {
             </div>
           </Reveal>
         )}
+
+        {section.image && (
+          <Reveal delay={120}>
+            <div className={`${section.note ? "mt-8 md:mt-10" : "mt-12 border-t border-foreground/10 pt-10 md:mt-14 md:pt-12"}`}>
+              <div className="overflow-hidden">
+                <img
+                  src={section.image}
+                  alt="Custom edge profile detail"
+                  className="h-auto w-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+            </div>
+          </Reveal>
+        )}
       </div>
     </section>
   );

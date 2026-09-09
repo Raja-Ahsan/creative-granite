@@ -1,10 +1,11 @@
 import { Reveal } from "@/components/site/Reveal";
 import { useSection, useSiteContent } from "@/contexts/SiteContentContext";
-import { sectionHeadingDark } from "@/utils/typography";
+import { serviceSectionHref } from "@/utils/serviceAnchors";
 
 export function Services() {
-  const { services } = useSiteContent();
+  const { services, servicesPage } = useSiteContent();
   const section = useSection("services");
+  const pageSections = servicesPage?.sections ?? [];
 
   return (
     <section id="services" className="relative bg-ink py-28 text-cream md:py-40">
@@ -15,14 +16,13 @@ export function Services() {
             <span className="h-px w-12 bg-cream/40" />
             <span className="eyebrow">{section.eyebrow}</span>
           </div>
-          {/* <h2 className={`mt-6 max-w-2xl ${sectionHeadingDark}`}>{section.heading}</h2> */}
         </Reveal>
 
         <div className="mt-20 divide-y divide-cream/15 border-y border-cream/15">
           {services.map((service, i) => (
             <Reveal key={service.slug} delay={i * 100}>
               <a
-                href={`/services/${service.slug}`}
+                href={serviceSectionHref(service.title, pageSections, i)}
                 data-cursor="learn"
                 className="group relative grid cursor-pointer grid-cols-12 gap-6 py-10 transition-colors duration-500 hover:bg-cream/[0.04] md:py-14"
               >

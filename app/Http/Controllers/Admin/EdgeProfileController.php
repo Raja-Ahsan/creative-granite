@@ -21,6 +21,7 @@ class EdgeProfileController extends Controller
         'edge_profiles_heading',
         'edge_profiles_body',
         'edge_profiles_note',
+        'edge_profiles_note_image',
     ];
 
     public function index(): View
@@ -81,12 +82,33 @@ class EdgeProfileController extends Controller
             'edge_profiles_heading' => ['nullable', 'string', 'max:255'],
             'edge_profiles_body' => ['nullable', 'string', 'max:5000'],
             'edge_profiles_note' => ['nullable', 'string', 'max:5000'],
+            'note_image' => ['nullable', 'file', 'mimes:jpg,jpeg,png,webp', 'max:12288'],
+            'remove_note_image' => ['nullable', 'boolean'],
         ]);
 
-        foreach (self::SECTION_KEYS as $key) {
+        foreach (['edge_profiles_eyebrow', 'edge_profiles_heading', 'edge_profiles_body', 'edge_profiles_note'] as $key) {
             SiteSetting::updateOrCreate(
                 ['key' => $key],
                 ['value' => (string) ($data[$key] ?? ''), 'type' => 'string', 'group' => 'edge_profiles']
+            );
+        }
+
+        $currentImage = SiteSetting::query()->where('key', 'edge_profiles_note_image')->value('value');
+
+        if ($request->boolean('remove_note_image') && ! $request->hasFile('note_image')) {
+            $this->deleteStoredImage($currentImage);
+            SiteSetting::updateOrCreate(
+                ['key' => 'edge_profiles_note_image'],
+                ['value' => '', 'type' => 'image', 'group' => 'edge_profiles']
+            );
+        } elseif ($request->hasFile('note_image')) {
+            $merged = $this->mergeImagePath($request, ['edge_profiles_note_image' => $currentImage], 'edge_profiles_note_image', 'public', 'edges', 'note_image');
+            if ($request->hasFile('note_image') && $currentImage) {
+                $this->deleteStoredImage($currentImage);
+            }
+            SiteSetting::updateOrCreate(
+                ['key' => 'edge_profiles_note_image'],
+                ['value' => (string) ($merged['edge_profiles_note_image'] ?? ''), 'type' => 'image', 'group' => 'edge_profiles']
             );
         }
 
@@ -165,7 +187,8 @@ class EdgeProfileController extends Controller
             'edge_profiles_eyebrow' => '',
             'edge_profiles_heading' => 'Edge Profiles',
             'edge_profiles_body' => 'The edge profile is a finishing detail that can subtly—or dramatically—change the look of a surface. Explore some of our most commonly requested profiles below. Our fabrication capabilities also allow us to create custom edge details tailored to the material, application, and design of your project.',
-            'edge_profiles_note' => 'The edge profiles shown here represent some of our most commonly requested options and are intended as examples of what we can create. They are not a complete representation of our fabrication capabilities. We offer a variety of additional edge profiles and can work with you to create a custom profile to suit your specific design and project needs.',
+            'edge_profiles_note' => 'Note: Additional and custom edge profiles are available. Our team can help create an edge detail tailored to your material, application, and design.',
+            'edge_profiles_note_image' => '/images/edges/note-feature.jpg',
         ];
 
         $stored = SiteSetting::query()

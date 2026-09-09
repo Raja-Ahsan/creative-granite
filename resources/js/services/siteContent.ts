@@ -60,6 +60,8 @@ export const defaultSiteContent: SiteContentPayload = {
     foundedYear: "1998",
     footerTagline: "Built on craftsmanship. Serving Utah since 1998.",
     contactFormIntro: "Tell us about your project — we will follow up with next steps, timing, and a path to estimate.",
+    contactBannerImage: "/images/contact/banner.jpg",
+    contactDirectionsImage: "/images/contact/directions.jpg",
   },
   projectTypes: [],
   heroSlides: [],

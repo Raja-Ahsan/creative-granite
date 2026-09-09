@@ -1,5 +1,6 @@
 import { Reveal } from "@/components/site/Reveal";
 import { bodyCopyDark, sectionHeadingDark } from "@/utils/typography";
+import { serviceSectionId } from "@/utils/serviceAnchors";
 
 type ServiceCardProps = {
   index: number;
@@ -18,10 +19,12 @@ export function ServiceCard({
   mainImage,
   reversed,
 }: ServiceCardProps) {
+  const href = `/services#${slug || serviceSectionId(title)}`;
+
   return (
     <Reveal delay={index * 80}>
       <a
-        href={`/services/${slug}`}
+        href={href}
         data-cursor="learn"
         className={`service-card group grid grid-cols-1 overflow-hidden rounded-sm border border-cream/10 bg-cream/[0.03] md:grid-cols-2 ${
           reversed ? "md:[direction:rtl]" : ""

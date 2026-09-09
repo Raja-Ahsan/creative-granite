@@ -18,7 +18,7 @@
             <p class="mt-1 text-sm text-gray-500">Shown on the Products page between Materials and Sink Selections. Profiles do not link to separate pages.</p>
         </div>
         <div class="p-6">
-            <form method="POST" action="{{ route('admin.edge-profiles.section.update') }}" class="space-y-6">
+            <form method="POST" action="{{ route('admin.edge-profiles.section.update') }}" enctype="multipart/form-data" class="space-y-6">
                 @csrf
                 @method('PUT')
 
@@ -33,6 +33,19 @@
                     <label class="block text-sm font-medium text-gray-700">Note (below profiles)</label>
                     <p class="mt-1 text-xs text-gray-500">Shown under the edge profile cards on the Products page.</p>
                     <textarea name="edge_profiles_note" rows="5" class="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">{{ old('edge_profiles_note', $sectionValues['edge_profiles_note']) }}</textarea>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Note Image (full width below note)</label>
+                    <p class="mt-1 text-xs text-gray-500">Shown under the note on the Products page. Recommended wide landscape photo.</p>
+                    @if (! empty($sectionValues['edge_profiles_note_image']))
+                        <img src="{{ $sectionValues['edge_profiles_note_image'] }}" alt="" class="mt-3 mb-2 h-40 w-auto max-w-full rounded object-cover">
+                        <label class="mb-2 inline-flex items-center gap-2 text-xs font-medium text-red-600">
+                            <input type="checkbox" name="remove_note_image" value="1" class="rounded border-gray-300 text-red-600 focus:ring-red-500">
+                            Remove image
+                        </label>
+                    @endif
+                    <input type="file" name="note_image" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:rounded-md file:border-0 file:bg-gray-100 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-gray-700">
                 </div>
 
                 <button type="submit" class="inline-flex items-center rounded-md bg-ink px-4 py-2 text-xs font-semibold uppercase tracking-widest text-cream hover:bg-ink-soft">

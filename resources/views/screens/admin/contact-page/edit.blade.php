@@ -10,7 +10,7 @@
                 <p class="mt-1 text-xs text-gray-500">Shown on the left side of the contact page form.</p>
             </div>
             <div class="p-6">
-                <form method="POST" action="{{ route('admin.contact-page.update') }}">
+                <form method="POST" action="{{ route('admin.contact-page.update') }}" enctype="multipart/form-data" class="space-y-6">
                     @csrf
                     @method('PUT')
 
@@ -21,6 +21,41 @@
                     <x-admin.input label="Email" name="email" type="email" :value="old('email', $values['email'])" />
                     <x-admin.input label="Directions URL (Google Maps)" name="showroom_maps_url" :value="old('showroom_maps_url', $values['showroom_maps_url'])" />
                     <x-admin.textarea label="Form Intro Text" name="contact_form_intro" :value="old('contact_form_intro', $values['contact_form_intro'])" :rows="3" />
+
+                    <div class="border-t border-gray-100 pt-6">
+                        <h3 class="text-sm font-semibold uppercase tracking-wider text-gray-500">Contact Page Images</h3>
+                        <p class="mt-1 text-xs text-gray-500">Banner appears behind the “Start Your Project” intro. Directions image appears under Get directions.</p>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Banner Background Image</label>
+                        @if (! empty($values['contact_banner_image']))
+                            <img src="{{ $values['contact_banner_image'] }}" alt="" class="mt-3 mb-2 h-36 w-auto max-w-full rounded object-cover">
+                            <label class="mb-2 inline-flex items-center gap-2 text-xs font-medium text-red-600">
+                                <input type="checkbox" name="remove_banner_image" value="1" class="rounded border-gray-300 text-red-600 focus:ring-red-500">
+                                Remove banner image
+                            </label>
+                        @endif
+                        <input type="file" name="banner_image" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:rounded-md file:border-0 file:bg-gray-100 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-gray-700">
+                        @error('banner_image')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Image After Get Directions</label>
+                        @if (! empty($values['contact_directions_image']))
+                            <img src="{{ $values['contact_directions_image'] }}" alt="" class="mt-3 mb-2 h-40 w-auto max-w-full rounded object-cover">
+                            <label class="mb-2 inline-flex items-center gap-2 text-xs font-medium text-red-600">
+                                <input type="checkbox" name="remove_directions_image" value="1" class="rounded border-gray-300 text-red-600 focus:ring-red-500">
+                                Remove directions image
+                            </label>
+                        @endif
+                        <input type="file" name="directions_image" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:rounded-md file:border-0 file:bg-gray-100 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-gray-700">
+                        @error('directions_image')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
 
                     <x-admin.form-actions :cancel-route="route('admin.dashboard')" submit-label="Save Contact Info" />
                 </form>

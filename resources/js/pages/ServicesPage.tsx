@@ -3,6 +3,7 @@ import { Reveal } from "@/components/site/Reveal";
 import { useEstimateModal } from "@/contexts/EstimateModalContext";
 import { useSiteContent } from "@/contexts/SiteContentContext";
 import { SiteLayout } from "@/layouts/SiteLayout";
+import { serviceSectionId } from "@/utils/serviceAnchors";
 import { bodyCopyLight, sectionHeadingLight } from "@/utils/typography";
 
 export function ServicesPage() {
@@ -13,9 +14,9 @@ export function ServicesPage() {
   return (
     <SiteLayout>
       <main>
+        {/* Page hero */}
         <Header />
 
-        {/* Page hero */}
         <section className="relative overflow-hidden bg-cream pb-10 pt-[calc(4.25rem+5rem)] md:pb-14 md:pt-[calc(6.5rem+7rem)]">
           <div className="pointer-events-none absolute inset-0 noise-overlay opacity-60" />
           <div className="relative mx-auto max-w-[1400px] px-6 md:px-10">
@@ -43,10 +44,14 @@ export function ServicesPage() {
         </section>
 
         {/* Primary services */}
-        {servicesPage.sections.map((service, index) => (
+        {servicesPage.sections.map((service, index) => {
+          const sectionId = service.slug || serviceSectionId(service.title);
+
+          return (
           <section
-            key={`${service.number}-${service.title}`}
-            className={`relative py-20 md:py-28 ${index % 2 === 0 ? "bg-ink text-cream" : "bg-cream text-foreground"}`}
+            key={`${service.number}-${sectionId}`}
+            id={sectionId}
+            className={`relative scroll-mt-28 py-20 md:scroll-mt-36 md:py-28 ${index % 2 === 0 ? "bg-ink text-cream" : "bg-cream text-foreground"}`}
           >
             <div
               className={`pointer-events-none absolute inset-0 ${index % 2 === 0 ? "grain opacity-40" : "noise-overlay opacity-50"}`}
@@ -105,10 +110,11 @@ export function ServicesPage() {
               </div>
             </div>
           </section>
-        ))}
+          );
+        })}
 
         {/* Repairs & Warranty */}
-        <section className="relative bg-ink pb-20 pt-10 text-cream md:pb-28 md:pt-10">
+        <section id="repairs-warranty" className="relative scroll-mt-28 bg-ink pb-20 pt-10 text-cream md:scroll-mt-36 md:pb-28 md:pt-10">
           <div className="pointer-events-none absolute inset-0 grain opacity-40" />
           <div className="relative mx-auto max-w-[1400px] px-6 md:px-10">
             <Reveal>

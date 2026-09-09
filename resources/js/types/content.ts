@@ -81,6 +81,7 @@ export type Service = {
 export type ServicePageSection = {
   number: string;
   title: string;
+  slug: string;
   body: string;
   hero: string;
   supporting: string[];
@@ -132,6 +133,8 @@ export type SiteSettings = {
   foundedYear: string;
   footerTagline: string;
   contactFormIntro: string;
+  contactBannerImage?: string | null;
+  contactDirectionsImage?: string | null;
 };
 
 export type SectionContent = {
