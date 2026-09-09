@@ -21,7 +21,7 @@ export function ContactPage() {
               <img
                 src={bannerImage}
                 alt=""
-                className="h-full w-full object-cover"
+                className="h-full w-full object-cover object-center"
                 fetchPriority="high"
                 decoding="async"
               />
@@ -30,9 +30,9 @@ export function ContactPage() {
 
           <div className="relative mx-auto max-w-[1400px] px-6 md:px-10">
             <Reveal>
-              <div className="mt-6 max-w-3xl bg-cream px-6 py-8 md:px-10 md:py-10">
+              <div className="mt-6 max-w-3xl bg-cream/55 px-6 py-8 backdrop-blur-[2px] md:px-10 md:py-10">
                 <h1 className={sectionHeadingLight}>{section.heading}</h1>
-                {section.body && <p className="mt-6 max-w-2xl text-[#2a2622]/80">{section.body}</p>}
+                {section.body && <p className="mt-6 max-w-2xl text-[#2a2622]/85">{section.body}</p>}
               </div>
             </Reveal>
           </div>
