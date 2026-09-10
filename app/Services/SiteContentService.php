@@ -442,7 +442,7 @@ natasha “Natasha”'],
     private function staticNavLeft(): array
     {
         return [
-            ['Work', '/gallery'],
+            ['Work', '/work'],
             ['Products', '/products'],
             ['Services', '/services'],
         ];
@@ -459,7 +459,7 @@ natasha “Natasha”'],
     private function staticFooterNavLinks(): array
     {
         return [
-            ['Work', '/gallery'],
+            ['Work', '/work'],
             ['Products', '/products'],
             ['Services', '/services'],
             ['Process', '/process'],

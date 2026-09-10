@@ -56,7 +56,7 @@
     </div>
 
     <p class="mb-4 text-sm text-gray-600">
-        These albums power <strong>/gallery</strong> and each collage detail page (<code>/gallery/{slug}</code>).
+        These albums power <strong>/work</strong> and each collage detail page (<code>/work/{slug}</code>).
         Upload a <strong>cover</strong> plus up to <strong>12 collage images</strong> per album (you can add them in batches).
     </p>
 
@@ -90,7 +90,7 @@
                                 {{ $item->images_count }} {{ \Illuminate\Support\Str::plural('image', $item->images_count) }}
                             </td>
                             <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                                <a href="{{ url('/gallery/'.$item->slug) }}" target="_blank" class="text-indigo-600 hover:underline">/gallery/{{ $item->slug }}</a>
+                                <a href="{{ url('/work/'.$item->slug) }}" target="_blank" class="text-indigo-600 hover:underline">/work/{{ $item->slug }}</a>
                             </td>
                             <td class="whitespace-nowrap px-6 py-4 text-sm">
                                 @if ($item->is_active)

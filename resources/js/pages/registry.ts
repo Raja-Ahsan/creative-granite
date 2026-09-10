@@ -18,7 +18,7 @@ export const pages = {
 export type PageName = keyof typeof pages;
 
 const pathPageMap: Record<string, PageName> = {
-  "/gallery": "gallery",
+  "/work": "gallery",
   "/services": "services",
   "/contact": "contact",
 };
@@ -39,7 +39,7 @@ export function resolvePage(name: string | undefined): ComponentType {
     return ServiceDetailPage;
   }
 
-  if (path.startsWith("/gallery/") && path !== "/gallery") {
+  if (path.startsWith("/work/") && path !== "/work") {
     return WorkGalleryPage;
   }
 

@@ -57,7 +57,7 @@ export function WorkGalleryPage() {
           <Header />
           <section className="mx-auto max-w-[1400px] px-6 py-32 md:px-10">
             <h1 className={sectionHeadingLight}>Gallery not found</h1>
-            <a href="/gallery" className="link-underline mt-6 inline-block text-sm tracking-[0.2em]">
+            <a href="/work" className="link-underline mt-6 inline-block text-sm tracking-[0.2em]">
               ← Back to Our Work
             </a>
           </section>
@@ -78,7 +78,7 @@ export function WorkGalleryPage() {
           <div className="mx-auto max-w-[1400px] px-6 md:px-10">
             <Reveal>
               <a
-                href="/gallery"
+                href="/work"
                 className="link-underline text-xs tracking-[0.22em] text-foreground/60"
                 data-cursor="view"
               >

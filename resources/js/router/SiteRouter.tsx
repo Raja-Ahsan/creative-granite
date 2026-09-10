@@ -42,8 +42,8 @@ function normalizePath(path: string): string {
 function resolvePage(pathname: string) {
   const path = normalizePath(pathname);
 
-  if (path === "/gallery") return GalleryPage;
-  if (path.startsWith("/gallery/")) return WorkGalleryPage;
+  if (path === "/work") return GalleryPage;
+  if (path.startsWith("/work/")) return WorkGalleryPage;
   if (path === "/products") return ProductsPage;
   if (path === "/process") return ProcessPage;
   if (path === "/services") return ServicesPage;
@@ -221,7 +221,7 @@ export function useServiceSlug(): string | undefined {
 
 export function useWorkGallerySlug(): string | undefined {
   const { pathname } = useSiteRouter();
-  const match = pathname.match(/^\/gallery\/([^/]+)$/);
+  const match = pathname.match(/^\/work\/([^/]+)$/);
   return match?.[1] ? decodeURIComponent(match[1]) : undefined;
 }
 

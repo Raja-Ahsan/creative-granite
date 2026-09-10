@@ -87,7 +87,7 @@ export function Work() {
 
         <Reveal delay={200} className="mt-12 flex justify-center md:mt-16">
           <a
-            href="/gallery"
+            href="/work"
             data-cursor="view"
             className="btn-magnetic inline-flex items-center gap-3 rounded-full border border-foreground bg-transparent px-10 py-5 text-xs font-medium tracking-[0.25em] text-foreground"
           >

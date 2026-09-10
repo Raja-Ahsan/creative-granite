@@ -16,8 +16,10 @@ use App\Http\Controllers\ServicesController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
-Route::get('/gallery', GalleryController::class)->name('gallery');
-Route::get('/gallery/{slug}', GalleryDetailController::class)->name('gallery.show');
+Route::get('/work', GalleryController::class)->name('gallery');
+Route::get('/work/{slug}', GalleryDetailController::class)->name('gallery.show');
+Route::redirect('/gallery', '/work', 301);
+Route::redirect('/gallery/{slug}', '/work/{slug}', 301);
 Route::get('/materials/{material:slug}', MaterialDetailController::class)->name('materials.show');
 Route::get('/products', ProductsController::class)->name('products');
 Route::get('/products/{product:slug}', ProductDetailController::class)->name('products.show');

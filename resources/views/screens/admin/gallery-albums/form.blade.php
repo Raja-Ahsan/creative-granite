@@ -15,8 +15,8 @@
                 <div class="mb-4">
                     <label for="kind" class="block text-sm font-medium text-gray-700">Type</label>
                     <select id="kind" name="kind" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" required>
-                        <option value="category" @selected(old('kind', $item->kind) === 'category')>Category (top grid on /gallery)</option>
-                        <option value="project" @selected(old('kind', $item->kind) === 'project')>Featured Project (bottom grid on /gallery)</option>
+                        <option value="category" @selected(old('kind', $item->kind) === 'category')>Category (top grid on /work)</option>
+                        <option value="project" @selected(old('kind', $item->kind) === 'project')>Featured Project (bottom grid on /work)</option>
                     </select>
                     @error('kind')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -24,7 +24,7 @@
                 </div>
 
                 <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700">Cover Image (card on /gallery)</label>
+                    <label class="block text-sm font-medium text-gray-700">Cover Image (card on /work)</label>
                     @if ($item->cover_path)
                         <img src="{{ $item->cover_path }}" alt="" class="mt-2 mb-2 h-28 w-auto rounded object-cover">
                     @endif

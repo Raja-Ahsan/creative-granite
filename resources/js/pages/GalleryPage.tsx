@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { Footer, Header } from "@/components/sections";
+import { Footer, Header, InstagramSection } from "@/components/sections";
 import { Reveal } from "@/components/site/Reveal";
 import { useEstimateModal } from "@/contexts/EstimateModalContext";
 import { useSection, useSiteContent } from "@/contexts/SiteContentContext";
@@ -8,10 +8,9 @@ import { bodyCopyLight, sectionHeadingLight } from "@/utils/typography";
 
 export function GalleryPage() {
   const { openEstimateModal } = useEstimateModal();
-  const { galleryAlbums, settings} = useSiteContent();
+  const { galleryAlbums } = useSiteContent();
   const intro = useSection("gallery");
   const featuredSection = useSection("gallery-featured");
-  const instagramUrl = settings.instagramUrl || "#";
 
   const categories = useMemo(
     () => galleryAlbums.filter((album) => album.kind === "category"),
@@ -50,7 +49,7 @@ export function GalleryPage() {
                 {categories.map((category, i) => (
                   <Reveal key={category.slug} delay={i * 80}>
                     <a
-                      href={`/gallery/${category.slug}`}
+                      href={`/work/${category.slug}`}
                       data-cursor="view"
                       className="img-zoom group relative block aspect-[4/3] overflow-hidden bg-bone md:aspect-[16/11]"
                     >
@@ -97,7 +96,7 @@ export function GalleryPage() {
                 {projects.map((project, i) => (
                   <Reveal key={project.slug} delay={100 + i * 70}>
                     <a
-                      href={`/gallery/${project.slug}`}
+                      href={`/work/${project.slug}`}
                       data-cursor="view"
                       className="img-zoom group relative block aspect-[4/3] overflow-hidden bg-bone md:aspect-[16/11]"
                     >
@@ -121,21 +120,11 @@ export function GalleryPage() {
                   </Reveal>
                 ))}
               </div>
-              <div className="mt-12 flex justify-center md:mt-16">
-                <a
-                  href={instagramUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  data-cursor="follow"
-                  className=" inline-flex items-center rounded-full border border-foreground bg-cream px-10 py-5 text-xs font-medium tracking-[0.25em] text-foreground"
-                >
-                  <span>Follow on Instagram</span>
-                  <span className="relative z-[2]">→</span>
-                </a>
-              </div>
             </div>
           </section>
         )}
+
+        <InstagramSection />
 
         {/* CTA */}
         <section className="relative overflow-hidden bg-cream py-28 md:py-36">
