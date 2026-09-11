@@ -43,6 +43,7 @@ class RemnantController extends Controller
                 'sort_order' => ((int) Remnant::query()->max('sort_order')) + 1,
                 'is_active' => true,
                 'is_available' => true,
+                'availability_status' => 'available',
             ]),
             'title' => 'Add Remnant',
         ]);
@@ -128,7 +129,7 @@ class RemnantController extends Controller
             'image' => ['nullable', 'file', 'mimes:jpg,jpeg,png,webp', 'max:12288'],
             'sort_order' => ['nullable', 'integer', 'min:0'],
             'is_active' => ['nullable', 'boolean'],
-            'is_available' => ['nullable', 'boolean'],
+            'availability_status' => ['required', 'in:available,coming_soon'],
             'remove_image' => ['nullable', 'boolean'],
         ]);
 
@@ -136,7 +137,8 @@ class RemnantController extends Controller
 
         $data['slug'] = $this->resolveSlug($request->input('slug'), $request->string('name')->toString(), $remnant);
         $data['is_active'] = $request->boolean('is_active');
-        $data['is_available'] = $request->boolean('is_available');
+        $data['availability_status'] = $request->input('availability_status', 'available');
+        $data['is_available'] = $data['availability_status'] === 'available';
         $data['sort_order'] = (int) $request->input('sort_order', 0);
         $data['quantity'] = $request->filled('quantity') ? (int) $request->input('quantity') : null;
         $data['image_path'] = $remnant?->image_path;

@@ -39,8 +39,39 @@
                 </div>
 
                 <x-admin.input label="Sort Order" name="sort_order" type="number" :value="old('sort_order', $item->sort_order ?? 0)" />
-                <x-admin.checkbox label="Published (visible on site when available)" name="is_active" :checked="old('is_active', $item->is_active ?? true)" />
-                <x-admin.checkbox label="Available" name="is_available" :checked="old('is_available', $item->is_available ?? true)" />
+                <x-admin.checkbox label="Published (visible on site)" name="is_active" :checked="old('is_active', $item->is_active ?? true)" />
+
+                @php
+                    $availabilityStatus = old('availability_status', $item->availability_status ?? ($item->is_available ? 'available' : 'coming_soon'));
+                @endphp
+                <div>
+                    <span class="block text-sm font-medium text-gray-700">Availability</span>
+                    <div class="mt-3 flex flex-wrap gap-6">
+                        <label class="inline-flex items-center gap-2 text-sm text-gray-800">
+                            <input
+                                type="radio"
+                                name="availability_status"
+                                value="available"
+                                class="border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                @checked($availabilityStatus === 'available')
+                            >
+                            Available
+                        </label>
+                        <label class="inline-flex items-center gap-2 text-sm text-gray-800">
+                            <input
+                                type="radio"
+                                name="availability_status"
+                                value="coming_soon"
+                                class="border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                @checked($availabilityStatus === 'coming_soon')
+                            >
+                            Coming Soon
+                        </label>
+                    </div>
+                    @error('availability_status')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
 
                 <x-admin.form-actions :cancel-route="route('admin.remnants.index')" />
             </form>

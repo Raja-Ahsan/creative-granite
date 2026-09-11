@@ -95,10 +95,10 @@
                             <td class="whitespace-nowrap px-6 py-4 text-sm">
                                 @if (! $item->is_active)
                                     <span class="text-gray-400">Hidden</span>
-                                @elseif ($item->is_available)
-                                    <span class="inline-flex rounded-full bg-green-100 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-green-800">Available</span>
+                                @elseif (($item->availability_status ?? 'available') === 'coming_soon')
+                                    <span class="inline-flex rounded-full bg-amber-100 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-amber-800">Coming Soon</span>
                                 @else
-                                    <span class="inline-flex rounded-full bg-amber-100 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-amber-800">Unavailable</span>
+                                    <span class="inline-flex rounded-full bg-green-100 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-green-800">Available</span>
                                 @endif
                             </td>
                             <td class="whitespace-nowrap px-6 py-4 text-right text-sm">

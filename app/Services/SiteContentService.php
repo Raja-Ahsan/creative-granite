@@ -263,7 +263,7 @@ class SiteContentService
             'remnants' => Schema::hasTable('remnants')
                 ? Remnant::query()
                     ->active()
-                    ->available()
+                    ->listed()
                     ->orderBy('sort_order')
                     ->orderBy('id')
                     ->get()
@@ -280,7 +280,8 @@ class SiteContentService
                         'suitability' => $remnant->suitability,
                         'priceLabel' => $remnant->price_label,
                         'image' => $remnant->image_path,
-                        'isAvailable' => (bool) $remnant->is_available,
+                        'availabilityStatus' => $remnant->availability_status ?: ($remnant->is_available ? 'available' : 'coming_soon'),
+                        'isAvailable' => ($remnant->availability_status ?: 'available') === 'available',
                         'sortOrder' => (int) $remnant->sort_order,
                     ])
                     ->values()

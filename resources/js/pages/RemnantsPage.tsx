@@ -15,7 +15,8 @@ function RemnantCard({ remnant }: { remnant: Remnant }) {
     remnant.priceLabel ? { label: "Pricing", value: remnant.priceLabel } : null,
   ].filter(Boolean) as { label: string; value: string }[];
 
-  const available = remnant.isAvailable !== false;
+  const status = remnant.availabilityStatus ?? (remnant.isAvailable === false ? "coming_soon" : "available");
+  const isComingSoon = status === "coming_soon";
 
   return (
     <article className="flex h-full w-full max-w-md flex-col overflow-hidden border border-foreground/10 bg-cream shadow-[0_12px_40px_rgba(42,38,34,0.06)]">
@@ -36,10 +37,10 @@ function RemnantCard({ remnant }: { remnant: Remnant }) {
         <span
           className={cn(
             "absolute left-4 top-4 rounded-full px-3 py-1 text-[10px] font-medium uppercase tracking-[0.18em]",
-            available ? "bg-cream text-[#2a2622]" : "bg-foreground/80 text-cream",
+            isComingSoon ? "bg-foreground/85 text-cream" : "bg-cream text-[#2a2622]",
           )}
         >
-          {available ? "Available" : "Unavailable"}
+          {isComingSoon ? "Coming Soon" : "Available"}
         </span>
       </div>
 

@@ -54,6 +54,7 @@ export type Remnant = {
   suitability?: string | null;
   priceLabel?: string | null;
   image?: string | null;
+  availabilityStatus?: "available" | "coming_soon";
   isAvailable?: boolean;
   sortOrder?: number;
 };

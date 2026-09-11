@@ -26,6 +26,7 @@ class Remnant extends Model
         'price_label',
         'image_path',
         'is_available',
+        'availability_status',
         'is_active',
         'sort_order',
     ];
@@ -45,8 +46,13 @@ class Remnant extends Model
         return $query->where('is_active', true);
     }
 
-    public function scopeAvailable(Builder $query): Builder
+    public function scopeListed(Builder $query): Builder
     {
-        return $query->where('is_available', true);
+        return $query->whereIn('availability_status', ['available', 'coming_soon']);
+    }
+
+    public function isComingSoon(): bool
+    {
+        return ($this->availability_status ?: 'available') === 'coming_soon';
     }
 }
