@@ -252,6 +252,7 @@ export function ProductsPage() {
         <Materials
           previewOnly
           showHelpCta
+          showRemnantsCta
           className="pt-[calc(4.25rem+7rem)] md:pt-[calc(6.5rem+10rem)]"
         />
 

@@ -10,6 +10,7 @@ import type {
   ProductCategory,
   ProjectTypeOption,
   EdgeProfile,
+  Remnant,
   SectionContent,
   Service,
   ServicesPageContent,
@@ -27,6 +28,7 @@ export type SiteContentPayload = {
   instagramPosts: InstagramPost[];
   materials: Material[];
   edgeProfiles: EdgeProfile[];
+  remnants: Remnant[];
   productCategories: ProductCategory[];
   products: Product[];
   services: Service[];
@@ -70,6 +72,7 @@ export const defaultSiteContent: SiteContentPayload = {
   instagramPosts: [],
   materials: [],
   edgeProfiles: [],
+  remnants: [],
   productCategories: [],
   products: [],
   services: [],

@@ -25,11 +25,11 @@
                 <p class="mt-4 text-[11px] uppercase tracking-[0.25em] text-cream/50">Admin Panel</p>
             </div>
 
-            <div class="w-full sm:max-w-md mt-8 px-6 sm:px-8 py-8 bg-ink-soft/40 border border-cream/10 shadow-sm sm:rounded-sm">
+            <div class="mt-8 w-full border border-cream/20 bg-ink-soft/55 px-6 py-8 shadow-sm sm:max-w-md sm:rounded-sm sm:px-8">
                 {{ $slot }}
             </div>
 
-            <a href="{{ route('home') }}" class="mt-8 text-sm text-cream/60 hover:text-accent transition">
+            <a href="{{ route('home') }}" class="mt-8 text-sm text-cream/75 transition hover:text-accent">
                 &larr; Back to website
             </a>
         </div>

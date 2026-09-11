@@ -2,6 +2,7 @@ import type { ComponentType } from "react";
 import { ContactPage } from "./ContactPage";
 import { GalleryPage } from "./GalleryPage";
 import { HomePage } from "./HomePage";
+import { RemnantsPage } from "./RemnantsPage";
 import { ServiceDetailPage } from "./ServiceDetailPage";
 import { ServicesPage } from "./ServicesPage";
 import { WorkGalleryPage } from "./WorkGalleryPage";
@@ -10,6 +11,7 @@ export const pages = {
   home: HomePage,
   gallery: GalleryPage,
   "work-gallery": WorkGalleryPage,
+  remnants: RemnantsPage,
   services: ServicesPage,
   "service-detail": ServiceDetailPage,
   contact: ContactPage,
@@ -19,6 +21,7 @@ export type PageName = keyof typeof pages;
 
 const pathPageMap: Record<string, PageName> = {
   "/work": "gallery",
+  "/remnants": "remnants",
   "/services": "services",
   "/contact": "contact",
 };

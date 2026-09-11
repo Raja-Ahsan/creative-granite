@@ -14,6 +14,7 @@ import { MaterialDetailPage } from "@/pages/MaterialDetailPage";
 import { ProcessPage } from "@/pages/ProcessPage";
 import { ProductDetailPage } from "@/pages/ProductDetailPage";
 import { ProductsPage } from "@/pages/ProductsPage";
+import { RemnantsPage } from "@/pages/RemnantsPage";
 import { ServiceDetailPage } from "@/pages/ServiceDetailPage";
 import { ServicesPage } from "@/pages/ServicesPage";
 import { WorkGalleryPage } from "@/pages/WorkGalleryPage";
@@ -45,6 +46,7 @@ function resolvePage(pathname: string) {
   if (path === "/work") return GalleryPage;
   if (path.startsWith("/work/")) return WorkGalleryPage;
   if (path === "/products") return ProductsPage;
+  if (path === "/remnants") return RemnantsPage;
   if (path === "/process") return ProcessPage;
   if (path === "/services") return ServicesPage;
   if (path === "/contact") return ContactPage;

@@ -41,6 +41,22 @@ export type EdgeProfile = {
   diagram?: string | null;
   sortOrder?: number;
 };
+export type Remnant = {
+  name: string;
+  slug: string;
+  material?: string | null;
+  finish?: string | null;
+  dimensions?: string | null;
+  thickness?: string | null;
+  remnantCode?: string | null;
+  quantity?: number | null;
+  description?: string | null;
+  suitability?: string | null;
+  priceLabel?: string | null;
+  image?: string | null;
+  isAvailable?: boolean;
+  sortOrder?: number;
+};
 export type ProductImage = { src: string; alt: string; label?: string };
 export type ProductCategory = {
   id: number;

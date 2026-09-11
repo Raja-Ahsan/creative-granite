@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\EdgeProfile;
+use App\Models\Remnant;
 use App\Models\GalleryAlbum;
 use App\Models\GalleryAlbumImage;
 use App\Models\HeroSlide;
@@ -255,6 +256,32 @@ class SiteContentService
                         'image' => $profile->image_path,
                         'diagram' => $profile->diagram_path,
                         'sortOrder' => (int) $profile->sort_order,
+                    ])
+                    ->values()
+                    ->all()
+                : [],
+            'remnants' => Schema::hasTable('remnants')
+                ? Remnant::query()
+                    ->active()
+                    ->available()
+                    ->orderBy('sort_order')
+                    ->orderBy('id')
+                    ->get()
+                    ->map(fn (Remnant $remnant) => [
+                        'name' => $remnant->name,
+                        'slug' => $remnant->slug,
+                        'material' => $remnant->material,
+                        'finish' => $remnant->finish,
+                        'dimensions' => $remnant->dimensions,
+                        'thickness' => $remnant->thickness,
+                        'remnantCode' => $remnant->remnant_code,
+                        'quantity' => $remnant->quantity,
+                        'description' => $remnant->description,
+                        'suitability' => $remnant->suitability,
+                        'priceLabel' => $remnant->price_label,
+                        'image' => $remnant->image_path,
+                        'isAvailable' => (bool) $remnant->is_available,
+                        'sortOrder' => (int) $remnant->sort_order,
                     ])
                     ->values()
                     ->all()
@@ -594,13 +621,24 @@ natasha “Natasha”'],
                 'image' => $settings['process_top_banner_path'] ?? '',
                 'secondaryImage' => $settings['process_bottom_banner_path'] ?? '',
             ],
+            'remnants-cta' => [
+                'eyebrow' => '',
+                'heading' => $settings['remnants_cta_heading'] ?? 'Explore Available Remnants',
+                'subheading' => '',
+                'body' => $settings['remnants_cta_body'] ?? 'Looking for a beautiful stone for a smaller project? Explore our available remnants and find the perfect piece for your project.',
+                'highlightText' => '',
+                'image' => '',
+                'buttonLabel' => $settings['remnants_cta_button_label'] ?? 'Explore Remnants',
+                'buttonUrl' => $settings['remnants_cta_button_url'] ?? '/remnants',
+            ],
             'remnants' => [
                 'eyebrow' => 'Remnants',
-                'heading' => 'Great stone at a great value.',
-                'subheading' => '',
-                'body' => 'Smaller pieces of stone, ideal for vanities, laundry rooms, and smaller projects. First come, first served — join our list for early access.',
+                'heading' => $settings['remnants_page_heading'] ?? 'Available Remnants',
+                'subheading' => $settings['remnants_page_subheading'] ?? 'Explore our selection of available stone remnants for smaller projects and custom applications.',
+                'body' => $settings['remnants_coming_soon_body'] ?? "We're currently organizing our remnant inventory and photography. Please check back soon to explore available pieces.",
+                'note' => $settings['remnants_coming_soon_heading'] ?? 'Available Remnants — Coming Soon',
                 'highlightText' => '',
-                'image' => '/portfolio/Creative-Quartz-scaled-1.jpg',
+                'image' => '',
             ],
             'testimonial' => [
                 'eyebrow' => '',

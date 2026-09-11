@@ -10,15 +10,18 @@ export function Materials({
   className,
   previewOnly = false,
   showHelpCta = false,
+  showRemnantsCta = false,
 }: {
   className?: string;
   previewOnly?: boolean;
   showHelpCta?: boolean;
+  showRemnantsCta?: boolean;
 }) {
   const { materials, settings } = useSiteContent();
   const homeSection = useSection("materials");
   const productsSection = useSection("materials-products");
   const calloutSection = useSection("materials-callout");
+  const remnantsCta = useSection("remnants-cta");
   const [active, setActive] = useState(0);
 
   const section = previewOnly
@@ -186,6 +189,16 @@ export function Materials({
                   </p>
 
                   <div className="mt-10 flex flex-wrap items-center justify-center gap-3 md:gap-4">
+                    {showRemnantsCta && remnantsCta.buttonLabel && (
+                      <a
+                        href={remnantsCta.buttonUrl || "/remnants"}
+                        className="inline-flex items-center gap-3 rounded-full border border-cream/30 px-7 py-3.5 text-xs font-medium tracking-[0.2em] text-cream transition hover:border-cream/60"
+                      >
+                        {remnantsCta.buttonLabel}
+                        <span aria-hidden="true">→</span>
+                      </a>
+                    )}
+
                     <a
                       href="#estimate"
                       data-cursor="estimate"
