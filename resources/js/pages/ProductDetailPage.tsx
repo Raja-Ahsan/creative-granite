@@ -148,7 +148,7 @@ export function ProductDetailPage() {
                           <p className="text-[10px] font-medium uppercase tracking-[0.22em] text-foreground/55">
                             Selected finish
                           </p>
-                          <p className="mt-1 font-display text-2xl uppercase tracking-[-0.01em] text-[#021E44]">
+                          <p className="mt-1 font-display text-2xl uppercase tracking-[-0.01em] text-black">
                             {activeImage.label}
                           </p>
                         </div>

@@ -280,7 +280,7 @@ export function MaterialDetailPage() {
                     <span className="h-px w-12 bg-foreground/40" />
                     <span className="eyebrow">In detail</span>
                   </div>
-                  <h2 className="mt-5 font-display text-3xl uppercase tracking-[-0.02em] text-[#021E44] md:text-5xl">
+                  <h2 className="mt-5 font-display text-3xl uppercase tracking-[-0.02em] text-black md:text-5xl">
                     Material gallery
                   </h2>
                 </div>
@@ -460,7 +460,7 @@ export function MaterialDetailPage() {
                       <span className="h-px w-12 bg-foreground/40" />
                       <span className="eyebrow">Continue exploring</span>
                     </div>
-                    <h2 className="mt-5 font-display text-3xl uppercase tracking-[-0.02em] text-[#021E44] md:text-4xl">
+                    <h2 className="mt-5 font-display text-3xl uppercase tracking-[-0.02em] text-black md:text-4xl">
                       Other primary materials
                     </h2>
                   </div>
@@ -512,7 +512,7 @@ export function MaterialDetailPage() {
           <div className="relative mx-auto max-w-[1400px] px-6 text-center md:px-10">
             <Reveal>
               <p className="eyebrow text-foreground/50">Ready when you are</p>
-              <h2 className="mt-5 font-display text-3xl uppercase tracking-[-0.02em] text-[#021E44] md:text-5xl">
+              <h2 className="mt-5 font-display text-3xl uppercase tracking-[-0.02em] text-black md:text-5xl">
                 Start Your Project
               </h2>
               <p className={`mx-auto mt-7 max-w-2xl ${bodyCopyLight}`}>

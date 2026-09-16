@@ -1,7 +1,7 @@
 export const sectionHeading =
   "font-display text-[clamp(1.75rem,4.5vw,3.75rem)] uppercase leading-[0.92] tracking-[-0.02em]";
 
-export const sectionHeadingLight = `${sectionHeading} text-[#021E44]`;
+export const sectionHeadingLight = `${sectionHeading} text-black`;
 export const sectionHeadingDark = `${sectionHeading} text-cream`;
 
 /** Default paragraph — body copy uses Biondi Sans via global typography. */

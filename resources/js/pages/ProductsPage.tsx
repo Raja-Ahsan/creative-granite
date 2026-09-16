@@ -142,7 +142,7 @@ function ProductCard({
           className="flex flex-1 flex-col px-6 pb-7 pt-5 md:px-8 md:pb-8"
           data-cursor="view"
         >
-          <h2 className="font-display text-2xl uppercase leading-[0.98] tracking-[-0.02em] text-[#021E44] md:text-[1.65rem]">
+          <h2 className="font-display text-2xl uppercase leading-[0.98] tracking-[-0.02em] text-black md:text-[1.65rem]">
             {product.bowlDescription ?? product.name}
           </h2>
           <p className="mt-3 line-clamp-2 text-sm font-light leading-relaxed text-foreground/65">
@@ -310,7 +310,7 @@ export function ProductsPage() {
                         <div className="mb-10 flex items-end justify-between gap-6 border-b border-foreground/10 pb-6">
                           <div>
                             <p className="eyebrow text-foreground/50">{String(groupIndex + 1).padStart(2, "0")}</p>
-                            <h2 className="mt-3 font-display text-3xl uppercase tracking-[-0.02em] text-[#021E44] md:text-4xl">
+                            <h2 className="mt-3 font-display text-3xl uppercase tracking-[-0.02em] text-black md:text-4xl">
                               {group.category.name}
                             </h2>
                           </div>

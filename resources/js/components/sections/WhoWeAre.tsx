@@ -24,21 +24,21 @@ export function WhoWeAre() {
         </h2>
       </Reveal>
 
-      <div className="mt-8 grid grid-cols-1 items-stretch gap-6 md:mt-10 md:grid-cols-2 md:gap-8">
+      <div className="mt-8 grid grid-cols-1 items-start gap-6 md:mt-10 md:grid-cols-2 md:gap-8 lg:gap-12">
         <div className="group w-full min-w-0">
-          <div className="relative min-h-[18rem] w-full overflow-hidden md:min-h-[40rem]">
+          <div className="relative w-full overflow-hidden bg-bone">
             <img
               src={image}
               alt="Natural stone powder room with marble vanity crafted by Creative Granite + Design"
               loading="eager"
               decoding="async"
               fetchPriority="low"
-              className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.04]"
+              className="block h-auto w-full max-w-full object-contain transition-transform duration-[1400ms] ease-out group-hover:scale-[1.02]"
             />
           </div>
         </div>
 
-        <Reveal delay={300} className="flex w-full min-w-0 items-center">
+        <Reveal delay={300} className="flex w-full min-w-0 items-start md:pt-2">
           <p className={`w-full ${bodyCopyLight}`}>{section.body}</p>
         </Reveal>
       </div>

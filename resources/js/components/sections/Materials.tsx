@@ -236,7 +236,7 @@ export function Materials({
                       <span className="h-px w-12 bg-foreground/40" />
                       <span className="eyebrow">{calloutContent.eyebrow}</span>
                     </div>
-                    <h3 className="mt-5 font-display text-3xl uppercase tracking-[-0.02em] text-[#021E44] md:text-4xl">
+                    <h3 className="mt-5 font-display text-3xl uppercase tracking-[-0.02em] text-black md:text-4xl">
                       {calloutContent.heading}
                     </h3>
                     {calloutContent.body && (

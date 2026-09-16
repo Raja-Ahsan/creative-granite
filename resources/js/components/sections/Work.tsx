@@ -37,7 +37,7 @@ export function Work() {
               <span className="eyebrow">{section.eyebrow}</span>
             </div>
             <h2
-              className={`mt-6 max-w-3xl font-display uppercase leading-[0.95] tracking-[-0.02em] text-[#021E44] text-[clamp(1.2rem,4.6vw,3.75rem)]`}
+              className={`mt-6 max-w-3xl font-display uppercase leading-[0.95] tracking-[-0.02em] text-black text-[clamp(1.2rem,4.6vw,3.75rem)]`}
             >
               {headingLines.map((line, index) => (
                 <span key={`${line}-${index}`} className="block whitespace-nowrap md:whitespace-normal">

@@ -154,7 +154,7 @@ export function RemnantsPage() {
           <div className="relative mx-auto max-w-[1400px] px-6 text-center md:px-10">
             <Reveal>
               <p className="eyebrow text-foreground/50">Ready when you are</p>
-              <h2 className="mt-5 font-display text-3xl uppercase tracking-[-0.02em] text-[#021E44] md:text-5xl">
+              <h2 className="mt-5 font-display text-3xl uppercase tracking-[-0.02em] text-black md:text-5xl">
                 Start Your Project
               </h2>
               <p className={`mx-auto mt-7 max-w-2xl ${bodyCopyLight}`}>

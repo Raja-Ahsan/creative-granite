@@ -68,7 +68,7 @@ export function ServicesPage() {
                   </div>
                   <div className="col-span-12 md:col-span-10">
                     <h2
-                      className={`max-w-3xl font-display text-[clamp(1.75rem,3.8vw,3.25rem)] uppercase leading-[0.95] tracking-[-0.02em] ${index % 2 === 0 ? "text-cream" : "text-[#021E44]"}`}
+                      className={`max-w-3xl font-display text-[clamp(1.75rem,3.8vw,3.25rem)] uppercase leading-[0.95] tracking-[-0.02em] ${index % 2 === 0 ? "text-cream" : "text-black"}`}
                     >
                       {service.title}
                     </h2>

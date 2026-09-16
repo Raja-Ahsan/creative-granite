@@ -55,7 +55,7 @@ export function EdgeProfiles() {
                   </div>
 
                   <div className="border-t border-foreground/10 px-4 py-4 md:px-5 md:py-5">
-                    <h3 className="font-display text-xl uppercase tracking-[0.08em] text-[#021E44] md:text-2xl">
+                    <h3 className="font-display text-xl uppercase tracking-[0.08em] text-black md:text-2xl">
                       {profile.name}
                     </h3>
                     {profile.description && (
