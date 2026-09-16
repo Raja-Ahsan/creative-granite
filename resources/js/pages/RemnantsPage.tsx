@@ -149,6 +149,32 @@ export function RemnantsPage() {
           </div>
         </section>
 
+        <section className="relative overflow-hidden border-t border-foreground/10 bg-cream py-20 md:py-28">
+          <div className="pointer-events-none absolute inset-0 noise-overlay opacity-45" />
+          <div className="relative mx-auto max-w-[1400px] px-6 text-center md:px-10">
+            <Reveal>
+              <p className="eyebrow text-foreground/50">Ready when you are</p>
+              <h2 className="mt-5 font-display text-3xl uppercase tracking-[-0.02em] text-[#021E44] md:text-5xl">
+                Start Your Project
+              </h2>
+              <p className={`mx-auto mt-7 max-w-2xl ${bodyCopyLight}`}>
+                Share a few details about your space and our team will help you choose the right material, edge, and
+                finish for the way you live.
+              </p>
+              <a
+                href="#estimate"
+                data-cursor="estimate"
+                className="btn-magnetic mt-10 inline-flex items-center gap-3 rounded-full border border-foreground bg-foreground px-8 py-4 text-xs font-medium tracking-[0.22em] text-cream"
+              >
+                Start Your Project
+                <span className="relative z-[2]" aria-hidden="true">
+                  →
+                </span>
+              </a>
+            </Reveal>
+          </div>
+        </section>
+
         <Footer />
       </main>
     </SiteLayout>
