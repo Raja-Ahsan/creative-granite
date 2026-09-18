@@ -95,12 +95,14 @@ export const defaultSiteContent: SiteContentPayload = {
         "Dedicated service team",
       ],
       warrantyCta: "Request a Warranty Repair.",
+      showWarrantyCard: true,
       repairsTitle: "Repairs",
       repairsPoints: [
         "Repair services available by request",
         "Contact us for an evaluation and quote",
       ],
       repairsCta: "Request a Repair Estimate",
+      showRepairsCard: true,
     },
     cta: {
       heading: "Ready to Start Your Project?",

@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\Concerns\HandlesImageUpload;
 use App\Http\Controllers\Controller;
 use App\Models\GalleryAlbum;
 use App\Models\GalleryAlbumImage;
+use App\Services\SiteContentService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
@@ -109,11 +110,16 @@ class GalleryAlbumController extends Controller
         unset($data['gallery_path']);
 
         $galleryAlbum->update($data);
+        $this->syncCollageSortOrders($request, $galleryAlbum);
         $this->removeCollageImages($request);
         $this->storeCollageImages($request, $galleryAlbum);
 
+        $galleryAlbum->unsetRelation('images');
         $first = $galleryAlbum->images()->orderBy('sort_order')->orderBy('id')->value('image_path');
         $galleryAlbum->update(['gallery_path' => $first]);
+
+        // Ensure public /work pages always see the latest collage order.
+        SiteContentService::clearCache();
 
         return redirect()->route('admin.gallery-albums.index')->with('success', 'Gallery album updated.');
     }
@@ -168,6 +174,8 @@ class GalleryAlbumController extends Controller
             'collage_images.*' => ['image', 'max:12288'],
             'remove_collage_images' => ['nullable', 'array'],
             'remove_collage_images.*' => ['integer', 'exists:gallery_album_images,id'],
+            'existing_collage' => ['nullable', 'array'],
+            'existing_collage.*.sort_order' => ['nullable', 'integer', 'min:0'],
         ]);
 
         if ($finalCount > $max) {
@@ -183,9 +191,44 @@ class GalleryAlbumController extends Controller
             unset($data['slug']);
         }
 
-        unset($data['collage_images'], $data['remove_collage_images'], $data['cover']);
+        unset($data['collage_images'], $data['remove_collage_images'], $data['existing_collage'], $data['cover']);
 
         return $data;
+    }
+
+    private function syncCollageSortOrders(Request $request, GalleryAlbum $album): void
+    {
+        $rows = $request->input('existing_collage', []);
+        if (! is_array($rows) || $rows === []) {
+            return;
+        }
+
+        $images = $album->images()->get()->keyBy('id');
+        $changed = false;
+
+        foreach ($rows as $imageId => $row) {
+            $imageId = (int) $imageId;
+            $image = $images->get($imageId);
+            if (! $image) {
+                continue;
+            }
+
+            $sortOrder = isset($row['sort_order']) && $row['sort_order'] !== ''
+                ? max(0, (int) $row['sort_order'])
+                : 0;
+
+            if ((int) $image->sort_order === $sortOrder) {
+                continue;
+            }
+
+            $image->sort_order = $sortOrder;
+            $image->save();
+            $changed = true;
+        }
+
+        if ($changed) {
+            SiteContentService::clearCache();
+        }
     }
 
     private function storeCollageImages(Request $request, GalleryAlbum $album): void

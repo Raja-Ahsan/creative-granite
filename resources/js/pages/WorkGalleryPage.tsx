@@ -20,7 +20,10 @@ export function WorkGalleryPage() {
 
   const collageImages = useMemo(() => {
     if (!item) return [];
-    if (item.images?.length) return item.images;
+    if (item.images?.length) {
+      // Payload is already sorted by admin sort_order — keep that order for collage + lightbox.
+      return [...item.images];
+    }
     return item.gallery ? [item.gallery] : [];
   }, [item]);
 

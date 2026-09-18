@@ -26,9 +26,11 @@ class ServicesPageController extends Controller
         'services_page_warranty_title',
         'services_page_warranty_points',
         'services_page_warranty_cta',
+        'services_page_show_warranty_card',
         'services_page_repairs_card_title',
         'services_page_repairs_points',
         'services_page_repairs_cta',
+        'services_page_show_repairs_card',
         'services_page_cta_heading',
         'services_page_cta_body',
         'services_page_cta_button',
@@ -55,9 +57,11 @@ class ServicesPageController extends Controller
             'services_page_warranty_title' => ['nullable', 'string', 'max:120'],
             'services_page_warranty_points' => ['nullable', 'string', 'max:5000'],
             'services_page_warranty_cta' => ['nullable', 'string', 'max:120'],
+            'services_page_show_warranty_card' => ['nullable', 'boolean'],
             'services_page_repairs_card_title' => ['nullable', 'string', 'max:120'],
             'services_page_repairs_points' => ['nullable', 'string', 'max:5000'],
             'services_page_repairs_cta' => ['nullable', 'string', 'max:120'],
+            'services_page_show_repairs_card' => ['nullable', 'boolean'],
             'services_page_cta_heading' => ['nullable', 'string', 'max:255'],
             'services_page_cta_body' => ['nullable', 'string', 'max:5000'],
             'services_page_cta_button' => ['nullable', 'string', 'max:120'],
@@ -65,8 +69,17 @@ class ServicesPageController extends Controller
             'repairs_image' => ['nullable', 'image', 'max:12288'],
         ]);
 
+        $booleanKeys = [
+            'services_page_show_warranty_card',
+            'services_page_show_repairs_card',
+        ];
+
         foreach (self::KEYS as $key) {
             if (in_array($key, ['services_page_hero_path', 'services_page_repairs_image_path'], true)) {
+                continue;
+            }
+            if (in_array($key, $booleanKeys, true)) {
+                $this->saveSetting($key, $request->boolean($key) ? '1' : '0');
                 continue;
             }
             if (array_key_exists($key, $data)) {
@@ -113,9 +126,11 @@ class ServicesPageController extends Controller
             'services_page_warranty_title' => 'Warranty',
             'services_page_warranty_points' => "One-year workmanship warranty\nWarranty support for qualifying fabrication and installation issues\nDedicated service team",
             'services_page_warranty_cta' => 'Request a Warranty Repair.',
+            'services_page_show_warranty_card' => '1',
             'services_page_repairs_card_title' => 'Repairs',
             'services_page_repairs_points' => "Repair services available by request\nContact us for an evaluation and quote",
             'services_page_repairs_cta' => 'Request a Repair Estimate',
+            'services_page_show_repairs_card' => '1',
             'services_page_cta_heading' => 'Ready to Start Your Project?',
             'services_page_cta_body' => "Whether you're building a custom home, remodeling an existing space, or managing a multifamily or commercial project, our team is ready to bring your vision to life.",
             'services_page_cta_button' => 'Get an Estimate',

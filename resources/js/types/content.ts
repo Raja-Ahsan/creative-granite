@@ -119,9 +119,11 @@ export type ServicesPageContent = {
     warrantyTitle: string;
     warrantyPoints: string[];
     warrantyCta: string;
+    showWarrantyCard: boolean;
     repairsTitle: string;
     repairsPoints: string[];
     repairsCta: string;
+    showRepairsCard: boolean;
   };
   cta: {
     heading: string;

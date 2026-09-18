@@ -144,7 +144,13 @@ export function ServicesPage() {
               </div>
             </Reveal>
 
-            <div className="mt-10 grid grid-cols-1 gap-6 md:mt-14 md:grid-cols-2 md:gap-8">
+            {(repairs.showWarrantyCard || repairs.showRepairsCard) && (
+            <div
+              className={`mt-10 grid grid-cols-1 gap-6 md:mt-14 md:gap-8 ${
+                repairs.showWarrantyCard && repairs.showRepairsCard ? "md:grid-cols-2" : "md:grid-cols-1 md:max-w-xl"
+              }`}
+            >
+              {repairs.showWarrantyCard && (
               <Reveal delay={120}>
                 <div className="flex h-full flex-col border border-cream/15 bg-cream/[0.04] p-8 md:p-10">
                   <h3 className="font-display text-2xl uppercase tracking-[-0.01em] text-cream md:text-3xl">
@@ -171,7 +177,9 @@ export function ServicesPage() {
                   </div>
                 </div>
               </Reveal>
+              )}
 
+              {repairs.showRepairsCard && (
               <Reveal delay={180}>
                 <div className="flex h-full flex-col border border-cream/15 bg-cream/[0.04] p-8 md:p-10">
                   <h3 className="font-display text-2xl uppercase tracking-[-0.01em] text-cream md:text-3xl">
@@ -198,7 +206,9 @@ export function ServicesPage() {
                   </div>
                 </div>
               </Reveal>
+              )}
             </div>
+            )}
           </div>
         </section>
 

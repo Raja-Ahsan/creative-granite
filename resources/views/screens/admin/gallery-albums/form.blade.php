@@ -52,19 +52,41 @@
                     </p>
 
                     @if ($item->exists && $item->images->isNotEmpty())
-                        <div class="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
-                            @foreach ($item->images as $collageImage)
-                                <label class="group relative block cursor-pointer overflow-hidden rounded-lg border border-gray-200 hover:border-red-300">
-                                    <img src="{{ $collageImage->image_path }}" alt="" class="h-28 w-full object-cover">
-                                    <div class="absolute inset-x-0 bottom-0 bg-black/60 px-2 py-1.5">
-                                        <span class="flex items-center gap-2 text-xs text-white">
-                                            <input type="checkbox" name="remove_collage_images[]" value="{{ $collageImage->id }}" class="rounded border-gray-300 text-red-600 focus:ring-red-500">
+                        <p class="mt-3 text-xs text-gray-500">Use <strong>Sort</strong> to set display order on the detail page (lower numbers appear first). Then click Save.</p>
+                        <div class="mt-3 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
+                            @foreach ($item->images->sortBy(['sort_order', 'id']) as $collageImage)
+                                <div class="overflow-hidden rounded-lg border border-gray-200 bg-gray-50">
+                                    <img src="{{ $collageImage->image_path }}" alt="" class="h-28 w-full object-cover bg-white">
+                                    <div class="space-y-2 border-t border-gray-200 bg-white p-2">
+                                        <label class="block text-[10px] font-semibold uppercase tracking-wider text-gray-500">
+                                            Sort
+                                            <input
+                                                type="number"
+                                                min="0"
+                                                name="existing_collage[{{ $collageImage->id }}][sort_order]"
+                                                value="{{ old('existing_collage.'.$collageImage->id.'.sort_order', $collageImage->sort_order) }}"
+                                                class="mt-1 block w-full rounded-md border-gray-300 text-sm shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                            >
+                                        </label>
+                                        <label class="inline-flex items-center gap-2 text-xs text-red-600">
+                                            <input
+                                                type="checkbox"
+                                                name="remove_collage_images[]"
+                                                value="{{ $collageImage->id }}"
+                                                class="rounded border-gray-300 text-red-600 focus:ring-red-500"
+                                            >
                                             Remove
-                                        </span>
+                                        </label>
                                     </div>
-                                </label>
+                                </div>
                             @endforeach
                         </div>
+                        @error('existing_collage')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                        @error('existing_collage.*.sort_order')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
                     @endif
 
                     <input type="file" name="collage_images[]" accept="image/*" multiple class="mt-4 block w-full text-sm text-gray-500 file:mr-4 file:rounded-md file:border-0 file:bg-gray-100 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-gray-700 hover:file:bg-gray-200">

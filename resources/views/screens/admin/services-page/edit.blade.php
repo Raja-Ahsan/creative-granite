@@ -48,12 +48,22 @@
                     </div>
                     <div class="mt-6 grid gap-6 md:grid-cols-2">
                         <div>
+                            <x-admin.checkbox
+                                label="Show Warranty card on site"
+                                name="services_page_show_warranty_card"
+                                :checked="old('services_page_show_warranty_card', $values['services_page_show_warranty_card']) == '1'"
+                            />
                             <x-admin.input label="Warranty Card Title" name="services_page_warranty_title" :value="old('services_page_warranty_title', $values['services_page_warranty_title'])" />
                             <label class="mt-4 block text-sm font-medium text-gray-700">Warranty Points (one per line)</label>
                             <textarea name="services_page_warranty_points" rows="4" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">{{ old('services_page_warranty_points', $values['services_page_warranty_points']) }}</textarea>
                             <x-admin.input class="mt-4" label="Warranty CTA Label" name="services_page_warranty_cta" :value="old('services_page_warranty_cta', $values['services_page_warranty_cta'])" />
                         </div>
                         <div>
+                            <x-admin.checkbox
+                                label="Show Repairs card on site"
+                                name="services_page_show_repairs_card"
+                                :checked="old('services_page_show_repairs_card', $values['services_page_show_repairs_card']) == '1'"
+                            />
                             <x-admin.input label="Repairs Card Title" name="services_page_repairs_card_title" :value="old('services_page_repairs_card_title', $values['services_page_repairs_card_title'])" />
                             <label class="mt-4 block text-sm font-medium text-gray-700">Repairs Points (one per line)</label>
                             <textarea name="services_page_repairs_points" rows="4" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">{{ old('services_page_repairs_points', $values['services_page_repairs_points']) }}</textarea>

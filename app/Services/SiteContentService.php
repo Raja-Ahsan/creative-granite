@@ -102,8 +102,12 @@ class SiteContentService
                 ->get()
                 ->map(function (GalleryAlbum $album) {
                     $images = $album->images
-                        ->map(fn (GalleryAlbumImage $image) => $image->image_path)
+                        ->sortBy([
+                            ['sort_order', 'asc'],
+                            ['id', 'asc'],
+                        ])
                         ->values()
+                        ->map(fn (GalleryAlbumImage $image) => $image->image_path)
                         ->all();
 
                     if ($images === [] && $album->gallery_path) {
@@ -343,9 +347,11 @@ class SiteContentService
                 'warrantyTitle' => $settings['services_page_warranty_title'] ?? 'Warranty',
                 'warrantyPoints' => $this->linesToList($settings['services_page_warranty_points'] ?? "One-year workmanship warranty\nWarranty support for qualifying fabrication and installation issues\nDedicated service team"),
                 'warrantyCta' => $settings['services_page_warranty_cta'] ?? 'Request a Warranty Repair.',
+                'showWarrantyCard' => ($settings['services_page_show_warranty_card'] ?? '1') !== '0',
                 'repairsTitle' => $settings['services_page_repairs_card_title'] ?? 'Repairs',
                 'repairsPoints' => $this->linesToList($settings['services_page_repairs_points'] ?? "Repair services available by request\nContact us for an evaluation and quote"),
                 'repairsCta' => $settings['services_page_repairs_cta'] ?? 'Request a Repair Estimate',
+                'showRepairsCard' => ($settings['services_page_show_repairs_card'] ?? '1') !== '0',
             ],
             'cta' => [
                 'heading' => $settings['services_page_cta_heading'] ?? 'Ready to Start Your Project?',
