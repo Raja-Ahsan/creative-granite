@@ -10,6 +10,7 @@ export function ServicesPage() {
   const { openEstimateModal } = useEstimateModal();
   const { servicesPage } = useSiteContent();
   const { repairs, cta } = servicesPage;
+  const isSingleRepairsCard = repairs.showWarrantyCard !== repairs.showRepairsCard;
 
   return (
     <SiteLayout>
@@ -155,7 +156,11 @@ export function ServicesPage() {
               {repairs.showWarrantyCard && (
               <Reveal delay={120}>
                 <div className="flex h-full flex-col border border-cream/15 bg-cream/[0.04] p-8 md:p-10">
-                  <h3 className="font-display text-2xl uppercase tracking-[-0.01em] text-cream md:text-3xl">
+                  <h3
+                    className={`font-display text-2xl uppercase tracking-[-0.01em] text-cream md:text-3xl ${
+                      isSingleRepairsCard ? "text-center" : ""
+                    }`}
+                  >
                     {repairs.warrantyTitle}
                   </h3>
                   <ul className="mt-8 space-y-4 text-cream/75">
@@ -166,7 +171,7 @@ export function ServicesPage() {
                       </li>
                     ))}
                   </ul>
-                  <div className="mt-auto pt-10">
+                  <div className={`mt-auto pt-10 ${isSingleRepairsCard ? "text-center" : ""}`}>
                     <button
                       type="button"
                       onClick={openEstimateModal}
@@ -184,7 +189,11 @@ export function ServicesPage() {
               {repairs.showRepairsCard && (
               <Reveal delay={180}>
                 <div className="flex h-full flex-col border border-cream/15 bg-cream/[0.04] p-8 md:p-10">
-                  <h3 className="font-display text-2xl uppercase tracking-[-0.01em] text-cream md:text-3xl">
+                  <h3
+                    className={`font-display text-2xl uppercase tracking-[-0.01em] text-cream md:text-3xl ${
+                      isSingleRepairsCard ? "text-center" : ""
+                    }`}
+                  >
                     {repairs.repairsTitle}
                   </h3>
                   <ul className="mt-8 space-y-4 text-cream/75">
@@ -195,7 +204,7 @@ export function ServicesPage() {
                       </li>
                     ))}
                   </ul>
-                  <div className="mt-auto pt-10">
+                  <div className={`mt-auto pt-10 ${isSingleRepairsCard ? "text-center" : ""}`}>
                     <button
                       type="button"
                       onClick={openEstimateModal}
