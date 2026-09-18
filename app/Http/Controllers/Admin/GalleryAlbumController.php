@@ -167,6 +167,7 @@ class GalleryAlbumController extends Controller
                 Rule::unique('gallery_albums', 'slug')->ignore($item?->id),
             ],
             'kind' => ['required', Rule::in([GalleryAlbum::KIND_CATEGORY, GalleryAlbum::KIND_PROJECT])],
+            'description' => ['nullable', 'string', 'max:2000'],
             'sort_order' => ['nullable', 'integer', 'min:0'],
             'is_active' => ['sometimes', 'boolean'],
             'cover' => [$item?->cover_path ? 'nullable' : 'required', 'image', 'max:12288'],

@@ -4,6 +4,7 @@ export type GalleryAlbum = {
   slug: string;
   title: string;
   kind: "category" | "project";
+  description?: string | null;
   cover: string;
   gallery: string;
   images: string[];

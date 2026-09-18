@@ -147,7 +147,9 @@ export function ServicesPage() {
             {(repairs.showWarrantyCard || repairs.showRepairsCard) && (
             <div
               className={`mt-10 grid grid-cols-1 gap-6 md:mt-14 md:gap-8 ${
-                repairs.showWarrantyCard && repairs.showRepairsCard ? "md:grid-cols-2" : "md:grid-cols-1 md:max-w-xl"
+                repairs.showWarrantyCard && repairs.showRepairsCard
+                  ? "md:grid-cols-2"
+                  : "md:mx-auto md:max-w-xl"
               }`}
             >
               {repairs.showWarrantyCard && (

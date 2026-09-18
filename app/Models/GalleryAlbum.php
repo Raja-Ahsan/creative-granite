@@ -21,6 +21,7 @@ class GalleryAlbum extends Model
         'title',
         'slug',
         'kind',
+        'description',
         'cover_path',
         'gallery_path',
         'sort_order',

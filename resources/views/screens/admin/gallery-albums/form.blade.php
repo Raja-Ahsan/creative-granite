@@ -23,6 +23,14 @@
                     @enderror
                 </div>
 
+                <x-admin.textarea
+                    label="Description (detail page intro)"
+                    name="description"
+                    :value="old('description', $item->description)"
+                    :rows="3"
+                    placeholder="A photo gallery from this collection — browse the images below."
+                />
+
                 <div class="mb-4">
                     <label class="block text-sm font-medium text-gray-700">Cover Image (card on /work)</label>
                     @if ($item->cover_path)

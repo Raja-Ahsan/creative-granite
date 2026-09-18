@@ -19,7 +19,8 @@ class GalleryDetailController extends Controller
             'page' => 'work-gallery',
             'siteContent' => $siteContent->getPayload(),
             'metaTitle' => $album->title.' — Creative Granite & Design',
-            'metaDescription' => 'Photo gallery: '.$album->title.' by Creative Granite & Design.',
+            'metaDescription' => $album->description
+                ?: ('Photo gallery: '.$album->title.' by Creative Granite & Design.'),
         ]);
     }
 }

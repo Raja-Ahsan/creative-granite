@@ -93,8 +93,8 @@ export function WorkGalleryPage() {
               </div>
               <h1 className={`mt-6 max-w-4xl ${sectionHeadingLight}`}>{item.title}</h1>
               <p className={`mt-6 max-w-xl ${bodyCopyLight}`}>
-                A photo gallery from this {isProject ? "project" : "collection"} — browse the images
-                below.
+                {item.description?.trim() ||
+                  `A photo gallery from this ${isProject ? "project" : "collection"} — browse the images below.`}
               </p>
             </Reveal>
 

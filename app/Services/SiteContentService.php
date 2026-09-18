@@ -118,6 +118,7 @@ class SiteContentService
                         'slug' => $album->slug,
                         'title' => $album->title,
                         'kind' => $album->kind,
+                        'description' => $album->description ?: null,
                         'cover' => $album->cover_path,
                         'gallery' => $images[0] ?? $album->gallery_path ?? '',
                         'images' => $images,

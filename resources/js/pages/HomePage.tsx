@@ -21,7 +21,7 @@ export function HomePage() {
           <WhoWeAre />
           <Work />
           <Services />
-          <Materials showHelpCta />
+          <Materials showHelpCta showRemnantsCta />
           <Testimonial />
           <InstagramSection />
           <CTA />
