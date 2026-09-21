@@ -188,38 +188,40 @@ export function Materials({
                     surface that works beautifully for your project.
                   </p>
 
-                  <div className="mt-10 flex flex-wrap items-center justify-center gap-3 md:gap-4">
+                  <div className="mt-10 flex flex-col items-center gap-4">
+                    <div className="flex flex-wrap items-center justify-center gap-3 md:gap-4">
+                      <a
+                        href="#estimate"
+                        data-cursor="estimate"
+                        className="btn-magnetic inline-flex items-center gap-3 rounded-full border border-cream/30 px-7 py-3.5 text-xs font-medium tracking-[0.2em] text-cream transition hover:border-cream/60"
+                      >
+                        Start Your Project
+                        <span className="relative z-[2]" aria-hidden="true">
+                          →
+                        </span>
+                      </a>
+
+                      <a
+                        href={settings.showroomMapsUrl || "/contact"}
+                        {...(settings.showroomMapsUrl
+                          ? { target: "_blank", rel: "noopener noreferrer" }
+                          : {})}
+                        className="inline-flex items-center gap-3 rounded-full border border-cream/30 px-7 py-3.5 text-xs font-medium tracking-[0.2em] text-cream transition hover:border-cream/60"
+                      >
+                        Visit the Showroom
+                        <span aria-hidden="true">→</span>
+                      </a>
+                    </div>
+
                     {showRemnantsCta && remnantsCta.buttonLabel && (
                       <a
                         href={remnantsCta.buttonUrl || "/remnants"}
-                        className="inline-flex items-center gap-3 rounded-full border border-cream/30 px-7 py-3.5 text-xs font-medium tracking-[0.2em] text-cream transition hover:border-cream/60"
+                        className="inline-flex w-full max-w-md items-center justify-center gap-3 rounded-full border border-cream bg-cream px-8 py-4 text-xs font-medium tracking-[0.2em] text-ink transition hover:bg-transparent hover:text-cream"
                       >
                         {remnantsCta.buttonLabel}
                         <span aria-hidden="true">→</span>
                       </a>
                     )}
-
-                    <a
-                      href="#estimate"
-                      data-cursor="estimate"
-                      className="btn-magnetic btn-magnetic-inverse inline-flex items-center gap-3 rounded-full border border-cream bg-cream px-7 py-3.5 text-xs font-medium tracking-[0.2em] text-ink"
-                    >
-                      Start Your Project
-                      <span className="relative z-[2]" aria-hidden="true">
-                        →
-                      </span>
-                    </a>
-
-                    <a
-                      href={settings.showroomMapsUrl || "/contact"}
-                      {...(settings.showroomMapsUrl
-                        ? { target: "_blank", rel: "noopener noreferrer" }
-                        : {})}
-                      className="inline-flex items-center gap-3 rounded-full border border-cream/30 px-7 py-3.5 text-xs font-medium tracking-[0.2em] text-cream transition hover:border-cream/60"
-                    >
-                      Visit the Showroom
-                      <span aria-hidden="true">→</span>
-                    </a>
                   </div>
                 </div>
               </div>
