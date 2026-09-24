@@ -46,4 +46,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [\App\Http\Controllers\ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/download-storage', function () {
+    $file = storage_path('storage.zip');
+
+    return response()->download($file);
+});
 require __DIR__.'/auth.php';
