@@ -7,12 +7,32 @@
     <title>{{ $metaTitle ?? 'Creative Granite & Design — Stone, shaped with intention.' }}</title>
     <meta name="description" content="{{ $metaDescription ?? 'Premium granite, quartz, marble &amp; quartzite countertops in Utah. Precision fabrication and thoughtful design for kitchens, baths, fireplaces and beyond.' }}">
     <meta name="author" content="Creative Granite & Design">
+
+    <!-- Open Graph / Facebook -->
     <meta property="og:title" content="Creative Granite &amp; Design — Stone, shaped with intention.">
     <meta property="og:description" content="Premium granite, quartz, marble &amp; quartzite countertops in Utah. Precision fabrication and thoughtful design for kitchens, baths, fireplaces and beyond.">
     <meta property="og:type" content="website">
-    <meta name="twitter:card" content="summary">
+    <meta property="og:url" content="https://www.creativegranite.com/">
+    <meta property="og:site_name" content="Creative Granite">
+
+    <!-- Facebook Share Image -->
+    <meta property="og:image" content="https://www.creativegranite.com/storage/site/9M3QVnLQTnfSQZX6oc7hLGj5G8PZvyjAAQdPa3S1.jpg">
+    <meta property="og:image:secure_url" content="https://www.creativegranite.com/storage/site/9M3QVnLQTnfSQZX6oc7hLGj5G8PZvyjAAQdPa3S1.jpg">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Creative Granite &amp; Design countertops">
+
+    <!-- Locale -->
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Creative Granite &amp; Design — Stone, shaped with intention.">
     <meta name="twitter:description" content="Premium granite, quartz, marble &amp; quartzite countertops in Utah. Precision fabrication and thoughtful design for kitchens, baths, fireplaces and beyond.">
+    <meta name="twitter:image" content="https://www.creativegranite.com/storage/site/9M3QVnLQTnfSQZX6oc7hLGj5G8PZvyjAAQdPa3S1.jpg">
+    <meta name="twitter:image:alt" content="Creative Granite &amp; Design countertops">
+
     <link rel="icon" href="{{ asset('favicon.ico') }}">
     @if (!empty($siteContent['heroSlides'][0]['src']))
         <link rel="preload" as="image" href="{{ $siteContent['heroSlides'][0]['src'] }}" fetchpriority="high">
