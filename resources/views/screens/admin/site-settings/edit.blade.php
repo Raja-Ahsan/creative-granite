@@ -52,12 +52,16 @@
 
                 <div class="mb-4">
                     <label class="block text-sm font-medium text-gray-700">Favicon</label>
+                    <p class="mt-1 text-xs text-gray-500">Shown in browser tabs for the website and admin. Use PNG or ICO, ideally 32×32 or 64×64.</p>
                     <input
                         type="file"
                         name="favicon"
-                        accept="image/*,.ico"
+                        accept="image/png,image/jpeg,image/gif,image/webp,image/x-icon,.ico"
                         class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-gray-100 file:text-gray-700 hover:file:bg-gray-200"
                     >
+                    @error('favicon')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <x-admin.input

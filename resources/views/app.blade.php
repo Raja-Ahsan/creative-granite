@@ -33,7 +33,13 @@
     <meta name="twitter:image" content="https://www.creativegranite.com/storage/site/9M3QVnLQTnfSQZX6oc7hLGj5G8PZvyjAAQdPa3S1.jpg">
     <meta name="twitter:image:alt" content="Creative Granite &amp; Design countertops">
 
-    <link rel="icon" href="{{ asset('favicon.ico') }}">
+    @php
+        $faviconUrl = \App\Models\SiteSetting::faviconUrl();
+        $faviconType = \App\Models\SiteSetting::faviconMimeType();
+    @endphp
+    <link rel="icon" href="{{ $faviconUrl }}" type="{{ $faviconType }}">
+    <link rel="shortcut icon" href="{{ $faviconUrl }}" type="{{ $faviconType }}">
+    <link rel="apple-touch-icon" href="{{ $faviconUrl }}">
     @if (!empty($siteContent['heroSlides'][0]['src']))
         <link rel="preload" as="image" href="{{ $siteContent['heroSlides'][0]['src'] }}" fetchpriority="high">
     @endif

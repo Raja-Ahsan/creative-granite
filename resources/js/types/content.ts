@@ -142,6 +142,7 @@ export type ProjectTypeOption = { value: string; label: string };
 
 export type SiteSettings = {
   logo: string;
+  favicon?: string;
   aboutStoneBath: string;
   instagramUrl: string;
   showroomMapsUrl: string;

@@ -47,6 +47,9 @@ class SiteContentService
         return [
             'settings' => [
                 'logo' => $settings['logo_path'] ?? '/images/site/update-logo.png',
+                'favicon' => filled($settings['favicon_path'] ?? null)
+                    ? $settings['favicon_path']
+                    : '/favicon.ico',
                 'aboutStoneBath' => $settings['about_image_path'] ?? '/images/site/LakeLine-20.jpg',
                 'instagramUrl' => $settings['instagram_url']
                     ?: (config('services.instagram.profile_url') ?: 'https://www.instagram.com/creativegraniteanddesign/'),

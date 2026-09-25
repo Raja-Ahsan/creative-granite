@@ -7,6 +7,13 @@
 
         <title>Admin — {{ config('app.name', 'Creative Granite') }}</title>
 
+        @php
+            $faviconUrl = \App\Models\SiteSetting::faviconUrl();
+            $faviconType = \App\Models\SiteSetting::faviconMimeType();
+        @endphp
+        <link rel="icon" href="{{ $faviconUrl }}" type="{{ $faviconType }}">
+        <link rel="shortcut icon" href="{{ $faviconUrl }}" type="{{ $faviconType }}">
+
         @if (filled(config('services.adobe_fonts.kit')))
             <link rel="stylesheet" href="https://use.typekit.net/{{ config('services.adobe_fonts.kit') }}.css">
         @endif

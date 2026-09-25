@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\SiteSetting;
+use App\Services\SiteContentService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -31,7 +32,7 @@ class SiteSettingController extends Controller
             'footer_copyright' => ['nullable', 'string', 'max:500'],
             'logo' => ['nullable', 'image', 'max:10240'],
             'footer_logo' => ['nullable', 'image', 'max:10240'],
-            'favicon' => ['nullable', 'file', 'mimes:png,jpg,jpeg,gif,webp,ico', 'max:2048'],
+            'favicon' => ['nullable', 'file', 'max:2048', 'mimes:png,jpg,jpeg,gif,webp,ico'],
         ]);
 
         if ($path = $this->storeUploadedFile($request, 'logo')) {
@@ -54,6 +55,8 @@ class SiteSettingController extends Controller
                 'general'
             );
         }
+
+        SiteContentService::clearCache();
 
         return redirect()->route('admin.site-settings.edit')->with('success', 'Site settings updated.');
     }

@@ -10,11 +10,11 @@
       content="admin template, Cuba admin template, dashboard template, flat admin template, responsive admin template, web app"
     />
     <meta name="author" content="pixelstrap" />
-    <link rel="icon" href="../assets/images/favicon.png" type="image/x-icon" />
+    <link rel="icon" href="{{ \App\Models\SiteSetting::faviconUrl() }}" type="{{ \App\Models\SiteSetting::faviconMimeType() }}" />
     <link
       rel="shortcut icon"
-      href="../assets/images/favicon.png"
-      type="image/x-icon"
+      href="{{ \App\Models\SiteSetting::faviconUrl() }}"
+      type="{{ \App\Models\SiteSetting::faviconMimeType() }}"
     />
     <!-- Google font-->
     <link

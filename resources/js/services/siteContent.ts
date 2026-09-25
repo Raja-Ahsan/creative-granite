@@ -51,6 +51,7 @@ declare global {
 export const defaultSiteContent: SiteContentPayload = {
   settings: {
     logo: "/images/site/update-logo.png",
+    favicon: "/favicon.ico",
     aboutStoneBath: "/images/site/LakeLine-20.jpg",
     instagramUrl: "#",
     showroomMapsUrl: "",
