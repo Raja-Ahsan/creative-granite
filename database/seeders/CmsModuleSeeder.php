@@ -50,6 +50,7 @@ class CmsModuleSeeder extends Seeder
                 ['contact-page.edit', 'Contact Page', 'fa-solid fa-address-card', 1],
                 ['contact-inquiries.index', 'Contact Enquiries', 'fa-solid fa-inbox', 2],
                 ['estimate-requests.index', 'Estimate Requests', 'fa-solid fa-file-invoice', 3],
+                ['warranty-requests.index', 'Warranty Requests', 'fa-solid fa-shield-halved', 4],
             ],
             $settings->id => [
                 ['site-settings.edit', 'Site Settings', 'fa-solid fa-sliders', 1],

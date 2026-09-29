@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\EdgeProfileController;
 use App\Http\Controllers\Admin\RemnantController;
 use App\Http\Controllers\Admin\EstimateRequestController;
+use App\Http\Controllers\Admin\WarrantyRequestController;
 use App\Http\Controllers\Admin\ContactPageController;
 use App\Http\Controllers\Admin\ContactInquiryController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -81,4 +82,9 @@ Route::middleware(['web', 'auth', 'admin'])->prefix('admin')->name('admin.')->gr
     Route::patch('estimate-requests/mark-all-read', [EstimateRequestController::class, 'markAllRead'])->name('estimate-requests.mark-all-read');
     Route::get('estimate-requests/{estimateRequest}', [EstimateRequestController::class, 'show'])->name('estimate-requests.show');
     Route::delete('estimate-requests/{estimateRequest}', [EstimateRequestController::class, 'destroy'])->name('estimate-requests.destroy');
+
+    Route::get('warranty-requests', [WarrantyRequestController::class, 'index'])->name('warranty-requests.index');
+    Route::patch('warranty-requests/mark-all-read', [WarrantyRequestController::class, 'markAllRead'])->name('warranty-requests.mark-all-read');
+    Route::get('warranty-requests/{warrantyRequest}', [WarrantyRequestController::class, 'show'])->name('warranty-requests.show');
+    Route::delete('warranty-requests/{warrantyRequest}', [WarrantyRequestController::class, 'destroy'])->name('warranty-requests.destroy');
 });

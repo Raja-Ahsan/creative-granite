@@ -1,6 +1,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { EstimateModalProvider } from "@/contexts/EstimateModalContext";
+import { WarrantyModalProvider } from "@/contexts/WarrantyModalContext";
 import { SiteContentProvider } from "@/contexts/SiteContentContext";
 import { SiteRouterProvider } from "@/router/SiteRouter";
 import "../css/site.css";
@@ -12,7 +13,9 @@ if (rootEl) {
     <StrictMode>
       <SiteContentProvider>
         <EstimateModalProvider>
-          <SiteRouterProvider />
+          <WarrantyModalProvider>
+            <SiteRouterProvider />
+          </WarrantyModalProvider>
         </EstimateModalProvider>
       </SiteContentProvider>
     </StrictMode>,

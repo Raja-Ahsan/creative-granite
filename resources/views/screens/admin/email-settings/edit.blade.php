@@ -84,7 +84,17 @@
                                         :value="old('mail_contact_recipient', $values['mail_contact_recipient'])"
                                         required
                                     />
-                                    <p class="mt-1 text-xs text-gray-500">Contact form submissions will be sent to this address.</p>
+                                    <p class="mt-1 text-xs text-gray-500">Contact and estimate form submissions will be sent to this address.</p>
+                                </div>
+                                <div class="md:col-span-2">
+                                    <x-admin.input
+                                        label="Warranty Form Recipient Email"
+                                        name="mail_warranty_recipient"
+                                        type="email"
+                                        :value="old('mail_warranty_recipient', $values['mail_warranty_recipient'])"
+                                        required
+                                    />
+                                    <p class="mt-1 text-xs text-gray-500">Warranty requests from the Services page will be sent to this address (default: warranties@creativegranite.com).</p>
                                 </div>
                             </div>
                         </div>

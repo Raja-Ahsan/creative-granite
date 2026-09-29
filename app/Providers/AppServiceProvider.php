@@ -6,6 +6,7 @@ use App\Models\EdgeProfile;
 use App\Models\Remnant;
 use App\Models\ContactInquiry;
 use App\Models\EstimateRequest;
+use App\Models\WarrantyRequest;
 use App\Models\GalleryAlbum;
 use App\Models\GalleryAlbumImage;
 use App\Models\HeroSlide;
@@ -63,6 +64,7 @@ class AppServiceProvider extends ServiceProvider
             if (auth()->check() && auth()->user()->role === 'admin') {
                 $contacts = collect();
                 $estimates = collect();
+                $warranties = collect();
 
                 if (Schema::hasTable('contact_inquiries')) {
                     $unreadCount += ContactInquiry::unread()->count();
@@ -88,8 +90,21 @@ class AppServiceProvider extends ServiceProvider
                     ]);
                 }
 
+                if (Schema::hasTable('warranty_requests')) {
+                    $unreadCount += WarrantyRequest::unread()->count();
+                    $warranties = WarrantyRequest::recent()->limit(8)->get()->map(fn (WarrantyRequest $item) => [
+                        'type' => 'warranty',
+                        'name' => $item->name,
+                        'label' => 'Warranty'.($item->address ? ' — '.$item->address : ''),
+                        'url' => route('admin.warranty-requests.show', $item),
+                        'unread' => $item->isUnread(),
+                        'created_at' => $item->created_at,
+                    ]);
+                }
+
                 $recentNotifications = $contacts
                     ->concat($estimates)
+                    ->concat($warranties)
                     ->sortByDesc(fn (array $item) => $item['created_at']?->timestamp ?? 0)
                     ->take(10)
                     ->values();

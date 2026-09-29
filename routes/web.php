@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ContactFormController;
 use App\Http\Controllers\EstimateFormController;
+use App\Http\Controllers\WarrantyFormController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\GalleryDetailController;
 use App\Http\Controllers\HomeController;
@@ -35,6 +36,9 @@ Route::post('/contact', [ContactFormController::class, 'store'])
 Route::post('/estimate-request', [EstimateFormController::class, 'store'])
     ->middleware('throttle:5,1')
     ->name('estimate.submit');
+Route::post('/warranty-request', [WarrantyFormController::class, 'store'])
+    ->middleware('throttle:5,1')
+    ->name('warranty.submit');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'admin'])

@@ -1,6 +1,7 @@
 import { Footer, Header } from "@/components/sections";
 import { Reveal } from "@/components/site/Reveal";
 import { useEstimateModal } from "@/contexts/EstimateModalContext";
+import { useWarrantyModal } from "@/contexts/WarrantyModalContext";
 import { useSiteContent } from "@/contexts/SiteContentContext";
 import { SiteLayout } from "@/layouts/SiteLayout";
 import { serviceSectionId } from "@/utils/serviceAnchors";
@@ -8,6 +9,7 @@ import { bodyCopyLight, sectionHeadingLight } from "@/utils/typography";
 
 export function ServicesPage() {
   const { openEstimateModal } = useEstimateModal();
+  const { openWarrantyModal } = useWarrantyModal();
   const { servicesPage } = useSiteContent();
   const { repairs, cta } = servicesPage;
   const isSingleRepairsCard = repairs.showWarrantyCard !== repairs.showRepairsCard;
@@ -174,7 +176,7 @@ export function ServicesPage() {
                   <div className={`mt-auto pt-10 ${isSingleRepairsCard ? "text-center" : ""}`}>
                     <button
                       type="button"
-                      onClick={openEstimateModal}
+                      onClick={openWarrantyModal}
                       data-cursor="estimate"
                       className="btn-magnetic inline-flex items-center gap-3 rounded-full border border-cream bg-transparent px-8 py-4 text-xs font-medium tracking-[0.22em] text-cream"
                     >

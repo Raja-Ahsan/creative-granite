@@ -20,6 +20,7 @@ class MailSettingsService
         'mail_from_address',
         'mail_from_name',
         'mail_contact_recipient',
+        'mail_warranty_recipient',
     ];
 
     public function defaults(): array
@@ -34,6 +35,7 @@ class MailSettingsService
             'mail_from_address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
             'mail_from_name' => env('MAIL_FROM_NAME', config('app.name', 'Creative Granite')),
             'mail_contact_recipient' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
+            'mail_warranty_recipient' => 'warranties@creativegranite.com',
         ];
     }
 
@@ -80,6 +82,7 @@ class MailSettingsService
             'mail_from_address' => $settings['mail_from_address'],
             'mail_from_name' => $settings['mail_from_name'],
             'mail_contact_recipient' => $settings['mail_contact_recipient'],
+            'mail_warranty_recipient' => $settings['mail_warranty_recipient'],
             'has_saved_password' => $this->hasStoredPassword(),
         ];
     }
@@ -112,6 +115,7 @@ class MailSettingsService
         $this->saveSetting('mail_from_address', $data['mail_from_address']);
         $this->saveSetting('mail_from_name', $data['mail_from_name']);
         $this->saveSetting('mail_contact_recipient', $data['mail_contact_recipient']);
+        $this->saveSetting('mail_warranty_recipient', $data['mail_warranty_recipient']);
 
         SiteSetting::updateOrCreate(
             ['key' => 'email'],
@@ -162,6 +166,18 @@ class MailSettingsService
         }
 
         return (string) $recipient;
+    }
+
+    public function warrantyRecipient(): string
+    {
+        $settings = $this->getSettings();
+        $recipient = $settings['mail_warranty_recipient'] ?? '';
+
+        if (filled($recipient)) {
+            return (string) $recipient;
+        }
+
+        return 'warranties@creativegranite.com';
     }
 
     private function saveSetting(string $key, string $value): void

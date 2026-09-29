@@ -34,6 +34,7 @@ class EmailSettingController extends Controller
             'mail_from_address' => ['required', 'email', 'max:255'],
             'mail_from_name' => ['required', 'string', 'max:255'],
             'mail_contact_recipient' => ['required', 'email', 'max:255'],
+            'mail_warranty_recipient' => ['required', 'email', 'max:255'],
         ]);
 
         $this->mailSettings->save($validated);

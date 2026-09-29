@@ -40,6 +40,7 @@ class CmsModulePermissionsSeeder extends Seeder
             'contact-page.edit',
             'contact-inquiries.index',
             'estimate-requests.index',
+            'warranty-requests.index',
             'site-settings.edit',
             'email-settings.edit',
             'email-templates.index',
