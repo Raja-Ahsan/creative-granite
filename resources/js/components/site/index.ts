@@ -1,4 +1,3 @@
-export { CustomCursor } from "./CustomCursor";
 export { GraniteBlade } from "./GraniteBlade";
 export { ImageLightbox } from "./ImageLightbox";
 export { LoadingScreen } from "./LoadingScreen";

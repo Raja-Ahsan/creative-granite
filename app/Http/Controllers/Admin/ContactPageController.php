@@ -43,7 +43,7 @@ class ContactPageController extends Controller
             'hours' => ['nullable', 'string', 'max:255'],
             'phone' => ['nullable', 'string', 'max:30'],
             'email' => ['nullable', 'email', 'max:255'],
-            'showroom_maps_url' => ['nullable', 'url', 'max:500'],
+            'showroom_maps_url' => ['nullable', 'url', 'max:1000'],
             'contact_form_intro' => ['nullable', 'string', 'max:500'],
             'banner_image' => ['nullable', 'file', 'mimes:jpg,jpeg,png,webp', 'max:12288'],
             'directions_image' => ['nullable', 'file', 'mimes:jpg,jpeg,png,webp', 'max:12288'],

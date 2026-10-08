@@ -39,7 +39,7 @@ class SiteContentSeeder extends Seeder
             ['key' => 'logo_path', 'value' => '/images/site/update-logo.png', 'type' => 'image', 'group' => 'assets'],
             ['key' => 'about_image_path', 'value' => '/images/site/LakeLine-20.jpg', 'type' => 'image', 'group' => 'assets'],
             ['key' => 'instagram_url', 'value' => 'https://www.instagram.com/creativegraniteanddesign/', 'type' => 'url', 'group' => 'social'],
-            ['key' => 'showroom_maps_url', 'value' => 'https://www.google.com/maps/place/1998+N+Redwood+Rd,+Salt+Lake+City,+UT+84116,+USA/@40.8115045,-111.9402546,16.96z/data=!4m6!3m5!1s0x8752f6bad3a740e7:0x54da835cc07f3b51!8m2!3d40.8115002!4d-111.9376702!16s%2Fg%2F11c1zjtg8r?entry=ttu&g_ep=EgoyMDI2MDYyMy4wIKXMDSoASAFQAw%3D%3D', 'type' => 'url', 'group' => 'contact'],
+            ['key' => 'showroom_maps_url', 'value' => 'https://www.google.com/maps/place/Creative+Granite+%26+Design/@40.8115045,-111.9402546,1149m/data=!3m1!1e3!4m15!1m8!3m7!1s0x8752f6bad3a740e7:0x54da835cc07f3b51!2s1998+N+Redwood+Rd,+Salt+Lake+City,+UT+84116!3b1!8m2!3d40.8115002!4d-111.9376702!16s%2Fg%2F11c1zjtg8r!3m5!1s0x8752f314d6696d13:0xa8469c4ef9b127ad!8m2!3d40.8113608!4d-111.9375649!16s%2Fg%2F1tfd2ws_?entry=ttu&g_ep=EgoyMDI2MTAwNS4wIKXMDSoASAFQAw%3D%3D', 'type' => 'url', 'group' => 'contact'],
             ['key' => 'address_line_1', 'value' => '1998 n redwood rd', 'type' => 'string', 'group' => 'contact'],
             ['key' => 'address_line_2', 'value' => 'Salt lake city, ut 84116', 'type' => 'string', 'group' => 'contact'],
             ['key' => 'phone', 'value' => '8015745477', 'type' => 'phone', 'group' => 'contact'],

@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import { CustomCursor } from "@/components/site/CustomCursor";
 import { LoadingScreen } from "@/components/site/LoadingScreen";
 
 type SiteLayoutProps = {
@@ -8,9 +7,8 @@ type SiteLayoutProps = {
 
 export function SiteLayout({ children }: SiteLayoutProps) {
   return (
-    <div className="relative bg-cream text-foreground md:cursor-none">
+    <div className="relative bg-cream text-foreground">
       <LoadingScreen />
-      <CustomCursor />
       {children}
     </div>
   );
