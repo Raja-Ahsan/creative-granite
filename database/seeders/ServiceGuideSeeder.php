@@ -9,6 +9,7 @@ class ServiceGuideSeeder extends Seeder
 {
     public function run(): void
     {
+        // Safe by default: existing guides (and their related rows) are never overwritten.
         $this->seedResidential();
         $this->seedCommercial();
         $this->seedRemodel();
@@ -19,8 +20,17 @@ class ServiceGuideSeeder extends Seeder
         $this->seedWyoming();
     }
 
+    private function missing(string $slug): bool
+    {
+        return ! ServiceGuide::query()->where('slug', $slug)->exists();
+    }
+
     private function seedResidential(): void
     {
+        if (! $this->missing('residential-countertops-in-utah')) {
+            return;
+        }
+
         $guide = ServiceGuide::updateOrCreate(
             ['slug' => 'residential-countertops-in-utah'],
             [
@@ -125,6 +135,10 @@ class ServiceGuideSeeder extends Seeder
 
     private function seedCommercial(): void
     {
+        if (! $this->missing('commercial-countertops-utah')) {
+            return;
+        }
+
         $guide = ServiceGuide::updateOrCreate(
             ['slug' => 'commercial-countertops-utah'],
             [
@@ -247,6 +261,10 @@ class ServiceGuideSeeder extends Seeder
 
     private function seedRemodel(): void
     {
+        if (! $this->missing('countertop-remodel-utah')) {
+            return;
+        }
+
         $guide = ServiceGuide::updateOrCreate(
             ['slug' => 'countertop-remodel-utah'],
             [
@@ -374,6 +392,10 @@ class ServiceGuideSeeder extends Seeder
 
     private function seedKitchen(): void
     {
+        if (! $this->missing('kitchen-countertops-utah')) {
+            return;
+        }
+
         $guide = ServiceGuide::updateOrCreate(
             ['slug' => 'kitchen-countertops-utah'],
             [
@@ -513,6 +535,10 @@ class ServiceGuideSeeder extends Seeder
 
     private function seedBathroom(): void
     {
+        if (! $this->missing('bathroom-countertops-utah')) {
+            return;
+        }
+
         $guide = ServiceGuide::updateOrCreate(
             ['slug' => 'bathroom-countertops-utah'],
             [
@@ -652,6 +678,10 @@ class ServiceGuideSeeder extends Seeder
 
     private function seedIdaho(): void
     {
+        if (! $this->missing('countertop-installation-idaho')) {
+            return;
+        }
+
         $guide = ServiceGuide::updateOrCreate(
             ['slug' => 'countertop-installation-idaho'],
             [
@@ -790,6 +820,10 @@ class ServiceGuideSeeder extends Seeder
 
     private function seedColorado(): void
     {
+        if (! $this->missing('countertop-installation-colorado')) {
+            return;
+        }
+
         $guide = ServiceGuide::updateOrCreate(
             ['slug' => 'countertop-installation-colorado'],
             [
@@ -928,6 +962,10 @@ class ServiceGuideSeeder extends Seeder
 
     private function seedWyoming(): void
     {
+        if (! $this->missing('countertop-installation-in-wyoming')) {
+            return;
+        }
+
         $guide = ServiceGuide::updateOrCreate(
             ['slug' => 'countertop-installation-in-wyoming'],
             [
