@@ -1,5 +1,6 @@
 export { EdgeProfiles } from "./EdgeProfiles";
 export { CTA } from "./CTA";
+export { Faq } from "./Faq";
 export { Footer } from "./Footer";
 export { Header } from "./Header";
 export { Hero } from "./Hero";

@@ -22,7 +22,7 @@ class SiteSetting extends Model
     {
         $path = static::getValue('favicon_path');
 
-        return filled($path) ? (string) $path : '/favicon.ico';
+        return filled($path) ? (string) $path : '/favicon.png';
     }
 
     public static function faviconUrl(): string

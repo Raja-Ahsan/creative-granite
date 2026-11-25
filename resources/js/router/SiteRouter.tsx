@@ -16,6 +16,7 @@ import { ProductDetailPage } from "@/pages/ProductDetailPage";
 import { ProductsPage } from "@/pages/ProductsPage";
 import { RemnantsPage } from "@/pages/RemnantsPage";
 import { ServiceDetailPage } from "@/pages/ServiceDetailPage";
+import { ServiceGuidePage } from "@/pages/ServiceGuidePage";
 import { ServicesPage } from "@/pages/ServicesPage";
 import { WorkGalleryPage } from "@/pages/WorkGalleryPage";
 
@@ -52,7 +53,12 @@ function resolvePage(pathname: string) {
   if (path === "/contact") return ContactPage;
   if (path.startsWith("/materials/")) return MaterialDetailPage;
   if (path.startsWith("/products/")) return ProductDetailPage;
-  if (path.startsWith("/services/")) return ServiceDetailPage;
+  if (path.startsWith("/services/")) {
+    if (typeof window !== "undefined" && window.__SITE_PAGE__ === "service-guide") {
+      return ServiceGuidePage;
+    }
+    return ServiceDetailPage;
+  }
 
   return HomePage;
 }

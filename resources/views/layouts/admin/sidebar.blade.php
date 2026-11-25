@@ -2,14 +2,15 @@
     $modules = dynamic_sidebar();
 
     $placeholderModules = [
-            'site-content-module',
-            'home-module',
+        'site-content-module',
+        'home-module',
         'gallery-module',
         'products-module',
         'services-module',
-            'process-module',
-            'contact-module',
-            'settings-module',
+        'service-area-module',
+        'process-module',
+        'contact-module',
+        'settings-module',
     ];
 
     $adminUrl = function (string $routeName) use ($placeholderModules): string {

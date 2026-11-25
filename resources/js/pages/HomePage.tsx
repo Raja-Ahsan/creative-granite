@@ -1,5 +1,6 @@
 import {
   CTA,
+  Faq,
   Footer,
   Header,
   Hero,
@@ -24,6 +25,7 @@ export function HomePage() {
           <Materials showHelpCta showRemnantsCta />
           <Testimonial />
           <InstagramSection />
+          <Faq />
           <CTA />
           <Footer />
         </main>

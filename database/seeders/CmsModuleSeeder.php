@@ -15,9 +15,10 @@ class CmsModuleSeeder extends Seeder
         $gallery = $this->upsertRoot('gallery-module', 'Gallery Page', 'fa-solid fa-images', 3);
         $productsPage = $this->upsertRoot('products-module', 'Products', 'fa-solid fa-box', 4);
         $servicesPage = $this->upsertRoot('services-module', 'Services Page', 'fa-solid fa-briefcase', 5);
-        $processPage = $this->upsertRoot('process-module', 'Process Page', 'fa-solid fa-list-ol', 6);
-        $contact = $this->upsertRoot('contact-module', 'Contact & Leads', 'fa-solid fa-address-book', 7);
-        $settings = $this->upsertRoot('settings-module', 'Settings', 'fa-solid fa-gear', 8);
+        $serviceArea = $this->upsertRoot('service-area-module', 'Service Area', 'fa-solid fa-map-location-dot', 6);
+        $processPage = $this->upsertRoot('process-module', 'Process Page', 'fa-solid fa-list-ol', 7);
+        $contact = $this->upsertRoot('contact-module', 'Contact & Leads', 'fa-solid fa-address-book', 8);
+        $settings = $this->upsertRoot('settings-module', 'Settings', 'fa-solid fa-gear', 9);
 
         $groups = [
             $home->id => [
@@ -28,6 +29,7 @@ class CmsModuleSeeder extends Seeder
                 ['portfolio-items.index', 'Our Work Collage', 'fa-solid fa-camera', 5],
                 ['instagram-posts.index', 'Instagram Feed', 'fa-brands fa-instagram', 6],
                 ['services.index', 'Homepage Services', 'fa-solid fa-list', 7],
+                ['faqs.index', 'FAQ', 'fa-solid fa-circle-question', 8],
             ],
             $gallery->id => [
                 ['gallery-albums.index', 'Gallery Albums', 'fa-solid fa-table-cells-large', 1],
@@ -42,6 +44,10 @@ class CmsModuleSeeder extends Seeder
             $servicesPage->id => [
                 ['services-page.edit', 'Page Settings', 'fa-solid fa-sliders', 1],
                 ['service-page-sections.index', 'Page Sections', 'fa-solid fa-layer-group', 2],
+                ['service-guides.index', 'Service Guides', 'fa-solid fa-book-open', 3],
+            ],
+            $serviceArea->id => [
+                ['service-areas.index', 'Service Area Pages', 'fa-solid fa-map-location-dot', 1],
             ],
             $processPage->id => [
                 ['process-steps.index', 'Process Steps', 'fa-solid fa-list-check', 1],
@@ -84,6 +90,7 @@ class CmsModuleSeeder extends Seeder
                 'gallery-module',
                 'products-module',
                 'services-module',
+                'service-area-module',
                 'process-module',
                 'contact-module',
                 'settings-module',

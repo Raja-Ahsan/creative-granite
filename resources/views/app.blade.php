@@ -58,6 +58,7 @@
         window.__SITE_CONTENT__ = @json($siteContent ?? []);
         window.__SITE_PAGE__ = @json($page ?? 'home');
         window.__SITE_SERVICE__ = @json($service ?? null);
+        window.__SITE_SERVICE_GUIDE__ = @json($serviceGuide ?? null);
     </script>
 </head>
 <body>

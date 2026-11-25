@@ -4,6 +4,7 @@ import { GalleryPage } from "./GalleryPage";
 import { HomePage } from "./HomePage";
 import { RemnantsPage } from "./RemnantsPage";
 import { ServiceDetailPage } from "./ServiceDetailPage";
+import { ServiceGuidePage } from "./ServiceGuidePage";
 import { ServicesPage } from "./ServicesPage";
 import { WorkGalleryPage } from "./WorkGalleryPage";
 
@@ -14,6 +15,7 @@ export const pages = {
   remnants: RemnantsPage,
   services: ServicesPage,
   "service-detail": ServiceDetailPage,
+  "service-guide": ServiceGuidePage,
   contact: ContactPage,
 } satisfies Record<string, ComponentType>;
 
@@ -30,6 +32,10 @@ export function resolvePage(name: string | undefined): ComponentType {
   const path =
     typeof window !== "undefined" ? window.location.pathname.replace(/\/$/, "") || "/" : "/";
 
+  if (typeof window !== "undefined" && window.__SITE_PAGE__ === "service-guide") {
+    return ServiceGuidePage;
+  }
+
   if (typeof window !== "undefined" && window.__SITE_PAGE__ === "service-detail") {
     return ServiceDetailPage;
   }
@@ -39,6 +45,9 @@ export function resolvePage(name: string | undefined): ComponentType {
   }
 
   if (path.startsWith("/services/") && path !== "/services") {
+    if (typeof window !== "undefined" && window.__SITE_SERVICE_GUIDE__) {
+      return ServiceGuidePage;
+    }
     return ServiceDetailPage;
   }
 

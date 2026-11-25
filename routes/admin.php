@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\Admin\EdgeProfileController;
+use App\Http\Controllers\Admin\FaqController;
+use App\Http\Controllers\Admin\ServiceAreaController;
+use App\Http\Controllers\Admin\ServiceGuideController;
 use App\Http\Controllers\Admin\RemnantController;
 use App\Http\Controllers\Admin\EstimateRequestController;
 use App\Http\Controllers\Admin\WarrantyRequestController;
@@ -48,8 +51,14 @@ Route::middleware(['web', 'auth', 'admin'])->prefix('admin')->name('admin.')->gr
     Route::resource('remnants', RemnantController::class)->except(['show']);
     Route::put('process-steps/section', [ProcessStepController::class, 'updateSection'])->name('process-steps.section.update');
     Route::resource('process-steps', ProcessStepController::class)->except(['show']);
+    Route::put('faqs/section', [FaqController::class, 'updateSection'])->name('faqs.section.update');
+    Route::resource('faqs', FaqController::class)->except(['show']);
     Route::resource('portfolio-items', PortfolioItemController::class)->except(['show']);
     Route::resource('services', ServiceController::class)->except(['show']);
+    Route::resource('service-guides', ServiceGuideController::class)->except(['show']);
+    Route::resource('service-areas', ServiceAreaController::class)
+        ->except(['show'])
+        ->parameters(['service-areas' => 'service_guide']);
     Route::get('services-page', [ServicesPageController::class, 'edit'])->name('services-page.edit');
     Route::put('services-page', [ServicesPageController::class, 'update'])->name('services-page.update');
     Route::resource('service-page-sections', ServicePageSectionController::class)->except(['show']);

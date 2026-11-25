@@ -6,12 +6,18 @@ function isEstimateLink(href: string): boolean {
   return href === "#estimate" || href.endsWith("#estimate");
 }
 
+function isServicesLink(label: string, href: string): boolean {
+  return label.toLowerCase() === "services" || href === "/services" || href.endsWith("/services");
+}
+
 export function Header() {
-  const { settings, navLeft, navRight } = useSiteContent();
+  const { settings, navLeft, navRight, serviceGuides } = useSiteContent();
   const { openEstimateModal } = useEstimateModal();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [servicesOpen, setServicesOpen] = useState(false);
   const scrolledRef = useRef(false);
+  const servicesRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     let raf = 0;
@@ -33,10 +39,62 @@ export function Header() {
     };
   }, []);
 
+  useEffect(() => {
+    const onPointerDown = (event: MouseEvent) => {
+      if (!servicesRef.current?.contains(event.target as Node)) {
+        setServicesOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", onPointerDown);
+    return () => document.removeEventListener("mousedown", onPointerDown);
+  }, []);
+
   const textNavRight = navRight.filter(([, h]) => !isEstimateLink(h));
   const estimateNav = navRight.find(([, h]) => isEstimateLink(h));
   const estimateLabel = estimateNav?.[0] ?? "Get an Estimate";
   const navMobile = [...navLeft, ...textNavRight] as const;
+  const hasServiceGuides = serviceGuides.length > 0;
+
+  const renderNavItem = (label: string, href: string) => {
+    if (isServicesLink(label, href) && hasServiceGuides) {
+      return (
+        <div key={label} className="relative" ref={servicesRef} onMouseEnter={() => setServicesOpen(true)} onMouseLeave={() => setServicesOpen(false)}>
+          <a
+            href={href || "/services"}
+            className="link-underline inline-flex items-center gap-1.5 text-sm font-medium text-cream/80 hover:text-cream"
+            aria-expanded={servicesOpen}
+            onClick={() => setServicesOpen(false)}
+          >
+            <span>{label}</span>
+            <span className={`text-[10px] transition-transform ${servicesOpen ? "rotate-180" : ""}`} aria-hidden>
+              ▼
+            </span>
+          </a>
+          {servicesOpen && (
+            <div className="absolute left-0 top-full z-50 pt-3">
+              <div className="min-w-[260px] border border-cream/15 bg-ink/95 py-2 shadow-xl backdrop-blur-md">
+                {serviceGuides.map((guide) => (
+                  <a
+                    key={guide.slug}
+                    href={guide.href}
+                    className="block px-4 py-2.5 text-sm text-cream/80 transition-colors hover:bg-cream/10 hover:text-cream"
+                  >
+                    {guide.title}
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    return (
+      <a key={label} href={href} className="link-underline text-sm font-medium text-cream/80 hover:text-cream">
+        {label}
+      </a>
+    );
+  };
 
   return (
     <header
@@ -48,11 +106,7 @@ export function Header() {
     >
       <div className="mx-auto hidden max-w-[1400px] grid-cols-3 items-center px-6 py-4 md:grid md:px-10 md:py-5">
         <nav className="flex items-center gap-6 lg:gap-8">
-          {navLeft.map(([l, h]) => (
-            <a key={l} href={h} className="link-underline text-sm font-medium text-cream/80 hover:text-cream">
-              {l}
-            </a>
-          ))}
+          {navLeft.map(([l, h]) => renderNavItem(l, h))}
         </nav>
 
         <a href="/" className="flex justify-center" data-cursor="home">
@@ -66,11 +120,7 @@ export function Header() {
         </a>
 
         <div className="flex items-center justify-end gap-6 lg:gap-8">
-          {textNavRight.map(([l, h]) => (
-            <a key={l} href={h} className="link-underline text-sm font-medium text-cream/80 hover:text-cream">
-              {l}
-            </a>
-          ))}
+          {textNavRight.map(([l, h]) => renderNavItem(l, h))}
           <a href="/contact" className="link-underline text-sm font-medium text-cream/80 hover:text-cream">
             Contact
           </a>
@@ -110,16 +160,40 @@ export function Header() {
       {open && (
         <div className="border-t border-cream/10 bg-ink/85 backdrop-blur-md md:hidden">
           <div className="flex flex-col px-6 py-6">
-            {navMobile.map(([l, h]) => (
-              <a
-                key={l}
-                href={h}
-                onClick={() => setOpen(false)}
-                className="border-b border-cream/10 py-4 text-2xl text-cream"
-              >
-                {l}
-              </a>
-            ))}
+            {navMobile.map(([l, h]) => {
+              if (isServicesLink(l, h) && hasServiceGuides) {
+                return (
+                  <div key={l} className="border-b border-cream/10 py-4">
+                    <a href="/services" onClick={() => setOpen(false)} className="block text-2xl text-cream">
+                      {l}
+                    </a>
+                    <div className="mt-3 space-y-2 pl-3">
+                      {serviceGuides.map((guide) => (
+                        <a
+                          key={guide.slug}
+                          href={guide.href}
+                          onClick={() => setOpen(false)}
+                          className="block text-base text-cream/70"
+                        >
+                          {guide.title}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                );
+              }
+
+              return (
+                <a
+                  key={l}
+                  href={h}
+                  onClick={() => setOpen(false)}
+                  className="border-b border-cream/10 py-4 text-2xl text-cream"
+                >
+                  {l}
+                </a>
+              );
+            })}
             <a
               href="/contact"
               onClick={() => setOpen(false)}

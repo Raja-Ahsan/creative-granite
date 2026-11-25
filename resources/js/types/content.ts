@@ -135,6 +135,7 @@ export type ServicesPageContent = {
 
 export type ServiceDetail = Service;
 export type ProcessStep = { n: string; t: string; d: string };
+export type FaqItem = { question: string; answer: string };
 export type Testimonial = { q: string; a: string; r: string };
 export type NavLink = readonly [label: string, href: string];
 export type SiteSocialLink = { label: string; url: string };

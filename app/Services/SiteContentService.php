@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\EdgeProfile;
+use App\Models\Faq;
 use App\Models\Remnant;
 use App\Models\GalleryAlbum;
 use App\Models\GalleryAlbumImage;
@@ -17,6 +18,7 @@ use App\Models\ProductCategory;
 use App\Models\ProductImage;
 use App\Models\ProjectType;
 use App\Models\Service;
+use App\Models\ServiceGuide;
 use App\Models\ServicePageSection;
 use App\Models\ServicePageSectionImage;
 use App\Models\SiteSetting;
@@ -30,6 +32,11 @@ class SiteContentService
 
     public function getPayload(): array
     {
+        // Local/dev: always rebuild so admin edits appear immediately on the website.
+        if (app()->environment(['local', 'development'])) {
+            return $this->buildPayload();
+        }
+
         return Cache::remember(self::CACHE_KEY, now()->addDay(), fn () => $this->buildPayload());
     }
 
@@ -49,7 +56,7 @@ class SiteContentService
                 'logo' => $settings['logo_path'] ?? '/images/site/update-logo.png',
                 'favicon' => filled($settings['favicon_path'] ?? null)
                     ? $settings['favicon_path']
-                    : '/favicon.ico',
+                    : '/favicon.png',
                 'aboutStoneBath' => $settings['about_image_path'] ?? '/images/site/LakeLine-20.jpg',
                 'instagramUrl' => $settings['instagram_url']
                     ?: (config('services.instagram.profile_url') ?: 'https://www.instagram.com/creativegraniteanddesign/'),
@@ -250,6 +257,22 @@ class SiteContentService
                 ])
                 ->values()
                 ->all(),
+            'serviceGuides' => Schema::hasTable('service_guides')
+                ? ServiceGuide::query()
+                    ->where('is_active', true)
+                    ->where('show_in_nav', true)
+                    ->where('is_service_area', false)
+                    ->orderBy('sort_order')
+                    ->orderBy('id')
+                    ->get()
+                    ->map(fn (ServiceGuide $guide) => [
+                        'title' => $guide->title,
+                        'slug' => $guide->slug,
+                        'href' => '/services/'.$guide->slug,
+                    ])
+                    ->values()
+                    ->all()
+                : [],
             'servicesPage' => $this->resolveServicesPage($settings),
             'edgeProfiles' => Schema::hasTable('edge_profiles')
                 ? EdgeProfile::query()
@@ -306,6 +329,18 @@ class SiteContentService
                 ])
                 ->values()
                 ->all(),
+            'faqs' => Schema::hasTable('faqs')
+                ? Faq::query()
+                    ->active()
+                    ->ordered()
+                    ->get()
+                    ->map(fn (Faq $faq) => [
+                        'question' => $faq->question,
+                        'answer' => $faq->answer,
+                    ])
+                    ->values()
+                    ->all()
+                : [],
             'testimonials' => $this->staticTestimonials(),
             'navLeft' => $this->staticNavLeft(),
             'navRight' => $this->staticNavRight(),
@@ -494,6 +529,7 @@ natasha “Natasha”'],
         ];
     }
 
+
     private function staticFooterNavLinks(): array
     {
         return [
@@ -664,6 +700,14 @@ natasha “Natasha”'],
                 'heading' => 'Start your project',
                 'subheading' => '',
                 'body' => 'Whether you\'re building a custom home, planning a remodel, or managing a multifamily or commercial project, our team is here to help bring it to life.',
+                'highlightText' => '',
+                'image' => '',
+            ],
+            'faq' => [
+                'eyebrow' => $settings['faq_eyebrow'] ?? 'FAQ',
+                'heading' => $settings['faq_heading'] ?? 'Frequently asked questions',
+                'subheading' => $settings['faq_subheading'] ?? 'Answers to common questions about materials, timelines, and working with our team.',
+                'body' => '',
                 'highlightText' => '',
                 'image' => '',
             ],

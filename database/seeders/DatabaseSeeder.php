@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
             CmsModuleSeeder::class,
             CmsModulePermissionsSeeder::class,
             EdgeProfileSeeder::class,
+            FaqSeeder::class,
+            ServiceGuideSeeder::class,
         ]);
     }
 }

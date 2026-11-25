@@ -11,6 +11,7 @@ import type {
   ProjectTypeOption,
   EdgeProfile,
   Remnant,
+  FaqItem,
   SectionContent,
   Service,
   ServicesPageContent,
@@ -32,8 +33,10 @@ export type SiteContentPayload = {
   productCategories: ProductCategory[];
   products: Product[];
   services: Service[];
+  serviceGuides: { title: string; slug: string; href: string }[];
   servicesPage: ServicesPageContent;
   processSteps: ProcessStep[];
+  faqs: FaqItem[];
   testimonials: Testimonial[];
   navLeft: NavLink[];
   navRight: NavLink[];
@@ -77,6 +80,7 @@ export const defaultSiteContent: SiteContentPayload = {
   productCategories: [],
   products: [],
   services: [],
+  serviceGuides: [],
   servicesPage: {
     eyebrow: "Services",
     heading: "Stone Fabrication for Every Stage of Your Project.",
@@ -112,6 +116,7 @@ export const defaultSiteContent: SiteContentPayload = {
     },
   },
   processSteps: [],
+  faqs: [],
   testimonials: [],
   navLeft: [],
   navRight: [],

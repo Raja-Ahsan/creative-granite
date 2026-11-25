@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\EdgeProfile;
+use App\Models\Faq;
 use App\Models\Remnant;
 use App\Models\ContactInquiry;
 use App\Models\EstimateRequest;
@@ -20,6 +21,11 @@ use App\Models\ProductCategory;
 use App\Models\ProductImage;
 use App\Models\ProjectType;
 use App\Models\Service;
+use App\Models\ServiceGuide;
+use App\Models\ServiceGuideButton;
+use App\Models\ServiceGuideFaq;
+use App\Models\ServiceGuideMaterial;
+use App\Models\ServiceGuideStep;
 use App\Models\ServicePageSection;
 use App\Models\ServicePageSectionImage;
 use App\Models\SiteSetting;
@@ -46,7 +52,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $clearSiteContentCache = static fn () => SiteContentService::clearCache();
 
-        foreach ([GalleryAlbum::class, GalleryAlbumImage::class, HeroSlide::class, InstagramPost::class, Material::class, MaterialImage::class, Product::class, ProductCategory::class, ProductImage::class, ProcessStep::class, ProjectType::class, PortfolioItem::class, Service::class, ServicePageSection::class, ServicePageSectionImage::class, SiteSetting::class, EdgeProfile::class, Remnant::class] as $model) {
+        foreach ([GalleryAlbum::class, GalleryAlbumImage::class, HeroSlide::class, InstagramPost::class, Material::class, MaterialImage::class, Product::class, ProductCategory::class, ProductImage::class, ProcessStep::class, ProjectType::class, PortfolioItem::class, Service::class, ServiceGuide::class, ServiceGuideMaterial::class, ServiceGuideStep::class, ServiceGuideFaq::class, ServiceGuideButton::class, ServicePageSection::class, ServicePageSectionImage::class, SiteSetting::class, EdgeProfile::class, Remnant::class, Faq::class] as $model) {
             $model::saved($clearSiteContentCache);
             $model::deleted($clearSiteContentCache);
         }
