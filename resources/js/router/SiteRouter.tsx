@@ -198,6 +198,13 @@ export function SiteRouterProvider({ children }: { children?: ReactNode }) {
         return;
       }
 
+      // Service guide pages are SSR-backed (__SITE_SERVICE_GUIDE__). A client-side
+      // route swap would change the URL but keep the previous guide payload.
+      // Allow a normal browser navigation so the correct slug always loads fresh.
+      if (/^\/services\/[^/]+\/?$/.test(url.pathname)) {
+        return;
+      }
+
       event.preventDefault();
       navigate(`${url.pathname}${url.search}${url.hash}`);
     };
