@@ -36,6 +36,7 @@ class CmsModulePermissionsSeeder extends Seeder
             'instagram-posts.index',
             'services.index',
             'faqs.index',
+            'cta-page.edit',
             'gallery-albums.index',
             'services-page.edit',
             'service-page-sections.index',

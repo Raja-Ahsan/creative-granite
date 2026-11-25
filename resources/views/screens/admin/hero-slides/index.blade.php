@@ -24,8 +24,8 @@
     <div class="mb-8 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
         <div>
             <p class="text-xs uppercase tracking-[0.2em] text-ink-soft/60">Site Content</p>
-            <h1 class="mt-1 font-display text-3xl text-ink">Hero Slides</h1>
-            <p class="mt-2 text-sm text-ink-soft">Manage homepage hero slider images and order.</p>
+            <h1 class="mt-1 font-display text-3xl text-ink">{{ $title ?? 'Hero Banner' }}</h1>
+            <p class="mt-2 text-sm text-ink-soft">Edit hero banner text and manage slider images.</p>
         </div>
         <a
             href="{{ route('admin.hero-slides.create', absolute: false) }}"
@@ -34,6 +34,62 @@
             <i class="fa-solid fa-plus text-xs"></i>
             Add Slide
         </a>
+    </div>
+
+    <div class="mb-8 bg-white rounded-xl border border-bone shadow-sm overflow-hidden">
+        <div class="px-6 py-4 border-b border-bone">
+            <h2 class="text-sm font-semibold text-ink">Banner Text</h2>
+            <p class="mt-1 text-sm text-ink-soft">Controls the heading, subheading, and button on the homepage hero.</p>
+        </div>
+        <div class="p-6">
+            <form method="POST" action="{{ route('admin.hero-slides.section.update') }}">
+                @csrf
+                @method('PUT')
+
+                <x-admin.input
+                    label="Eyebrow (optional)"
+                    name="hero_intro_eyebrow"
+                    :value="old('hero_intro_eyebrow', $sectionValues['hero_intro_eyebrow'])"
+                    placeholder="Welcome to creative granite and design"
+                />
+
+                <x-admin.textarea
+                    label="Main Heading"
+                    name="hero_intro_heading"
+                    :value="old('hero_intro_heading', $sectionValues['hero_intro_heading'])"
+                    :rows="2"
+                    placeholder="Countertop Installation Salt Lake City, UT —&#10;Custom Stone for Inspired Spaces"
+                />
+                <p class="mt-1 text-xs text-ink-soft">Press Enter for a new line — each line shows separately on the homepage.</p>
+
+                <x-admin.textarea
+                    label="Subheading"
+                    name="hero_intro_subheading"
+                    :value="old('hero_intro_subheading', $sectionValues['hero_intro_subheading'])"
+                    :rows="2"
+                />
+
+                <div class="mt-2 grid grid-cols-1 gap-6 md:grid-cols-2">
+                    <x-admin.input
+                        label="Button Label"
+                        name="hero_intro_button_label"
+                        :value="old('hero_intro_button_label', $sectionValues['hero_intro_button_label'])"
+                        placeholder="Get an Estimate"
+                    />
+                    <x-admin.input
+                        label="Button URL / Link"
+                        name="hero_intro_button_url"
+                        :value="old('hero_intro_button_url', $sectionValues['hero_intro_button_url'])"
+                        placeholder="#estimate"
+                    />
+                </div>
+                <p class="mt-2 text-xs text-ink-soft">Use <code class="rounded bg-bone px-1">#estimate</code> to open the estimate modal.</p>
+
+                <div class="mt-6">
+                    <x-primary-button>Save Banner Text</x-primary-button>
+                </div>
+            </form>
+        </div>
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">

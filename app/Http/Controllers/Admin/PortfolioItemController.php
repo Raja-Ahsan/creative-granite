@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Admin\Concerns\HandlesImageUpload;
 use App\Http\Controllers\Controller;
 use App\Models\PortfolioItem;
+use App\Models\SiteSetting;
+use App\Services\SiteContentService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -12,6 +14,12 @@ use Illuminate\View\View;
 class PortfolioItemController extends Controller
 {
     use HandlesImageUpload;
+
+    private const SECTION_KEYS = [
+        'work_eyebrow',
+        'work_heading',
+        'work_subheading',
+    ];
 
     public function index(Request $request): View
     {
@@ -46,6 +54,7 @@ class PortfolioItemController extends Controller
         return view('screens.admin.portfolio-items.index', [
             'items' => $query->paginate(12)->withQueryString(),
             'title' => 'Our Work Gallery',
+            'sectionValues' => $this->sectionValues(),
             'filters' => [
                 'search' => $search,
                 'featured' => $featured,
@@ -53,6 +62,49 @@ class PortfolioItemController extends Controller
                 'direction' => $direction,
             ],
         ]);
+    }
+
+    public function updateSection(Request $request): RedirectResponse
+    {
+        $data = $request->validate([
+            'work_eyebrow' => ['nullable', 'string', 'max:120'],
+            'work_heading' => ['nullable', 'string', 'max:300'],
+            'work_subheading' => ['nullable', 'string', 'max:800'],
+        ]);
+
+        foreach (self::SECTION_KEYS as $key) {
+            $this->saveSetting($key, $data[$key] ?? '');
+        }
+
+        SiteContentService::clearCache();
+
+        return redirect()
+            ->route('admin.portfolio-items.index')
+            ->with('success', 'Our Work section text updated.');
+    }
+
+    private function sectionValues(): array
+    {
+        $defaults = [
+            'work_eyebrow' => 'Our work',
+            'work_heading' => 'Fabricated with precision. installed with intention.',
+            'work_subheading' => 'A selection of completed spaces, material details, and in between moments each reflecting our approach to stone, design, and execution.',
+        ];
+
+        $stored = SiteSetting::query()
+            ->whereIn('key', self::SECTION_KEYS)
+            ->pluck('value', 'key')
+            ->all();
+
+        return array_merge($defaults, $stored);
+    }
+
+    private function saveSetting(string $key, string $value): void
+    {
+        SiteSetting::updateOrCreate(
+            ['key' => $key],
+            ['value' => $value, 'type' => 'string', 'group' => 'work']
+        );
     }
 
     public function create(): View

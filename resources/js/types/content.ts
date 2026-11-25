@@ -170,4 +170,7 @@ export type SectionContent = {
   secondaryImage?: string | null;
   buttonLabel?: string | null;
   buttonUrl?: string | null;
+  secondaryButtonLabel?: string | null;
+  secondaryButtonUrl?: string | null;
+  appointmentLabel?: string | null;
 };

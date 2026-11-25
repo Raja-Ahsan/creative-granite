@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Admin\Concerns\HandlesImageUpload;
 use App\Http\Controllers\Controller;
 use App\Models\HeroSlide;
+use App\Models\SiteSetting;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -13,12 +14,66 @@ class HeroSlideController extends Controller
 {
     use HandlesImageUpload;
 
+    private const SECTION_KEYS = [
+        'hero_intro_eyebrow',
+        'hero_intro_heading',
+        'hero_intro_subheading',
+        'hero_intro_button_label',
+        'hero_intro_button_url',
+    ];
+
     public function index(): View
     {
         return view('screens.admin.hero-slides.index', [
             'items' => HeroSlide::query()->orderBy('sort_order')->get(),
-            'title' => 'Hero Slides',
+            'sectionValues' => $this->sectionValues(),
+            'title' => 'Hero Banner',
         ]);
+    }
+
+    public function updateSection(Request $request): RedirectResponse
+    {
+        $data = $request->validate([
+            'hero_intro_eyebrow' => ['nullable', 'string', 'max:120'],
+            'hero_intro_heading' => ['nullable', 'string', 'max:300'],
+            'hero_intro_subheading' => ['nullable', 'string', 'max:500'],
+            'hero_intro_button_label' => ['nullable', 'string', 'max:120'],
+            'hero_intro_button_url' => ['nullable', 'string', 'max:500'],
+        ]);
+
+        foreach (self::SECTION_KEYS as $key) {
+            $this->saveSetting($key, $data[$key] ?? '');
+        }
+
+        return redirect()
+            ->route('admin.hero-slides.index')
+            ->with('success', 'Hero banner text updated.');
+    }
+
+    private function sectionValues(): array
+    {
+        $defaults = [
+            'hero_intro_eyebrow' => 'Welcome to creative granite and design',
+            'hero_intro_heading' => "Countertop Installation Salt Lake City, UT —\nCustom Stone for Inspired Spaces",
+            'hero_intro_subheading' => 'Serving homeowners, builders, and multifamily projects across Utah',
+            'hero_intro_button_label' => 'Get an Estimate',
+            'hero_intro_button_url' => '#estimate',
+        ];
+
+        $stored = SiteSetting::query()
+            ->whereIn('key', self::SECTION_KEYS)
+            ->pluck('value', 'key')
+            ->all();
+
+        return array_merge($defaults, $stored);
+    }
+
+    private function saveSetting(string $key, string $value): void
+    {
+        SiteSetting::updateOrCreate(
+            ['key' => $key],
+            ['value' => $value, 'type' => 'string', 'group' => 'hero']
+        );
     }
 
     public function create(): View

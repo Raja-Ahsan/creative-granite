@@ -30,6 +30,7 @@ class CmsModuleSeeder extends Seeder
                 ['instagram-posts.index', 'Instagram Feed', 'fa-brands fa-instagram', 6],
                 ['services.index', 'Homepage Services', 'fa-solid fa-list', 7],
                 ['faqs.index', 'FAQ', 'fa-solid fa-circle-question', 8],
+                ['cta-page.edit', 'Final CTA', 'fa-solid fa-bullhorn', 9],
             ],
             $gallery->id => [
                 ['gallery-albums.index', 'Gallery Albums', 'fa-solid fa-table-cells-large', 1],

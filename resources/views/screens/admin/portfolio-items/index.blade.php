@@ -7,6 +7,46 @@
         'actionLabel' => 'Add Item',
     ])
 
+    <div class="mb-6 overflow-hidden rounded-xl border border-bone bg-white shadow-sm">
+        <div class="border-b border-bone px-6 py-4">
+            <h2 class="text-sm font-semibold text-ink">Section Text</h2>
+            <p class="mt-1 text-sm text-ink-soft">Controls the eyebrow, heading, and description on the homepage Our Work section.</p>
+        </div>
+        <div class="p-6">
+            <form method="POST" action="{{ route('admin.portfolio-items.section.update') }}">
+                @csrf
+                @method('PUT')
+
+                <x-admin.input
+                    label="Eyebrow"
+                    name="work_eyebrow"
+                    :value="old('work_eyebrow', $sectionValues['work_eyebrow'])"
+                    placeholder="Our work"
+                />
+
+                <x-admin.textarea
+                    label="Heading"
+                    name="work_heading"
+                    :value="old('work_heading', $sectionValues['work_heading'])"
+                    :rows="2"
+                    placeholder="Fabricated with precision. installed with intention."
+                />
+                <p class="mt-1 text-xs text-ink-soft">Use a period + space to split into two lines (e.g. “Precision. Intention.”).</p>
+
+                <x-admin.textarea
+                    label="Description"
+                    name="work_subheading"
+                    :value="old('work_subheading', $sectionValues['work_subheading'])"
+                    :rows="3"
+                />
+
+                <div class="mt-6">
+                    <x-primary-button>Save Section Text</x-primary-button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <div class="mb-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
         <form method="GET" action="{{ route('admin.portfolio-items.index') }}" class="grid grid-cols-1 gap-3 md:grid-cols-12 md:items-end">
             <div class="md:col-span-4">

@@ -106,7 +106,7 @@ export function Hero() {
         aria-hidden
       />
 
-      <div className="relative z-20 flex h-full items-center justify-center pb-24 md:pb-28">
+      <div className="relative z-20 flex h-full items-center justify-center px-0 pt-[5.5rem] pb-28 sm:pt-[6rem] md:pt-[7.5rem] md:pb-32">
         <HeroIntro overlay />
       </div>
 

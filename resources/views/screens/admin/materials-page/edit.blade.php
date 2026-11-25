@@ -51,6 +51,28 @@
                     <x-admin.input label="Button URL" name="materials_callout_button_url" :value="old('materials_callout_button_url', $values['materials_callout_button_url'])" placeholder="/contact" />
                 </div>
 
+                <div class="border-t border-gray-100 pt-6">
+                    <h3 class="text-sm font-semibold uppercase tracking-wider text-gray-500">Help Choosing CTA</h3>
+                    <p class="mt-1 text-sm text-gray-500">Dark banner under Materials on the homepage and Products page (“Need help choosing?”).</p>
+                </div>
+                <x-admin.input label="Eyebrow" name="materials_help_eyebrow" :value="old('materials_help_eyebrow', $values['materials_help_eyebrow'])" placeholder="Need help choosing?" />
+                <x-admin.input label="Heading" name="materials_help_heading" :value="old('materials_help_heading', $values['materials_help_heading'])" placeholder="Not sure which material is right for your project?" />
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Body</label>
+                    <p class="mt-1 text-xs text-gray-500">Main paragraph under the heading. Formatting is supported.</p>
+                    <textarea id="materials_help_body" name="materials_help_body" rows="6" class="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">{{ old('materials_help_body', $values['materials_help_body']) }}</textarea>
+                </div>
+                <div class="grid gap-4 md:grid-cols-2">
+                    <x-admin.input label="Primary Button Label" name="materials_help_primary_label" :value="old('materials_help_primary_label', $values['materials_help_primary_label'])" placeholder="Start Your Project" />
+                    <x-admin.input label="Primary Button URL" name="materials_help_primary_url" :value="old('materials_help_primary_url', $values['materials_help_primary_url'])" placeholder="#estimate" />
+                </div>
+                <p class="text-xs text-gray-500">Use <code class="rounded bg-gray-100 px-1">#estimate</code> to open the estimate modal.</p>
+                <div class="grid gap-4 md:grid-cols-2">
+                    <x-admin.input label="Secondary Button Label" name="materials_help_secondary_label" :value="old('materials_help_secondary_label', $values['materials_help_secondary_label'])" placeholder="Visit the Showroom" />
+                    <x-admin.input label="Secondary Button URL" name="materials_help_secondary_url" :value="old('materials_help_secondary_url', $values['materials_help_secondary_url'])" placeholder="Leave blank for showroom map / contact" />
+                </div>
+                <p class="text-xs text-gray-500">Leave Secondary URL blank to use the showroom map link from Site Settings (falls back to /contact).</p>
+
                 <x-admin.form-actions :cancel-route="route('admin.materials.index')" />
             </form>
         </div>
@@ -68,7 +90,7 @@
             });
 
             tinymce.init({
-                selector: '#materials_section_subheading, #materials_products_subheading, #materials_callout_body',
+                selector: '#materials_section_subheading, #materials_products_subheading, #materials_callout_body, #materials_help_body',
                 license_key: 'gpl',
                 base_url: 'https://cdn.jsdelivr.net/npm/tinymce@7.6.0',
                 suffix: '.min',

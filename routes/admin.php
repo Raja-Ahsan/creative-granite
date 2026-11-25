@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\RemnantController;
 use App\Http\Controllers\Admin\EstimateRequestController;
 use App\Http\Controllers\Admin\WarrantyRequestController;
 use App\Http\Controllers\Admin\ContactPageController;
+use App\Http\Controllers\Admin\CtaPageController;
 use App\Http\Controllers\Admin\ContactInquiryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EditorUploadController;
@@ -35,6 +36,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['web', 'auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
+    Route::put('hero-slides/section', [HeroSlideController::class, 'updateSection'])->name('hero-slides.section.update');
     Route::resource('hero-slides', HeroSlideController::class)->except(['show']);
     Route::resource('instagram-posts', InstagramPostController::class)->except(['show']);
     Route::resource('gallery-albums', GalleryAlbumController::class)->except(['show']);
@@ -53,6 +55,9 @@ Route::middleware(['web', 'auth', 'admin'])->prefix('admin')->name('admin.')->gr
     Route::resource('process-steps', ProcessStepController::class)->except(['show']);
     Route::put('faqs/section', [FaqController::class, 'updateSection'])->name('faqs.section.update');
     Route::resource('faqs', FaqController::class)->except(['show']);
+    Route::get('cta-page', [CtaPageController::class, 'edit'])->name('cta-page.edit');
+    Route::put('cta-page', [CtaPageController::class, 'update'])->name('cta-page.update');
+    Route::put('portfolio-items/section', [PortfolioItemController::class, 'updateSection'])->name('portfolio-items.section.update');
     Route::resource('portfolio-items', PortfolioItemController::class)->except(['show']);
     Route::resource('services', ServiceController::class)->except(['show']);
     Route::resource('service-guides', ServiceGuideController::class)->except(['show']);

@@ -38,7 +38,7 @@ export function SplitText({
       {text.split(" ").map((word, wi) => (
         <span
           key={wi}
-          className={`inline-block overflow-hidden align-baseline ${dense ? "py-0" : "py-[0.15em]"} ${wrap ? "pr-[0.2em]" : "whitespace-nowrap pr-[0.25em]"}`}
+          className={`inline-block overflow-hidden align-baseline ${dense ? "py-[0.06em]" : "py-[0.15em]"} ${wrap ? "pr-[0.2em]" : "whitespace-nowrap pr-[0.25em]"}`}
         >
           {word.split("").map((c, ci) => (
             <span

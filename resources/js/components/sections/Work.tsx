@@ -30,25 +30,26 @@ export function Work() {
   return (
     <section id="work" className="relative py-28 md:py-40">
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
-        <div className="flex flex-wrap items-end justify-between gap-6">
-          <Reveal>
-            <div className="flex items-center gap-3 text-foreground/60">
-              <span className="h-px w-12 bg-foreground/40" />
-              <span className="eyebrow">{section.eyebrow}</span>
-            </div>
-            <h2
-              className={`mt-6 max-w-3xl font-display uppercase leading-[0.95] tracking-[-0.02em] text-black text-[clamp(1.2rem,4.6vw,3.75rem)]`}
-            >
+        <Reveal>
+          <div className="flex items-center gap-3 text-foreground/60">
+            <span className="h-px w-12 bg-foreground/40" />
+            <span className="eyebrow">{section.eyebrow}</span>
+          </div>
+        </Reveal>
+
+        <div className="mt-6 grid grid-cols-1 items-start gap-8 md:grid-cols-12 md:gap-10 lg:gap-14">
+          <Reveal className="md:col-span-7">
+            <h2 className="max-w-3xl font-display uppercase leading-[0.95] tracking-[-0.02em] text-black text-[clamp(1.2rem,4.6vw,3.75rem)]">
               {headingLines.map((line, index) => (
-                <span key={`${line}-${index}`} className="block whitespace-nowrap md:whitespace-normal">
+                <span key={`${line}-${index}`} className="block">
                   {line}
                 </span>
               ))}
             </h2>
           </Reveal>
           {section.subheading && (
-            <Reveal delay={200}>
-              <p className={`max-w-sm ${bodyCopyLight}`}>{section.subheading}</p>
+            <Reveal delay={200} className="md:col-span-5 md:pt-1">
+              <p className={`max-w-md md:ml-auto ${bodyCopyLight}`}>{section.subheading}</p>
             </Reveal>
           )}
         </div>

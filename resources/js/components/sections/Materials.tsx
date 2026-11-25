@@ -21,8 +21,20 @@ export function Materials({
   const homeSection = useSection("materials");
   const productsSection = useSection("materials-products");
   const calloutSection = useSection("materials-callout");
+  const helpSection = useSection("materials-help");
   const remnantsCta = useSection("remnants-cta");
   const [active, setActive] = useState(0);
+
+  const helpEyebrow = helpSection.eyebrow || "Need help choosing?";
+  const helpHeading = helpSection.heading || "Not sure which material is right for your project?";
+  const helpBody =
+    helpSection.body ||
+    "The right surface depends on more than appearance. How the space will be used, maintenance expectations, application, design direction, and the characteristics of the individual material all matter. Our team can help you explore your options, understand the differences, and select a surface that works beautifully for your project.";
+  const helpPrimaryLabel = helpSection.buttonLabel || "Start Your Project";
+  const helpPrimaryUrl = helpSection.buttonUrl || "#estimate";
+  const helpSecondaryLabel = helpSection.secondaryButtonLabel || "Visit the Showroom";
+  const helpSecondaryUrl = helpSection.secondaryButtonUrl || settings.showroomMapsUrl || "/contact";
+  const helpSecondaryIsExternal = /^https?:\/\//i.test(helpSecondaryUrl);
 
   const section = previewOnly
     ? {
@@ -177,40 +189,46 @@ export function Materials({
                 )}
 
                 <div className={calloutContent ? "pt-10 md:pt-12" : ""}>
-                  <p className="eyebrow text-cream/50">Need help choosing?</p>
-                  <h2 className="mt-5 font-display text-3xl uppercase tracking-[-0.02em] text-cream md:text-5xl">
-                    Not sure which material is right for your project?
-                  </h2>
-                  <p className="mt-7 text-sm font-light leading-relaxed text-cream/70 md:text-base">
-                    The right surface depends on more than appearance. How the space will be used, maintenance
-                    expectations, application, design direction, and the characteristics of the individual material
-                    all matter. Our team can help you explore your options, understand the differences, and select a
-                    surface that works beautifully for your project.
-                  </p>
+                  {helpEyebrow && <p className="eyebrow text-cream/50">{helpEyebrow}</p>}
+                  {helpHeading && (
+                    <h2 className="mt-5 font-display text-3xl uppercase tracking-[-0.02em] text-cream md:text-5xl">
+                      {helpHeading}
+                    </h2>
+                  )}
+                  {helpBody && (
+                    <RichHtml
+                      html={helpBody}
+                      className="mt-7 text-sm font-light leading-relaxed text-cream/70 md:text-base"
+                    />
+                  )}
 
                   <div className="mt-10 flex flex-col items-center gap-4">
                     <div className="flex flex-wrap items-center justify-center gap-3 md:gap-4">
-                      <a
-                        href="#estimate"
-                        data-cursor="estimate"
-                        className="btn-magnetic inline-flex items-center gap-3 rounded-full border border-cream/30 px-7 py-3.5 text-xs font-medium tracking-[0.2em] text-cream transition hover:border-cream/60"
-                      >
-                        Start Your Project
-                        <span className="relative z-[2]" aria-hidden="true">
-                          →
-                        </span>
-                      </a>
+                      {helpPrimaryLabel && (
+                        <a
+                          href={helpPrimaryUrl}
+                          data-cursor="estimate"
+                          className="btn-magnetic inline-flex items-center gap-3 rounded-full border border-cream/30 px-7 py-3.5 text-xs font-medium tracking-[0.2em] text-cream transition hover:border-cream/60"
+                        >
+                          {helpPrimaryLabel}
+                          <span className="relative z-[2]" aria-hidden="true">
+                            →
+                          </span>
+                        </a>
+                      )}
 
-                      <a
-                        href={settings.showroomMapsUrl || "/contact"}
-                        {...(settings.showroomMapsUrl
-                          ? { target: "_blank", rel: "noopener noreferrer" }
-                          : {})}
-                        className="inline-flex items-center gap-3 rounded-full border border-cream/30 px-7 py-3.5 text-xs font-medium tracking-[0.2em] text-cream transition hover:border-cream/60"
-                      >
-                        Visit the Showroom
-                        <span aria-hidden="true">→</span>
-                      </a>
+                      {helpSecondaryLabel && (
+                        <a
+                          href={helpSecondaryUrl}
+                          {...(helpSecondaryIsExternal
+                            ? { target: "_blank", rel: "noopener noreferrer" }
+                            : {})}
+                          className="inline-flex items-center gap-3 rounded-full border border-cream/30 px-7 py-3.5 text-xs font-medium tracking-[0.2em] text-cream transition hover:border-cream/60"
+                        >
+                          {helpSecondaryLabel}
+                          <span aria-hidden="true">→</span>
+                        </a>
+                      )}
                     </div>
 
                     {showRemnantsCta && remnantsCta.buttonLabel && (
