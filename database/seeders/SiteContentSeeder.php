@@ -62,6 +62,8 @@ class SiteContentSeeder extends Seeder
             ['key' => 'work_eyebrow', 'value' => 'Our work', 'type' => 'string', 'group' => 'work'],
             ['key' => 'work_heading', 'value' => 'Fabricated with precision. installed with intention.', 'type' => 'string', 'group' => 'work'],
             ['key' => 'work_subheading', 'value' => 'A selection of completed spaces, material details, and in between moments each reflecting our approach to stone, design, and execution.', 'type' => 'string', 'group' => 'work'],
+            ['key' => 'homepage_services_eyebrow', 'value' => 'Services', 'type' => 'string', 'group' => 'services'],
+            ['key' => 'homepage_services_heading', 'value' => 'Built for builders. Tailored for homes.', 'type' => 'string', 'group' => 'services'],
             ['key' => 'cta_eyebrow', 'value' => 'Final Call to Action', 'type' => 'string', 'group' => 'cta'],
             ['key' => 'cta_heading', 'value' => 'Start your project', 'type' => 'string', 'group' => 'cta'],
             ['key' => 'cta_body', 'value' => "Whether you're building a custom home, planning a remodel, or managing a multifamily or commercial project, our team is here to help bring it to life.", 'type' => 'string', 'group' => 'cta'],

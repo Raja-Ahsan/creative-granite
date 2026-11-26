@@ -33,6 +33,9 @@ class HomepageCmsSettingsSeeder extends Seeder
             ['key' => 'materials_help_secondary_label', 'value' => 'Visit the Showroom', 'type' => 'string', 'group' => 'materials_section'],
             ['key' => 'materials_help_secondary_url', 'value' => '', 'type' => 'string', 'group' => 'materials_section'],
 
+            ['key' => 'homepage_services_eyebrow', 'value' => 'Services', 'type' => 'string', 'group' => 'services'],
+            ['key' => 'homepage_services_heading', 'value' => 'Built for builders. Tailored for homes.', 'type' => 'string', 'group' => 'services'],
+
             ['key' => 'cta_eyebrow', 'value' => 'Final Call to Action', 'type' => 'string', 'group' => 'cta'],
             ['key' => 'cta_heading', 'value' => 'Start your project', 'type' => 'string', 'group' => 'cta'],
             ['key' => 'cta_body', 'value' => "Whether you're building a custom home, planning a remodel, or managing a multifamily or commercial project, our team is here to help bring it to life.", 'type' => 'string', 'group' => 'cta'],

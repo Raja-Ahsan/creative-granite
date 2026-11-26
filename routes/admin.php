@@ -59,6 +59,7 @@ Route::middleware(['web', 'auth', 'admin'])->prefix('admin')->name('admin.')->gr
     Route::put('cta-page', [CtaPageController::class, 'update'])->name('cta-page.update');
     Route::put('portfolio-items/section', [PortfolioItemController::class, 'updateSection'])->name('portfolio-items.section.update');
     Route::resource('portfolio-items', PortfolioItemController::class)->except(['show']);
+    Route::put('services/section', [ServiceController::class, 'updateSection'])->name('services.section.update');
     Route::resource('services', ServiceController::class)->except(['show']);
     Route::resource('service-guides', ServiceGuideController::class)->except(['show']);
     Route::resource('service-areas', ServiceAreaController::class)

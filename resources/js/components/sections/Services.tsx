@@ -1,6 +1,7 @@
 import { Reveal } from "@/components/site/Reveal";
 import { useSection, useSiteContent } from "@/contexts/SiteContentContext";
 import { serviceSectionHref } from "@/utils/serviceAnchors";
+import { sectionHeadingDark } from "@/utils/typography";
 
 export function Services() {
   const { services, servicesPage } = useSiteContent();
@@ -14,11 +15,14 @@ export function Services() {
         <Reveal>
           <div className="flex items-center gap-3 text-cream/60">
             <span className="h-px w-12 bg-cream/40" />
-            <span className="eyebrow">{section.eyebrow}</span>
+            <span className="eyebrow">{section.eyebrow || "Services"}</span>
           </div>
+          {section.heading && (
+            <h2 className={`mt-6 max-w-4xl ${sectionHeadingDark}`}>{section.heading}</h2>
+          )}
         </Reveal>
 
-        <div className="mt-20 divide-y divide-cream/15 border-y border-cream/15">
+        <div className="mt-12 divide-y divide-cream/15 border-y border-cream/15 md:mt-16">
           {services.map((service, i) => (
             <Reveal key={service.slug} delay={i * 100}>
               <a

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Admin\Concerns\HandlesImageUpload;
 use App\Http\Controllers\Controller;
 use App\Models\Service;
+use App\Models\SiteSetting;
+use App\Services\SiteContentService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -15,12 +17,54 @@ class ServiceController extends Controller
 {
     use HandlesImageUpload;
 
+    private const SECTION_KEYS = [
+        'homepage_services_eyebrow',
+        'homepage_services_heading',
+    ];
+
     public function index(): View
     {
         return view('screens.admin.services.index', [
             'items' => Service::query()->orderBy('sort_order')->get(),
-            'title' => 'Services',
+            'sectionValues' => $this->sectionValues(),
+            'title' => 'Homepage Services',
         ]);
+    }
+
+    public function updateSection(Request $request): RedirectResponse
+    {
+        $data = $request->validate([
+            'homepage_services_eyebrow' => ['nullable', 'string', 'max:120'],
+            'homepage_services_heading' => ['nullable', 'string', 'max:300'],
+        ]);
+
+        foreach (self::SECTION_KEYS as $key) {
+            SiteSetting::updateOrCreate(
+                ['key' => $key],
+                ['value' => $data[$key] ?? '', 'type' => 'string', 'group' => 'services']
+            );
+        }
+
+        SiteContentService::clearCache();
+
+        return redirect()
+            ->route('admin.services.index')
+            ->with('success', 'Services section text updated.');
+    }
+
+    private function sectionValues(): array
+    {
+        $defaults = [
+            'homepage_services_eyebrow' => 'Services',
+            'homepage_services_heading' => 'Built for builders. Tailored for homes.',
+        ];
+
+        $stored = SiteSetting::query()
+            ->whereIn('key', self::SECTION_KEYS)
+            ->pluck('value', 'key')
+            ->all();
+
+        return array_merge($defaults, $stored);
     }
 
     public function create(): View
