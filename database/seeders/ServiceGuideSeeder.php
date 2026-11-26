@@ -15,6 +15,7 @@ class ServiceGuideSeeder extends Seeder
         $this->seedRemodel();
         $this->seedKitchen();
         $this->seedBathroom();
+        $this->seedFireplace();
         $this->seedIdaho();
         $this->seedColorado();
         $this->seedWyoming();
@@ -656,6 +657,132 @@ class ServiceGuideSeeder extends Seeder
                 'question' => 'What design options are available for custom bathroom countertops in Utah?',
                 'answer' => 'Options may include material, color, pattern, edge profile, finish, backsplash height, and sink cutout style.',
                 'sort_order' => 5,
+            ],
+        ] as $faq) {
+            $guide->faqs()->create($faq + ['is_active' => true]);
+        }
+
+        $guide->buttons()->delete();
+        foreach ([
+            ['section' => 'hero_cta', 'label' => 'Get an Estimate', 'url' => '#estimate', 'sort_order' => 1],
+            ['section' => 'process_cta', 'label' => 'Explore Our Services', 'url' => '/services', 'sort_order' => 1],
+            ['section' => 'work_cta', 'label' => 'View Our Work', 'url' => '/work', 'sort_order' => 1],
+            ['section' => 'materials_cta', 'label' => 'Start Your Project', 'url' => '#estimate', 'sort_order' => 1],
+            ['section' => 'materials_cta', 'label' => 'Visit the Showroom', 'url' => '/contact', 'sort_order' => 2],
+            ['section' => 'materials_cta', 'label' => 'Explore Remnants', 'url' => '/remnants', 'sort_order' => 3],
+            ['section' => 'closing_cta', 'label' => 'Get an Estimate', 'url' => '#estimate', 'sort_order' => 1],
+            ['section' => 'closing_cta', 'label' => 'Visit the Showroom', 'url' => '/contact', 'sort_order' => 2],
+        ] as $button) {
+            $guide->buttons()->create($button + ['is_active' => true]);
+        }
+    }
+
+    private function seedFireplace(): void
+    {
+        if (! $this->missing('fireplace-countertop-in-utah')) {
+            return;
+        }
+
+        $guide = ServiceGuide::updateOrCreate(
+            ['slug' => 'fireplace-countertop-in-utah'],
+            [
+                'title' => 'Fireplace Countertop in Utah',
+                'meta_title' => 'Fireplace Countertop in Utah | Creative Granite & Design',
+                'meta_description' => 'Fireplace countertops in Utah—custom hearths, mantels, and stone surrounds fabricated to complement your home’s architecture.',
+                'hero_image_path' => '/images/work/fireplaces-cover.jpg',
+                'hero_body' => 'A fireplace has a way of organizing a room. Whether the design calls for a quiet hearth or a dramatic surround, the stone should complement the architecture without ignoring heat and installation requirements.',
+                'process_eyebrow' => 'Services',
+                'process_heading' => 'From Planning to Installation',
+                'process_body' => 'Our process for fireplace countertops in Utah is organized around decisions that are easier to make before fabrication. We begin by reviewing the project scope and material preferences, then confirm measurements when the site is ready. Cutouts, edges, seams, and installation conditions are considered together rather than independently.',
+                'process_image_path' => '/images/work/fireplaces-gallery.png',
+                'work_eyebrow' => 'Our Work',
+                'work_heading' => 'Made to Fit the Space',
+                'work_body' => 'Hearths, mantels, raised benches, and decorative surrounds may call for different thicknesses, edge treatments, and supporting structures. Material direction matters, but so do the smaller details: how the stone meets a wall, where a seam falls, and how an edge feels to the hand.',
+                'work_image_path' => '/images/work/fireplaces-cover.jpg',
+                'materials_eyebrow' => 'Materials',
+                'materials_heading' => 'Choose for the Way the Surface Will Be Used',
+                'materials_intro' => 'A good fireplace countertop in Utah should offer more than an attractive photograph. Granite provides individual mineral patterning and generally robust everyday performance. True quartzite often offers notable hardness and distinctive movement, though varieties differ and should be evaluated individually. Marble has a classic, luminous appearance but can etch from acidic substances.',
+                'additional_eyebrow' => 'Additional Materials',
+                'additional_heading' => null,
+                'additional_body' => 'Porcelain and other special-order materials may also be considered when the design or intended application calls for an alternative. Suitability depends on product specifications, fabrication requirements, edge details, and installation conditions. We prefer to discuss those constraints openly rather than promise that every material will work in every location.',
+                'additional_help_text' => 'Need help choosing? Bring your plans, inspiration, or photos of the existing room to a material conversation. We can help compare options with the project’s actual needs in view.',
+                'additional_image_path' => '/images/services/remodel-hero.png',
+                'advantages_heading' => 'Advantages of a Custom-Fabricated Surface',
+                'advantages_body' => 'The value of a fireplace countertop in Utah lies in the fit between the material and the project. Custom fabrication allows attention to sink openings, edge profiles, seam locations, and unusual dimensions. It also creates opportunities to align visual movement with the layout, rather than treating each section as an isolated piece.',
+                'advantages_image_path' => '/images/site/LakeLine-20.jpg',
+                'faq_heading' => 'Frequently Asked Questions',
+                'cta_heading' => 'Start Your Project!',
+                'cta_body' => 'If you are considering a fireplace countertop in Utah, share the approximate dimensions, project location, preferred material, and desired schedule. A conversation about the space can help clarify the next step and the information needed for a meaningful estimate. We welcome homeowners as well as builders and design professionals.',
+                'sort_order' => 6,
+                'is_active' => true,
+                'show_in_nav' => true,
+                'is_service_area' => false,
+            ]
+        );
+
+        $guide->steps()->delete();
+        foreach ([
+            [
+                'step_number' => '01',
+                'title' => 'Consultation and Material Selection',
+                'body' => 'We discuss the intended use, design direction, maintenance expectations, and practical budget considerations.',
+                'sort_order' => 1,
+            ],
+            [
+                'step_number' => '02',
+                'title' => 'Precision Fabrication',
+                'body' => 'Layout, dimensions, openings, and edge treatment are planned around the selected slab or engineered product.',
+                'sort_order' => 2,
+            ],
+            [
+                'step_number' => '03',
+                'title' => 'Professional Installation',
+                'body' => 'Fit, support, joints, and finishing details receive careful attention at the installation stage.',
+                'sort_order' => 3,
+            ],
+        ] as $step) {
+            $guide->steps()->create($step + ['is_active' => true]);
+        }
+
+        $guide->materials()->delete();
+        foreach ([
+            [
+                'name' => 'Granite',
+                'body' => 'Granite can be an excellent choice when a project calls for natural variation and a surface intended for regular use. Colors range from quiet neutrals to expressive patterns. Because porosity differs from slab to slab, care recommendations should be based on the actual material.',
+                'image_path' => '/materials/granite.webp',
+                'sort_order' => 1,
+            ],
+            [
+                'name' => 'Quartz',
+                'body' => 'Engineered quartz offers a broad selection of colors and patterns, including restrained solids and stone-inspired veining. Its nonporous surface typically does not need sealing, which makes cleaning straightforward. It should still be protected from excessive heat, and manufacturer limitations should be checked for areas with strong sunlight.',
+                'image_path' => '/materials/quartz.webp',
+                'sort_order' => 2,
+            ],
+        ] as $material) {
+            $guide->materials()->create($material + ['is_active' => true]);
+        }
+
+        $guide->faqs()->delete();
+        foreach ([
+            [
+                'question' => 'What materials are best for fireplace hearths and surrounding stone surfaces in Utah homes?',
+                'answer' => 'Granite and some other natural stones may be suitable, but the correct choice depends on the fireplace type, heat exposure, substrate, and manufacturer requirements.',
+                'sort_order' => 1,
+            ],
+            [
+                'question' => 'Can custom stone fireplace surrounds be designed to match existing countertops?',
+                'answer' => 'Often yes. Related colors or stone families can connect the room, although matching an existing natural slab exactly may not be possible.',
+                'sort_order' => 2,
+            ],
+            [
+                'question' => 'Can granite, marble, or quartzite be used for fireplace surrounds?',
+                'answer' => 'They may be considered for appropriate applications after verifying heat exposure, clearances, and installation requirements. Engineered quartz should not be assumed suitable near high heat.',
+                'sort_order' => 3,
+            ],
+            [
+                'question' => 'How do I choose a fireplace stone design that complements my home’s interior?',
+                'answer' => 'Consider the scale of the opening, adjacent flooring, wall color, mantel proportions, and whether the stone should stand out or quietly unify the space.',
+                'sort_order' => 4,
             ],
         ] as $faq) {
             $guide->faqs()->create($faq + ['is_active' => true]);

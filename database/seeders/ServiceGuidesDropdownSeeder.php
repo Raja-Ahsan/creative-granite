@@ -15,6 +15,7 @@ use Illuminate\Database\Seeder;
  * 3. countertop-remodel-utah
  * 4. kitchen-countertops-utah
  * 5. bathroom-countertops-utah
+ * 6. fireplace-countertop-in-utah
  *
  * Service Area (show_in_nav = no, is_service_area = yes):
  * - countertop-installation-idaho
@@ -37,6 +38,7 @@ class ServiceGuidesDropdownSeeder extends Seeder
             3 => 'countertop-remodel-utah',
             4 => 'kitchen-countertops-utah',
             5 => 'bathroom-countertops-utah',
+            6 => 'fireplace-countertop-in-utah',
         ];
 
         foreach ($dropdown as $order => $slug) {
@@ -52,9 +54,9 @@ class ServiceGuidesDropdownSeeder extends Seeder
         }
 
         $serviceAreas = [
-            6 => 'countertop-installation-idaho',
-            7 => 'countertop-installation-colorado',
-            8 => 'countertop-installation-in-wyoming',
+            7 => 'countertop-installation-idaho',
+            8 => 'countertop-installation-colorado',
+            9 => 'countertop-installation-in-wyoming',
         ];
 
         foreach ($serviceAreas as $order => $slug) {
