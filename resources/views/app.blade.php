@@ -7,6 +7,16 @@
     <title>{{ $metaTitle ?? 'Creative Granite & Design — Stone, shaped with intention.' }}</title>
     <meta name="description" content="{{ $metaDescription ?? 'Premium granite, quartz, marble &amp; quartzite countertops in Utah. Precision fabrication and thoughtful design for kitchens, baths, fireplaces and beyond.' }}">
     <meta name="author" content="Creative Granite & Design">
+    <meta name="google-site-verification" content="BvqtYPuCEWRIhWPWHyxMtZ-YyEurWXDA50VjT5ZT1ts" />
+
+    <!-- Google Tag Manager -->
+    <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-T2V98GLP"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    </script>
+    <!-- End Google Tag Manager -->
 
     <!-- Open Graph / Facebook -->
     <meta property="og:title" content="Creative Granite &amp; Design — Stone, shaped with intention.">
@@ -62,6 +72,11 @@
     </script>
 </head>
 <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T2V98GLP" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <div id="app" data-page="{{ $page ?? 'home' }}"></div>
 </body>
 </html>
